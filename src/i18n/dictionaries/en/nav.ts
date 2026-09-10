@@ -247,14 +247,26 @@ export const MENUS: Record<MegaKey, Menu> = {
   },
 };
 
-export const GRIDS: Record<"enable" | "why" | "resources", { name: string; body: string; href: string }[]> = {
+/**
+ * A card with an `objective` or `industry` key routes to that detail page;
+ * the rest fall back to their `href` through the artboard map.
+ */
+export type GridCard = {
+  name: string;
+  body: string;
+  href: string;
+  objective?: string;
+  industry?: string;
+};
+
+export const GRIDS: Record<"enable" | "why" | "resources", GridCard[]> = {
   enable: [
-    { name: "Generate More Leads", body: "Increase qualified lead volume from your ICP.", href: "Solutions.dc.html#objective" },
-    { name: "Build Pipeline", body: "From first content interaction to sales-qualified opportunity.", href: "Solutions.dc.html#objective" },
-    { name: "Accelerate Sales", body: "Book more meetings. Close more revenue.", href: "Solutions.dc.html#objective" },
-    { name: "Launch New Markets", body: "Enter new regions and segments with confidence.", href: "Solutions.dc.html#objective" },
-    { name: "Improve ABM Performance", body: "Stop running ABM on assumptions.", href: "Solutions.dc.html#objective" },
-    { name: "Increase Webinar Attendance", body: "Fill every seat with the right buyers.", href: "Solutions.dc.html#objective" },
+    { objective: "generate-more-leads", name: "Generate More Leads", body: "Increase qualified lead volume from your ICP.", href: "Solutions.dc.html#objective" },
+    { objective: "build-pipeline", name: "Build Pipeline", body: "From first content interaction to sales-qualified opportunity.", href: "Solutions.dc.html#objective" },
+    { objective: "accelerate-sales", name: "Accelerate Sales", body: "Book more meetings. Close more revenue.", href: "Solutions.dc.html#objective" },
+    { objective: "launch-new-markets", name: "Launch New Markets", body: "Enter new regions and segments with confidence.", href: "Solutions.dc.html#objective" },
+    { objective: "improve-abm-performance", name: "Improve ABM Performance", body: "Stop running ABM on assumptions.", href: "Solutions.dc.html#objective" },
+    { objective: "increase-webinar-attendance", name: "Increase Webinar Attendance", body: "Fill every seat with the right buyers.", href: "Solutions.dc.html#objective" },
     { name: "Industry Solutions", body: "Built for B2B. Specialized by industry.", href: "Industries.dc.html" },
   ],
   why: [

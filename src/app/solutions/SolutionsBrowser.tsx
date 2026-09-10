@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "@/components/icons";
-import { route } from "@/lib/routes";
+import { industryHref, objectiveHref, route } from "@/lib/routes";
 import {
   INDUSTRY_SOLUTIONS,
   OBJECTIVE_SOLUTIONS,
@@ -157,7 +157,7 @@ export default function SolutionsBrowser() {
               )}
 
               <Link
-                href={route("Contact.dc.html")}
+                href={tab === "objective" ? objectiveHref(c.key) : industryHref(c.key)}
                 className="mt-1 inline-flex items-center gap-2.5 self-start border-b border-ink/30 pb-[5px] text-[11.5px] font-semibold tracking-[0.05em] text-ink uppercase transition-colors hover:border-brand hover:text-brand"
               >
                 {c.cta}

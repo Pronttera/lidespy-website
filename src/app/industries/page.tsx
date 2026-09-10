@@ -5,7 +5,7 @@ import SiteNav from "@/components/SiteNav";
 import { ArrowRight } from "@/components/icons";
 import { Eyebrow, Slot } from "@/components/ui";
 import { INDUSTRIES_LIST } from "@/i18n/dictionaries/en/industries";
-import { route } from "@/lib/routes";
+import { industryHref, route } from "@/lib/routes";
 
 export const metadata: Metadata = {
   title: "Industries · Lidespy",
@@ -85,7 +85,7 @@ export default function IndustriesPage() {
             <Link
               key={i.key}
               id={i.key}
-              href={route("Contact.dc.html")}
+              href={industryHref(i.key)}
               className="flex scroll-mt-24 flex-col overflow-hidden rounded-ui border border-ink/14 bg-white text-ink transition-colors hover:border-brand/55"
             >
               <Slot

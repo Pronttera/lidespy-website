@@ -3,9 +3,16 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { pillarHref, route, serviceHref } from "@/lib/routes";
-import { GRIDS, MENUS, NAV_ITEMS, type MegaKey } from "@/i18n/dictionaries/en/nav";
+import { industryHref, objectiveHref, pillarHref, route, serviceHref } from "@/lib/routes";
+import { GRIDS, MENUS, NAV_ITEMS, type GridCard, type MegaKey } from "@/i18n/dictionaries/en/nav";
 import { ArrowRight, ArrowUpRight, ChevronDown, ChevronRight } from "./icons";
+
+/** A grid card routes to its own detail page where it has one. */
+function gridHref(c: GridCard): string {
+  if (c.objective) return objectiveHref(c.objective);
+  if (c.industry) return industryHref(c.industry);
+  return route(c.href);
+}
 
 export default function SiteNav({ active }: { active?: MegaKey }) {
   const [mega, setMega] = useState<MegaKey | null>(null);
@@ -40,7 +47,7 @@ export default function SiteNav({ active }: { active?: MegaKey }) {
             href: serviceHref(s.key),
           })),
         ]
-      : GRIDS[key].map((c) => ({ name: c.name, href: route(c.href) }));
+      : GRIDS[key].map((c) => ({ name: c.name, href: gridHref(c) }));
 
   const open = (key: MegaKey) => () => {
     setMega(key);
@@ -176,7 +183,7 @@ export default function SiteNav({ active }: { active?: MegaKey }) {
               {GRIDS[mega].map((c) => (
                 <Link
                   key={c.name}
-                  href={route(c.href)}
+                  href={gridHref(c)}
                   className="flex min-h-[104px] flex-col gap-2.5 rounded-card border border-transparent bg-panel px-[22px] pt-[22px] pb-6 text-ink transition-colors hover:border-brand/45 hover:bg-white"
                 >
                   <div className="flex items-start justify-between gap-3">

@@ -66,7 +66,21 @@ export function pillarHref(key: string): string {
   return `/why-lidespy/${key}`;
 }
 
-/** Resource categories deep-link into the page that hosts them. */
-export function resourceHref(cat: "blog" | "reports" | "insights"): string {
-  return cat === "blog" ? "Blog.dc.html" : "#";
+/** The six "What We Enable" objectives, under the Solutions route. */
+export function objectiveHref(key: string): string {
+  return `/solutions/${key}`;
+}
+
+/** The nine industries, under the Industries route. */
+export function industryHref(key: string): string {
+  return `/industries/${key}`;
+}
+
+/**
+ * Where a resource card points. Reports and insights have a page of their own;
+ * blog-category resources belong to the blog and land on its index until post
+ * pages exist.
+ */
+export function resourceHref(resource: { slug?: string }): string {
+  return resource.slug ? `/resources/${resource.slug}` : "/blog";
 }

@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Close } from "@/components/icons";
 import { Slot } from "@/components/ui";
-import { resourceHref, route } from "@/lib/routes";
+import { resourceHref } from "@/lib/routes";
 import {
   RESOURCES,
   RESOURCES_COPY,
@@ -108,7 +108,7 @@ export default function ResourceLibrary({ type }: { type?: string }) {
               {featured.body}
             </p>
             <a
-              href="#library"
+              href={resourceHref(featured)}
               className="mt-auto inline-flex items-center gap-2.5 pt-1 text-[11px] font-semibold tracking-[0.06em] text-cream uppercase after:absolute after:inset-0"
             >
               {featured.cta}
@@ -256,7 +256,7 @@ export default function ResourceLibrary({ type }: { type?: string }) {
                       {/* Stretched link: the whole card is clickable, but the
                         image credit stays a separate, reachable anchor. */}
                       <Link
-                        href={route(resourceHref(r.cat))}
+                        href={resourceHref(r)}
                         className="after:absolute after:inset-0"
                       >
                         {r.title}
