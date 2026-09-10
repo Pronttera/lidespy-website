@@ -47,7 +47,7 @@ export const RESOURCES_COPY = {
     titleLead: "Everything we know about",
     titleAccent: "building B2B pipeline",
     intro:
-      "Guides, benchmarks and campaign teardowns from the team running the programs — not the marketing department. Search the whole library below.",
+      "Guides, benchmarks and campaign teardowns from the team running the programs — not the marketing department. Browse the whole library below.",
     stats: [
       { value: "500+", label: "Campaigns analysed" },
       { value: "12+", label: "Industries covered" },
@@ -55,15 +55,12 @@ export const RESOURCES_COPY = {
       { value: "Free", label: "No paywall" },
     ],
   },
-  search: {
-    label: "Search the resource library",
-    placeholder: "Search guides, reports and insights…",
-    clear: "Clear search",
+  library: {
     resultsOne: "1 resource",
     /** `{count}` is the number of matching resources. */
     resultsMany: "{count} resources",
-    emptyTitle: "Nothing matches that yet.",
-    emptyBody: "Try a broader term — or browse the whole library.",
+    emptyTitle: "Nothing in this category yet.",
+    emptyBody: "Browse the whole library instead.",
     emptyAction: "Reset filters",
   },
   cta: {

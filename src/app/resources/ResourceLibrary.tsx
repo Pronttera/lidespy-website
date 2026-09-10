@@ -1,8 +1,8 @@
 "use client";
 
-import { useId, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Close, Search } from "@/components/icons";
+import { ArrowRight, Close } from "@/components/icons";
 import { Slot } from "@/components/ui";
 import { resourceHref, route } from "@/lib/routes";
 import {
@@ -14,7 +14,7 @@ import {
 
 type Filter = "all" | ResourceCategory;
 
-const { hero, featured, search: SEARCH } = RESOURCES_COPY;
+const { hero, featured, library: LIBRARY } = RESOURCES_COPY;
 
 /** How many resources sit behind each filter chip — shown as a superscript count. */
 const COUNTS: Record<Filter, number> = RESOURCE_FILTERS.reduce(
@@ -29,45 +29,35 @@ const COUNTS: Record<Filter, number> = RESOURCE_FILTERS.reduce(
 );
 
 /**
- * The hero, the search/filter command bar and the results grid are one
- * component because they share a single piece of state: the query typed in the
- * hero narrows the grid below it. Splitting them would mean lifting that state
- * into a context for no gain.
+ * The hero, the filter chips and the results grid are one component because
+ * they share a single piece of state: the active category filter. Splitting
+ * them would mean lifting that state into a context for no gain.
  */
 export default function ResourceLibrary({ type }: { type?: string }) {
   const deepLinked: Filter = RESOURCE_FILTERS.some((f) => f.id === type)
     ? (type as Filter)
     : "all";
   const [filter, setFilter] = useState<Filter>(deepLinked);
-  const [query, setQuery] = useState("");
   const [lastDeepLink, setLastDeepLink] = useState(deepLinked);
-  const searchId = useId();
 
   // Chip clicks stay local so filtering is instant; the Resources menu — which
   // can be used from this page — changes `type` instead. Adjusting during
   // render rather than in an effect means the grid never paints the old
-  // category first. A stale search box must not keep filtering the category
-  // the visitor was just promised, so it clears with the switch.
+  // category first.
   if (lastDeepLink !== deepLinked) {
     setLastDeepLink(deepLinked);
     setFilter(deepLinked);
-    setQuery("");
   }
 
-  const items = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return RESOURCES.filter((r) => {
-      if (filter !== "all" && r.cat !== filter) return false;
-      if (!q) return true;
-      return `${r.title} ${r.body} ${r.type}`.toLowerCase().includes(q);
-    });
-  }, [filter, query]);
+  const items = useMemo(
+    () => RESOURCES.filter((r) => filter === "all" || r.cat === filter),
+    [filter],
+  );
 
-  const filtered = filter !== "all" || query.trim() !== "";
+  const filtered = filter !== "all";
 
   function reset() {
     setFilter("all");
-    setQuery("");
   }
 
   return (
@@ -91,34 +81,6 @@ export default function ResourceLibrary({ type }: { type?: string }) {
               {hero.intro}
             </p>
 
-            {/* The library search — the primary action of the page. */}
-            <div className="relative mt-1 max-w-[560px]">
-              <label htmlFor={searchId} className="sr-only">
-                {SEARCH.label}
-              </label>
-              <Search
-                size={17}
-                className="pointer-events-none absolute top-1/2 left-[22px] -translate-y-1/2 text-cream/45"
-              />
-              <input
-                id={searchId}
-                type="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder={SEARCH.placeholder}
-                className="w-full rounded-ui border border-cream/22 bg-cream/6 py-[17px] pr-[52px] pl-[54px] text-[15px] text-cream placeholder:text-cream/45 focus:border-coral/70 focus:bg-cream/10 focus:outline-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none"
-              />
-              {query && (
-                <button
-                  type="button"
-                  onClick={() => setQuery("")}
-                  aria-label={SEARCH.clear}
-                  className="absolute top-1/2 right-[18px] flex h-7 w-7 -translate-y-1/2 cursor-pointer items-center justify-center rounded-ui text-cream/55 transition-colors hover:bg-cream/12 hover:text-cream"
-                >
-                  <Close size={13} />
-                </button>
-              )}
-            </div>
           </div>
 
           {/* Featured report — the one thing worth reading first. */}
@@ -228,8 +190,8 @@ export default function ResourceLibrary({ type }: { type?: string }) {
                 className="text-[12px] text-muted-2 tabular-nums"
               >
                 {items.length === 1
-                  ? SEARCH.resultsOne
-                  : SEARCH.resultsMany.replace("{count}", String(items.length))}
+                  ? LIBRARY.resultsOne
+                  : LIBRARY.resultsMany.replace("{count}", String(items.length))}
               </div>
               {filtered && (
                 <button
@@ -238,7 +200,7 @@ export default function ResourceLibrary({ type }: { type?: string }) {
                   className="inline-flex cursor-pointer items-center gap-1.5 text-[11px] font-semibold tracking-[0.05em] text-brand uppercase transition-opacity hover:opacity-70"
                 >
                   <Close size={11} />
-                  {SEARCH.emptyAction}
+                  {LIBRARY.emptyAction}
                 </button>
               )}
             </div>
@@ -250,17 +212,17 @@ export default function ResourceLibrary({ type }: { type?: string }) {
           {items.length === 0 ? (
             <div className="flex flex-col items-center gap-3 rounded-card border border-dashed border-ink/20 px-6 py-[clamp(48px,7vw,88px)] text-center">
               <h3 className="m-0 text-[20px] font-medium tracking-[-0.02em]">
-                {SEARCH.emptyTitle}
+                {LIBRARY.emptyTitle}
               </h3>
               <p className="m-0 max-w-[36ch] text-[14px] leading-[1.6] text-muted-2 text-pretty">
-                {SEARCH.emptyBody}
+                {LIBRARY.emptyBody}
               </p>
               <button
                 type="button"
                 onClick={reset}
                 className="mt-2 inline-flex cursor-pointer items-center gap-3 rounded-ui bg-brand-cta px-6 py-[13px] text-[11px] font-semibold tracking-[0.05em] text-white uppercase"
               >
-                {SEARCH.emptyAction}
+                {LIBRARY.emptyAction}
                 <ArrowRight size={12} />
               </button>
             </div>

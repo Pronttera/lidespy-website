@@ -28,8 +28,8 @@ export default async function ResourcesPage({
     <div className="dc-rules min-h-screen overflow-x-clip bg-cream text-ink">
       <SiteNav active="resources" />
 
-      {/* Hero, search/filter command bar and the results grid share one piece
-          of state, so they live together in a single client component. */}
+      {/* Hero, filter chips and the results grid share one piece of state, so
+          they live together in a single client component. */}
       <ResourceLibrary type={typeof type === "string" ? type : undefined} />
 
       {/* MEDIA KIT */}
