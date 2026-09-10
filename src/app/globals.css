@@ -87,6 +87,14 @@ body {
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
 
+/* Bottom fade for the Challenge figure. The source artwork survives only as a
+   bust crop, so the lower edge dissolves into the page instead of ending on a
+   hard horizontal cut. Remove this once the full-body art is restored. */
+.ld-fade-b {
+  mask-image: linear-gradient(to bottom, #000 66%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 66%, transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ld-marquee { animation: none }
 }

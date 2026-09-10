@@ -190,6 +190,7 @@ export default function HomePage() {
 
       {/* CHALLENGE — pinned stage; the four cards fly in on scroll (HomeMotion) */}
       <section
+        id="challenge"
         data-challenge
         className="relative border-y border-ink/12 bg-cream lg:h-screen lg:min-h-[640px]"
       >
@@ -210,14 +211,14 @@ export default function HomePage() {
 
           <div
             data-ch-item="hero"
-            className="relative mx-auto aspect-15/6 w-full max-w-[420px] lg:absolute lg:right-0 lg:bottom-[4vh] lg:left-0 lg:aspect-15/16 lg:max-h-[74vh] lg:w-[clamp(420px,51vw,780px)] lg:max-w-none"
+            className="ld-fade-b relative mx-auto aspect-[670/425] w-full max-w-[380px] lg:absolute lg:right-0 lg:bottom-[8vh] lg:left-0 lg:max-h-[42vh] lg:w-[clamp(340px,34vw,520px)] lg:max-w-none"
           >
             <Image
               src="/challenge-visual.png"
               alt="Marketer working through a messy contact database"
               fill
-              sizes="(max-width: 1024px) 100vw, 51vw"
-              className="object-cover object-top lg:object-contain"
+              sizes="(max-width: 1024px) 380px, 34vw"
+              className="object-contain object-bottom"
             />
           </div>
 
