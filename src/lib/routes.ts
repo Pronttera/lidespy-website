@@ -1,3 +1,5 @@
+import { isServicePageKey } from "./service-keys";
+
 /**
  * The design project links between `*.dc.html` artboards; this maps each one to
  * its route in the app. Anything unmapped resolves to "#".
@@ -29,6 +31,8 @@ export function route(designHref: string): string {
   return `${path}${query ? `?${query}` : ""}${hash ? `#${hash}` : ""}`;
 }
 
+export { isServicePageKey as hasServicePage };
+
 /**
  * The slug an anchor uses on a service detail page. Deliverable names are the
  * link text in the mega-menu and the section heading on the page, so both ends
@@ -43,33 +47,15 @@ export function slugify(text: string): string {
 }
 
 /**
- * Services with a page of their own. Everything else still resolves to its
- * section on `/services`, so the menu stays complete while the detail pages
- * are written one at a time.
- *
- * This mirrors the keys in `en/service-pages.ts`, deliberately: the nav is a
- * client component, and importing that file here would ship every service
- * page's copy to the browser. Add a key in both places.
- */
-const SERVICE_PAGE_KEYS = new Set([
-  "demand-generation",
-  "content-syndication",
-  "abm",
-]);
-
-export function hasServicePage(key: string | undefined): boolean {
-  return !!key && SERVICE_PAGE_KEYS.has(key);
-}
-
-/**
- * Where a service link points. A service with its own page gets it; the rest
- * fall back to their anchor on the services overview. `deliverable` deep-links
- * to that deliverable's section, and is ignored when there is no page to
- * anchor into.
+ * Where a service link points. A service with its own page gets it; anything
+ * else falls back to its anchor on the services overview. `deliverable`
+ * deep-links to that deliverable's section — the anchor is derived from the
+ * same string the page headings use, which is why the mega-menu labels in
+ * `en/nav.ts` have to match the deliverable names in `en/services.ts`.
  */
 export function serviceHref(key: string | undefined, deliverable?: string): string {
   if (!key) return "/services";
-  if (!hasServicePage(key)) return `/services#${key}`;
+  if (!isServicePageKey(key)) return `/services#${key}`;
   return deliverable
     ? `/services/${key}#${slugify(deliverable)}`
     : `/services/${key}`;

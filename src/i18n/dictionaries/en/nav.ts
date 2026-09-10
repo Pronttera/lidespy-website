@@ -4,6 +4,12 @@ export type Service = {
   key: string;
   name: string;
   overview: string;
+  /**
+   * Each of these deep-links to `#<slugified name>` on the service's own page,
+   * where the sections are generated from `SERVICE_DETAILS.deliverables` — so
+   * every string here has to match one of those deliverable names exactly, or
+   * the link lands at the top of the page instead of the section.
+   */
   deliverables: string[];
 };
 
@@ -70,7 +76,7 @@ export const SERVICES: Service[] = [
       "Verified, permission-based B2B contact databases built for outreach. Every record validated, enriched and matched to your ICP — no recycled lists.",
     deliverables: [
       "Custom database build to your ICP",
-      "CSV or CRM-ready delivery",
+      "CSV or CRM-ready format",
       "Suppression file application",
     ],
   },
@@ -82,7 +88,7 @@ export const SERVICES: Service[] = [
     deliverables: [
       "Webinar promotion campaign setup",
       "Registration delivery and reporting",
-      "Post-event attendee engagement data",
+      "Post-event attendee list with engagement data",
     ],
   },
   {
@@ -115,7 +121,7 @@ export const SERVICES: Service[] = [
     deliverables: [
       "AI visibility audit report",
       "AI-optimized content creation",
-      "Competitor share-of-voice analysis",
+      "Competitor AI share-of-voice analysis",
     ],
   },
   {
@@ -126,7 +132,7 @@ export const SERVICES: Service[] = [
     deliverables: [
       "Campaign setup and management",
       "Audience targeting and bid strategy",
-      "Monthly optimization review",
+      "Monthly strategy and optimization review",
     ],
   },
   {

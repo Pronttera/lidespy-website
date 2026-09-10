@@ -173,7 +173,7 @@ export const PILLARS: Pillar[] = [
     name: "Revenue-Focused Outcomes",
     eyebrow: "Why Lidespy · Pillar 03",
     titleLead: "Qualified leads, booked meetings,",
-    titleAccent: "measurable pipeline.",
+    titleAccent: "real pipeline.",
     intro:
       "Not impressions. Not MQLs that die on contact with sales. We report on the metrics your CFO recognises — accepted leads, held meetings and pipeline contribution — and we are willing to be measured on them.",
     stats: [
@@ -244,6 +244,7 @@ export const PILLARS: Pillar[] = [
 export const PILLARS_COPY = {
   backLabel: "Why Lidespy",
   statsLabel: "By the numbers",
+  onThisPage: "On this page",
   sectionsLabel: "How it works",
   servicesLabel: "Services built on this",
   servicesIntro: "The programs where this shows up first.",

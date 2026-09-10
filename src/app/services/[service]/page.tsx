@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ButtonMotion from "@/components/ButtonMotion";
+import DetailHero from "@/components/DetailHero";
+import DetailHeroMotion from "@/components/DetailHeroMotion";
 import SiteFooter from "@/components/SiteFooter";
 import SiteNav from "@/components/SiteNav";
 import { ArrowRight, Check, ChevronRight } from "@/components/icons";
 import { Eyebrow } from "@/components/ui";
 import {
-  SERVICE_PAGES,
   SERVICE_PAGE_COPY,
   servicePageByKey,
 } from "@/i18n/dictionaries/en/service-pages";
 import { SERVICE_DETAILS } from "@/i18n/dictionaries/en/services";
 import { route, serviceHref, slugify } from "@/lib/routes";
+import { SERVICE_PAGE_KEYS } from "@/lib/service-keys";
 
 export function generateStaticParams() {
-  return SERVICE_PAGES.map((s) => ({ service: s.key }));
+  return SERVICE_PAGE_KEYS.map((service) => ({ service }));
 }
 
 /** The shared detail and the page-only copy, resolved together or not at all. */
@@ -50,102 +53,37 @@ export default async function ServiceDetailPage({
     copy: page.deliverables[name],
   }));
 
+  const position = SERVICE_DETAILS.findIndex((s) => s.key === detail.key);
   const related = page.related
     .map((key) => SERVICE_DETAILS.find((s) => s.key === key))
     .filter((s) => s !== undefined);
 
   return (
-    <div className="dc-rules min-h-screen overflow-x-clip bg-cream text-ink">
+    <div
+      data-gsap-root
+      className="dc-rules min-h-screen overflow-x-clip bg-cream text-ink"
+    >
+      <DetailHeroMotion />
+      <ButtonMotion />
       <SiteNav active="solutions" />
 
-      {/* ═══ HERO ══════════════════════════════════════════════════════════ */}
-      <section className="dc-rules-dark relative overflow-hidden bg-ink text-cream">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -top-[28%] -right-[12%] h-[640px] w-[640px] rounded-full bg-[radial-gradient(circle,rgba(225,27,34,0.24),transparent_63%)] blur-[12px]"
-        />
-
-        <div className="relative mx-auto grid max-w-[1280px] items-start gap-[clamp(36px,5vw,80px)] page-x pt-[clamp(40px,4.5vw,72px)] pb-[clamp(44px,4.5vw,72px)] lg:grid-cols-[minmax(0,1.15fr)_minmax(300px,0.85fr)]">
-          <div className="flex flex-col gap-[clamp(22px,2.4vw,32px)]">
-            <Link
-              href={route("Services.dc.html")}
-              className="inline-flex items-center gap-2 self-start text-[11px] font-semibold tracking-[0.12em] text-cream/50 uppercase transition-colors hover:text-coral"
-            >
-              <span className="text-coral">←</span>
-              {SERVICE_PAGE_COPY.backLabel}
-            </Link>
-
-            <div className="self-start">
-              <Eyebrow tone="coral">{page.eyebrow}</Eyebrow>
-            </div>
-
-            <h1 className="m-0 text-[clamp(34px,4.8vw,70px)] leading-[1.03] font-normal tracking-[-0.035em] text-balance">
-              {page.titleLead}{" "}
-              <span className="text-coral">{page.titleAccent}</span>
-            </h1>
-
-            <p className="m-0 max-w-[58ch] text-[clamp(15px,1.25vw,18.5px)] leading-[1.62] text-cream/70 text-pretty">
-              {page.intro}
-            </p>
-
-            <div className="flex flex-wrap items-center gap-4">
-              <Link
-                href={route("Contact.dc.html")}
-                className="inline-flex items-center gap-3 rounded-ui bg-brand-cta px-7 py-[17px] text-[12px] font-semibold tracking-[0.04em] text-white uppercase transition-colors hover:bg-white hover:text-ink"
-              >
-                {detail.cta}
-                <ArrowRight />
-              </Link>
-              <Link
-                href={route("Calculator.dc.html")}
-                className="inline-flex items-center gap-3 rounded-ui border border-cream/30 px-[22px] py-[17px] text-[12px] font-semibold tracking-[0.04em] text-cream uppercase transition-colors hover:border-coral hover:text-coral"
-              >
-                Estimate a campaign budget
-              </Link>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-3.5">
-            <div className="rounded-card border border-cream/14 bg-cream/[0.045] px-[clamp(20px,2vw,26px)] py-[clamp(18px,1.8vw,24px)]">
-              <div className="mb-4 border-b border-cream/14 pb-3.5 text-[10.5px] font-semibold tracking-[0.14em] text-cream/45 uppercase">
-                {SERVICE_PAGE_COPY.statsLabel}
-              </div>
-              <div className="grid grid-cols-2 gap-x-6 gap-y-6">
-                {page.stats.map((s) => (
-                  <div key={s.label}>
-                    <div className="text-[clamp(22px,2.2vw,30px)] leading-none font-medium tracking-[-0.03em] text-coral">
-                      {s.value}
-                    </div>
-                    <div className="mt-2 text-[12.5px] leading-[1.45] text-cream/60 text-pretty">
-                      {s.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* The deliverable index doubles as the anchor map the mega-menu
-                links into, so a visitor arriving mid-page can see the rest. */}
-            <div className="rounded-card border border-cream/14 bg-cream/4 px-[22px] pt-[18px] pb-2.5">
-              <div className="mb-2 text-[10.5px] font-semibold tracking-[0.14em] text-cream/45 uppercase">
-                {SERVICE_PAGE_COPY.onThisPage}
-              </div>
-              {sections.map((s, i) => (
-                <a
-                  key={s.id}
-                  href={`#${s.id}`}
-                  className="flex items-baseline gap-2.5 border-b border-cream/10 py-[7px] text-[13.5px] text-cream transition-colors last:border-b-0 hover:text-coral"
-                >
-                  <span className="w-[20px] shrink-0 text-[10.5px] tabular-nums text-coral">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="min-w-0 flex-1 leading-[1.3]">{s.name}</span>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <DetailHero
+        back={{ label: SERVICE_PAGE_COPY.backLabel, href: route("Services.dc.html") }}
+        index={{ n: position + 1, of: SERVICE_DETAILS.length, label: "Service" }}
+        eyebrow={page.eyebrow}
+        titleLead={page.titleLead}
+        titleAccent={page.titleAccent}
+        intro={page.intro}
+        primary={{ label: detail.cta, href: "Contact.dc.html" }}
+        secondary={{ label: "Estimate a campaign budget", href: route("Calculator.dc.html") }}
+        stats={page.stats}
+        statsLabel={SERVICE_PAGE_COPY.statsLabel}
+        contents={{
+          label: SERVICE_PAGE_COPY.onThisPage,
+          items: sections.map((sec) => ({ id: sec.id, name: sec.name })),
+        }}
+        ticker={detail.deliverables}
+      />
 
       {/* ═══ KEY BENEFITS ══════════════════════════════════════════════════ */}
       <section className="border-b border-ink/12 bg-panel">

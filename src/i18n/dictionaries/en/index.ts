@@ -63,7 +63,7 @@ export const en = {
   services: {
     ...SERVICES_COPY,
     details: SERVICE_DETAILS,
-    page: { ...SERVICE_PAGE_COPY, items: SERVICE_PAGES },
+    page: { ...SERVICE_PAGE_COPY, byKey: SERVICE_PAGES },
   },
   pillars: { ...PILLARS_COPY, items: PILLARS },
   solutions: {

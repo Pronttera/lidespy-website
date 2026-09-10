@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ButtonMotion from "@/components/ButtonMotion";
+import DetailHero from "@/components/DetailHero";
+import DetailHeroMotion from "@/components/DetailHeroMotion";
 import SiteFooter from "@/components/SiteFooter";
 import SiteNav from "@/components/SiteNav";
 import { ArrowRight, Check, ChevronRight } from "@/components/icons";
@@ -30,85 +33,38 @@ export default async function PillarPage({
   const pillar = pillarByKey((await params).pillar);
   if (!pillar) notFound();
 
+  const position = PILLARS.findIndex((p) => p.key === pillar.key);
   const others = PILLARS.filter((p) => p.key !== pillar.key);
   const services = pillar.services
     .map((key) => SERVICE_DETAILS.find((s) => s.key === key))
     .filter((s) => s !== undefined);
 
   return (
-    <div className="dc-rules min-h-screen overflow-x-clip bg-cream text-ink">
+    <div
+      data-gsap-root
+      className="dc-rules min-h-screen overflow-x-clip bg-cream text-ink"
+    >
+      <DetailHeroMotion />
+      <ButtonMotion />
       <SiteNav active="solutions" />
 
-      {/* ═══ HERO ══════════════════════════════════════════════════════════
-          The pillar is an argument, so it opens the way the Why Lidespy page
-          does — dark, oversized claim on the left, the numbers that back it
-          stacked beside it. */}
-      <section className="dc-rules-dark relative overflow-hidden bg-ink text-cream">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -top-[30%] -left-[10%] h-[680px] w-[680px] rounded-full bg-[radial-gradient(circle,rgba(225,27,34,0.26),transparent_62%)] blur-[12px]"
-        />
-
-        <div className="relative mx-auto grid max-w-[1280px] items-start gap-[clamp(36px,5vw,80px)] page-x pt-[clamp(40px,4.5vw,72px)] pb-[clamp(48px,5vw,80px)] lg:grid-cols-[minmax(0,1.15fr)_minmax(300px,0.85fr)]">
-          <div className="flex flex-col gap-[clamp(22px,2.4vw,32px)]">
-            <Link
-              href={route("Why Lidespy.dc.html")}
-              className="inline-flex items-center gap-2 self-start text-[11px] font-semibold tracking-[0.12em] text-cream/50 uppercase transition-colors hover:text-coral"
-            >
-              <span className="text-coral">←</span>
-              {PILLARS_COPY.backLabel}
-            </Link>
-
-            <div className="self-start">
-              <Eyebrow tone="coral">{pillar.eyebrow}</Eyebrow>
-            </div>
-
-            <h1 className="m-0 text-[clamp(36px,5vw,74px)] leading-[1.02] font-normal tracking-[-0.035em] text-balance">
-              {pillar.titleLead}{" "}
-              <span className="text-coral">{pillar.titleAccent}</span>
-            </h1>
-
-            <p className="m-0 max-w-[58ch] text-[clamp(15px,1.25vw,18.5px)] leading-[1.62] text-cream/70 text-pretty">
-              {pillar.intro}
-            </p>
-
-            <div className="flex flex-wrap items-center gap-4">
-              <Link
-                href={route("Contact.dc.html")}
-                className="inline-flex items-center gap-3 rounded-ui bg-brand-cta px-7 py-[17px] text-[12px] font-semibold tracking-[0.04em] text-white uppercase transition-colors hover:bg-white hover:text-ink"
-              >
-                {pillar.cta.button}
-                <ArrowRight />
-              </Link>
-              <Link
-                href="#how"
-                className="inline-flex items-center gap-3 rounded-ui border border-cream/30 px-[22px] py-[17px] text-[12px] font-semibold tracking-[0.04em] text-cream uppercase transition-colors hover:border-coral hover:text-coral"
-              >
-                {PILLARS_COPY.sectionsLabel}
-                <span className="text-coral">↓</span>
-              </Link>
-            </div>
-          </div>
-
-          <div className="rounded-card border border-cream/14 bg-cream/[0.045] p-[clamp(20px,2vw,28px)]">
-            <div className="mb-4 border-b border-cream/14 pb-4 text-[10.5px] font-semibold tracking-[0.14em] text-cream/45 uppercase">
-              {PILLARS_COPY.statsLabel}
-            </div>
-            <div className="grid grid-cols-2 gap-x-6 gap-y-7">
-              {pillar.stats.map((s) => (
-                <div key={s.label}>
-                  <div className="text-[clamp(26px,2.6vw,34px)] leading-none font-medium tracking-[-0.03em] text-coral">
-                    {s.value}
-                  </div>
-                  <div className="mt-2 text-[12.5px] leading-[1.45] text-cream/60 text-pretty">
-                    {s.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <DetailHero
+        back={{ label: PILLARS_COPY.backLabel, href: route("Why Lidespy.dc.html") }}
+        index={{ n: position + 1, of: PILLARS.length, label: "Pillar" }}
+        eyebrow={pillar.eyebrow}
+        titleLead={pillar.titleLead}
+        titleAccent={pillar.titleAccent}
+        intro={pillar.intro}
+        primary={{ label: pillar.cta.button, href: "Contact.dc.html" }}
+        secondary={{ label: PILLARS_COPY.sectionsLabel, href: "#how" }}
+        stats={pillar.stats}
+        statsLabel={PILLARS_COPY.statsLabel}
+        contents={{
+          label: PILLARS_COPY.onThisPage,
+          items: pillar.sections.map((sec) => ({ id: sec.id, name: sec.title })),
+        }}
+        ticker={pillar.sections.map((sec) => sec.title)}
+      />
 
       {/* ═══ HOW IT WORKS ══════════════════════════════════════════════════
           A sticky index on the left against the numbered sections, matching
