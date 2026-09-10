@@ -1,26 +1,106 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Lidespy brand palette (ported from the Claude Design project) */
+  --color-cream: #f7f8f4;
+  --color-panel: #eff1ea;
+  --color-ink: #12150f;
+  --color-brand: #be1622;
+  --color-brand-cta: #e11b22;
+  --color-coral: #ff5a4f;
+  --color-muted: #3e443c;
+  --color-muted-2: #52594f;
+  --color-muted-3: #6b6c71;
+
+  --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
+
+  /* Radius scale — the design's hairline corners. One place to change. */
+  --radius-ui: 2px;
+  --radius-card: 3px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  /* NOTE: no overflow-x here. `overflow` on html/body creates a scroll
+     container that breaks ScrollTrigger pinning (Home's Challenge and Process
+     sections). Each page root clips its own overflow instead. */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* The page gutter. Every full-width container uses this so the rule grid below,
+   the nav and the sections all breathe together — 20px on a phone, 32px from
+   the `sm` breakpoint up (matching the design's original px-8). */
+@utility page-x {
+  padding-inline: 20px;
+  @media (width >= 40rem) {
+    padding-inline: 32px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* The design draws six faint vertical rules across the page — three on a phone,
+   where six would sit ~50px apart and read as noise. The inset tracks `page-x`. */
+.dc-rules,
+.dc-rules-dark {
+  background-repeat: no-repeat;
+  background-size: calc(100% - 40px) 100%;
+  background-position: 20px 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--dc-rule-color) 0 1px,
+    transparent 1px calc(100% / 3)
+  );
+}
+
+.dc-rules {
+  --dc-rule-color: rgb(18 21 15 / 0.07);
+}
+
+/* The inverted variant used by the dark page heroes. */
+.dc-rules-dark {
+  --dc-rule-color: rgb(247 248 244 / 0.06);
+}
+
+@media (width >= 40rem) {
+  .dc-rules,
+  .dc-rules-dark {
+    background-size: calc(100% - 64px) 100%;
+    background-position: 32px 0;
+    background-image: repeating-linear-gradient(
+      90deg,
+      var(--dc-rule-color) 0 1px,
+      transparent 1px calc(100% / 6)
+    );
+  }
+}
+
+
+/* ---- Marquees (logo rail + testimonial rail) ---- */
+@keyframes ld-marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+.ld-marquee { display: flex; width: max-content; animation: ld-marquee 40s linear infinite }
+.ld-marquee-slow { animation-duration: 60s }
+.ld-fade-x {
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ld-marquee { animation: none }
+}
+
+/* Horizontal rails that become a native swipe deck below `lg`, where the GSAP
+   pin-and-scrub that drives them on desktop is switched off. Scoped to the
+   media query rather than a `lg:overflow-visible` utility on the element: this
+   rule is unlayered, so it would win over Tailwind's layered utilities. */
+@media (width < 64rem) {
+  .ld-swipe-x {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .ld-swipe-x::-webkit-scrollbar { display: none }
 }
