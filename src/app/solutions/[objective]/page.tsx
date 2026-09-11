@@ -23,7 +23,11 @@ export async function generateMetadata({
 }: PageProps<"/solutions/[objective]">): Promise<Metadata> {
   const objective = objectiveByKey((await params).objective);
   if (!objective) return {};
-  return { title: `${objective.name} · Lidespy`, description: objective.intro };
+  return {
+    title: `${objective.name} · B2B Solutions · Lidespy`,
+    description: objective.intro,
+    alternates: { canonical: objectiveHref(objective.key) },
+  };
 }
 
 export default async function ObjectivePage({

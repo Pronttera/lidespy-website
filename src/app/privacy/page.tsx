@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import LegalDoc, { type Section } from "@/components/LegalDoc";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/privacy" },
   title: "Privacy Policy · Lidespy",
   description:
     "How Lidespy collects, uses, shares and protects personal data across our website and B2B demand generation services.",

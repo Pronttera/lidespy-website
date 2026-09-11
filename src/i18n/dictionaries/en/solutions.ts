@@ -78,7 +78,7 @@ export const OBJECTIVE_SOLUTIONS: SolutionCard[] = [
 /** Copy for the Solutions page shell. */
 export const SOLUTIONS_COPY = {
   meta: {
-    title: "Solutions · Lidespy",
+    title: "B2B Growth Solutions · Lidespy",
     description:
       "Demand generation solutions built around your business goals — by industry and by objective.",
   },

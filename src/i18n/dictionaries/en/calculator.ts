@@ -7,7 +7,7 @@
 
 export const CALCULATOR = {
   meta: {
-    title: "Campaign Budget Calculator · Lidespy",
+    title: "Campaign Budget Calculator · Free B2B Lead Gen Estimate · Lidespy",
     description:
       "Estimate campaign budgets, expected lead volume and pipeline potential for your next B2B demand generation campaign.",
   },
@@ -20,15 +20,32 @@ export const CALCULATOR = {
   },
   inputs: {
     heading: "Your campaign",
+    /** The three numbered steps the inputs are grouped under. */
+    steps: {
+      audience: "Who you want to reach",
+      channel: "How you reach them",
+      goal: "How many leads you need",
+    },
     region: "Target region",
     industry: "Industry",
-    audience: "Target audience size",
+    companySize: "Target company size",
+    companySizeHint: "Employees at the accounts you want to reach",
     campaignType: "Campaign type",
-    campaignTypeHint: "Select one or more",
-    duration: "Campaign duration",
+    campaignTypeHint: "Select one",
+    /** Shown on each campaign-type card under the name — `{cpl}` is the price. */
+    perLead: "{cpl} per lead",
     leadGoal: "Lead goal",
+    leadGoalHint: "Priced on the top of the range, so the budget is a ceiling",
   },
-  /** Keyed by the identifiers in `CPL`, `REGION` and `INDUSTRY`. */
+  /** One line under each campaign type, keyed like `campaignTypes`. */
+  campaignTypeNotes: {
+    "Content Syndication": "Your gated assets, placed in front of your ICP",
+    ABM: "Coordinated plays into named accounts",
+    "Email Marketing": "Verified lists, warmed domains, sequenced sends",
+    "Webinar Promotion": "Registrations from the buyers you actually want",
+    "Appointment Generation": "Qualified meetings on your AEs’ calendars",
+  },
+  /** Keyed by the campaign types in `src/data/campaign-pricing.json`, `REGIONS` and `INDUSTRY`. */
   campaignTypes: {
     "Content Syndication": "Content Syndication",
     ABM: "ABM",
@@ -54,9 +71,8 @@ export const CALCULATOR = {
     "Professional Services": "Professional Services",
     Other: "Other",
   },
-  /** Positional — one label per entry in `AUD`, `DUR` and `LEADS`. */
-  audienceSizes: ["Under 1,000", "1,000–5,000", "5,000–20,000", "20,000+ contacts"],
-  durations: ["1 Month", "3 Months", "6 Months", "12 Months"],
+  /** Positional — one label per entry in `SIZES` and `LEADS`. */
+  companySizes: ["1–10", "11–50", "51–200", "201–500", "501–1,000", "1,001–5,000", "5,000+"],
   leadRanges: ["25–50", "51–100", "101–250", "251–500", "500+ leads"],
   /** Channels the model can recommend on top of the selected campaign types. */
   channels: {
@@ -67,13 +83,15 @@ export const CALCULATOR = {
   result: {
     heading: "Your estimate",
     live: "Updates live",
-    budgetLabel: "Estimated budget range",
-    /** `{amount}` per month over `{duration}` (the duration label, lowercased). */
-    monthlyNote: "About {amount} per month over {duration}",
-    cplLabel: "Estimated CPL",
+    budgetLabel: "Budget range",
+    /** `{cpl}` price per lead and `{leads}` the lead goal's upper bound. */
+    budgetNote: "{cpl} per lead × {leads} leads",
+    cplLabel: "Cost per lead",
     leadVolumeLabel: "Estimated lead volume",
     pipelineLabel: "Estimated pipeline potential",
     pipelineNote: "Assumes standard B2B conversion rates for your industry",
+    /** The sticky bar on phones, where the estimate sits below the inputs. */
+    mobileBar: { label: "Estimated budget", jump: "See estimate" },
     channelsLabel: "Recommended marketing channels",
     bookCta: "Book a call to discuss",
     share: "Share results",
@@ -83,6 +101,27 @@ export const CALCULATOR = {
       "Lidespy campaign estimate — {region}, {industry}: {budget} for {leads} leads via {channels}.",
     disclaimer:
       "Estimates are directional and based on Lidespy campaign benchmarks. Final pricing depends on audience availability, qualification criteria and deliverable format.",
+  },
+  /** Explainer under the calculator: what each figure is built from. */
+  how: {
+    eyebrow: "How the estimate works",
+    title: "Three inputs, no black box.",
+    intro:
+      "Every number on the card is arithmetic on Lidespy campaign benchmarks — here is exactly what goes in.",
+    items: [
+      {
+        title: "Price per lead",
+        body: "Each campaign type carries a benchmark price per lead from live Lidespy programs — from email at the low end to booked appointments at the top.",
+      },
+      {
+        title: "Lead goal",
+        body: "Budget is price per lead multiplied by the top of your lead range, so the figure is a ceiling rather than a midpoint.",
+      },
+      {
+        title: "Pipeline potential",
+        body: "Leads × a 14% lead-to-opportunity rate × the average deal size for your industry. It is opportunity value, not closed revenue.",
+      },
+    ],
   },
   cta: {
     title: "Need a custom campaign plan?",

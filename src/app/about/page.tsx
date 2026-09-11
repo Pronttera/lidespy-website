@@ -7,7 +7,8 @@ import { Eyebrow, Slot } from "@/components/ui";
 import { route } from "@/lib/routes";
 
 export const metadata: Metadata = {
-  title: "About · Lidespy",
+  alternates: { canonical: "/about" },
+  title: "About Lidespy · B2B Demand Generation Agency",
   description:
     "A B2B demand generation company built for revenue teams. Headquartered in Pune, India; serving clients globally.",
 };

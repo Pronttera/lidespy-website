@@ -2,7 +2,7 @@
 
 export const ABOUT = {
   meta: {
-    title: "About · Lidespy",
+    title: "About Lidespy · B2B Demand Generation Agency",
     description:
       "A B2B demand generation company built for revenue teams. Headquartered in Pune, India; serving clients globally.",
   },

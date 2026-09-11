@@ -2,9 +2,9 @@
  * Detail pages for the gated reports and the insight pieces, at
  * `/resources/<slug>`.
  *
- * Blog-category resources are not here — those belong to the blog and still
- * resolve to `/blog` until post pages exist. The card copy, cover image and
- * category stay in `resources.ts`; this file carries the page itself.
+ * Blog-category resources are not here — those open their article under
+ * `/blog`. The card copy, cover image and category stay in `resources.ts`;
+ * this file carries the page itself.
  */
 
 import type { DetailCopy } from "./detail";

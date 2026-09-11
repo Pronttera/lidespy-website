@@ -78,6 +78,14 @@ export const FOOTER = {
         { label: "Contact Us", href: "Contact.dc.html" },
       ],
     },
+    {
+      title: "Compliance",
+      links: [
+        { label: "GDPR", href: "/compliance/gdpr" },
+        { label: "CAN-SPAM", href: "/compliance/can-spam" },
+        { label: "CASL", href: "/compliance/casl" },
+      ],
+    },
   ] as {
     title: string;
     links: { label: string; href: string; accent?: boolean }[];

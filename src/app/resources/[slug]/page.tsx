@@ -30,7 +30,11 @@ export async function generateMetadata({
   const page = resourcePageBySlug(slug);
   const resource = WITH_PAGES.find((r) => r.slug === slug);
   if (!page || !resource) return {};
-  return { title: `${resource.title} · Lidespy`, description: page.intro };
+  return {
+    title: `${resource.title} · Resources · Lidespy`,
+    description: page.intro,
+    alternates: { canonical: `/resources/${slug}` },
+  };
 }
 
 export default async function ResourcePage({

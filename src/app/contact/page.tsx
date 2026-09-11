@@ -5,7 +5,8 @@ import { ArrowRight } from "@/components/icons";
 import ContactForm from "./ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact · Lidespy",
+  alternates: { canonical: "/contact" },
+  title: "Contact Lidespy · Book a Free Strategy Call",
   description:
     "Let's talk about your pipeline. Book a 30-minute discovery call with the Lidespy demand generation team.",
 };

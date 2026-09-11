@@ -11,6 +11,7 @@ import { WHY } from "@/i18n/dictionaries/en/why";
 import { route } from "@/lib/routes";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/why-lidespy" },
   title: WHY.meta.title,
   description: WHY.meta.description,
 };

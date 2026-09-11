@@ -41,6 +41,14 @@ const COLUMNS: { title: string; links: { label: string; href: string; accent?: b
       { label: "Contact Us", href: "Contact.dc.html" },
     ],
   },
+  {
+    title: "Compliance",
+    links: [
+      { label: "GDPR", href: "/compliance/gdpr" },
+      { label: "CAN-SPAM", href: "/compliance/can-spam" },
+      { label: "CASL", href: "/compliance/casl" },
+    ],
+  },
 ];
 
 /** The legal ribbon under the footer columns. These live outside the design's
@@ -52,8 +60,10 @@ const LEGAL = [
 ];
 
 /** A footer service link resolves to that service's own page where one exists,
-    and otherwise to its section on the services overview. */
+    and otherwise to its section on the services overview. App routes that sit
+    outside the design's artboard map (the compliance pages) pass through. */
 function footerHref(href: string): string {
+  if (href.startsWith("/")) return href;
   const [file, hash] = href.split("#");
   return file === "Services.dc.html" && hasServicePage(hash)
     ? serviceHref(hash)
@@ -63,7 +73,7 @@ function footerHref(href: string): string {
 export default function SiteFooter() {
   return (
     <footer className="border-t border-ink/15 bg-cream text-ink">
-      <div className="mx-auto grid max-w-[1280px] gap-7 page-x pt-14 sm:grid-cols-2 lg:grid-cols-[minmax(220px,1.2fr)_repeat(3,minmax(160px,1fr))] lg:gap-14">
+      <div className="mx-auto grid max-w-[1280px] gap-7 page-x pt-14 sm:grid-cols-2 lg:grid-cols-[minmax(220px,1.2fr)_repeat(4,minmax(140px,1fr))] lg:gap-12">
         <div className="flex flex-col gap-3.5">
           <Image
             src="/lidespy-logo.png"

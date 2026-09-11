@@ -24,7 +24,7 @@ export const INDUSTRIES_LIST: Industry[] = [
 /** Copy for the Industries page shell. */
 export const INDUSTRIES_COPY = {
   meta: {
-    title: "Industries · Lidespy",
+    title: "Industries We Serve · B2B Lead Generation · Lidespy",
     description:
       "B2B demand generation specialized for technology, SaaS, cybersecurity, fintech, healthcare and more.",
   },

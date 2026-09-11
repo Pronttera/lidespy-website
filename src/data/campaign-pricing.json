@@ -1,0 +1,7 @@
+[
+  { "campaignType": "Content Syndication", "pricePerLead": 65 },
+  { "campaignType": "ABM", "pricePerLead": 190 },
+  { "campaignType": "Email Marketing", "pricePerLead": 48 },
+  { "campaignType": "Webinar Promotion", "pricePerLead": 95 },
+  { "campaignType": "Appointment Generation", "pricePerLead": 380 }
+]

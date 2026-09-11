@@ -17,7 +17,7 @@ const FIELDS = [
 const INTERESTS = [
   "Demand Generation", "Content Syndication", "ABM", "Email Marketing",
   "Audience Intelligence", "Data", "Webinar Promotion", "Appointment Generation",
-  "GTM Strategy", "Digital Marketing", "Website Development", "Other",
+  "GTM Strategy", "Digital Marketing", "Tech Development", "Other",
 ];
 
 const inputClass =

@@ -103,7 +103,7 @@ export const SERVICE_DETAILS: ServiceDetail[] = [
   },
   {
     key: "website-design",
-    name: "Website Design & Development",
+    name: "IT Development",
     overview: "Modern, conversion-optimized B2B websites designed to generate leads and communicate your value proposition. From landing pages to full website builds.",
     benefits: ["Conversion-focused B2B website design", "Lead capture and form optimization", "CMS development (WordPress, Webflow)", "SEO-ready architecture", "Mobile-first, fast-loading builds"],
     deliverables: ["Website discovery and wireframes", "UI/UX design (desktop + mobile)", "Front-end and back-end development", "CMS setup and content migration", "QA, launch, and post-launch support"],
@@ -114,7 +114,7 @@ export const SERVICE_DETAILS: ServiceDetail[] = [
 /** Copy for the Services page shell. */
 export const SERVICES_COPY = {
   meta: {
-    title: "Services · Lidespy",
+    title: "B2B Demand Generation Services · Lidespy",
     description:
       "Demand generation services that drive real revenue — from audience intelligence to appointment setting.",
   },

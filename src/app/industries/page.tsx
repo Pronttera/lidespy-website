@@ -8,7 +8,8 @@ import { INDUSTRIES_LIST } from "@/i18n/dictionaries/en/industries";
 import { industryHref, route } from "@/lib/routes";
 
 export const metadata: Metadata = {
-  title: "Industries · Lidespy",
+  alternates: { canonical: "/industries" },
+  title: "Industries We Serve · B2B Lead Generation · Lidespy",
   description:
     "B2B demand generation specialized for technology, SaaS, cybersecurity, fintech, healthcare and more.",
 };

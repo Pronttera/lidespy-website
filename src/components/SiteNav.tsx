@@ -11,7 +11,7 @@ import { ArrowRight, ArrowUpRight, ChevronDown, ChevronRight } from "./icons";
 function gridHref(c: GridCard): string {
   if (c.objective) return objectiveHref(c.objective);
   if (c.industry) return industryHref(c.industry);
-  return route(c.href);
+  return c.href.startsWith("/") ? c.href : route(c.href);
 }
 
 export default function SiteNav({ active }: { active?: MegaKey }) {

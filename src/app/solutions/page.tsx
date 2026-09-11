@@ -7,7 +7,8 @@ import { route } from "@/lib/routes";
 import SolutionsBrowser from "./SolutionsBrowser";
 
 export const metadata: Metadata = {
-  title: "Solutions · Lidespy",
+  alternates: { canonical: "/solutions" },
+  title: "B2B Growth Solutions · Lidespy",
   description:
     "Demand generation solutions built around your business goals — by industry and by objective.",
 };

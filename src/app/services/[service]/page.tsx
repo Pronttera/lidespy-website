@@ -4,8 +4,14 @@ import { notFound } from "next/navigation";
 import ButtonMotion from "@/components/ButtonMotion";
 import DetailHero from "@/components/DetailHero";
 import DetailHeroMotion from "@/components/DetailHeroMotion";
+import JsonLd from "@/components/JsonLd";
 import SiteFooter from "@/components/SiteFooter";
 import SiteNav from "@/components/SiteNav";
+import {
+  StudioDeliverables,
+  StudioHero,
+  StudioProcess,
+} from "@/components/StudioService";
 import { ArrowRight, Check, ChevronRight } from "@/components/icons";
 import { Eyebrow } from "@/components/ui";
 import {
@@ -15,6 +21,7 @@ import {
 import { SERVICE_DETAILS } from "@/i18n/dictionaries/en/services";
 import { route, serviceHref, slugify } from "@/lib/routes";
 import { SERVICE_PAGE_KEYS } from "@/lib/service-keys";
+import { absoluteUrl } from "@/lib/site";
 
 export function generateStaticParams() {
   return SERVICE_PAGE_KEYS.map((service) => ({ service }));
@@ -32,9 +39,16 @@ export async function generateMetadata({
 }: PageProps<"/services/[service]">): Promise<Metadata> {
   const found = load((await params).service);
   if (!found) return {};
+  const path = serviceHref(found.detail.key);
   return {
-    title: `${found.detail.name} · Lidespy`,
+    title: `${found.detail.name} Services · Lidespy`,
     description: found.page.intro,
+    alternates: { canonical: path },
+    openGraph: {
+      title: `${found.detail.name} Services · Lidespy`,
+      description: found.page.intro,
+      url: path,
+    },
   };
 }
 
@@ -58,130 +72,202 @@ export default async function ServiceDetailPage({
     .map((key) => SERVICE_DETAILS.find((s) => s.key === key))
     .filter((s) => s !== undefined);
 
+  const url = absoluteUrl(serviceHref(detail.key));
+  // What the service is, the questions it answers and where it sits — the
+  // FAQ block is what answer engines lift into a direct response.
+  const schema = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: detail.name,
+      serviceType: detail.name,
+      description: detail.overview,
+      url,
+      provider: { "@id": `${absoluteUrl("/")}#organization` },
+      areaServed: "Worldwide",
+      audience: { "@type": "BusinessAudience", name: "B2B marketing and sales teams" },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: `${detail.name} deliverables`,
+        itemListElement: detail.deliverables.map((d) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name: d },
+        })),
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: page.faq.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+        { "@type": "ListItem", position: 2, name: "Services", item: absoluteUrl("/services") },
+        { "@type": "ListItem", position: 3, name: detail.name, item: url },
+      ],
+    },
+  ];
+
   return (
     <div
       data-gsap-root
       className="dc-rules min-h-screen overflow-x-clip bg-cream text-ink"
     >
+      <JsonLd data={schema} />
       <DetailHeroMotion />
       <ButtonMotion />
       <SiteNav active="solutions" />
 
-      <DetailHero
-        back={{ label: SERVICE_PAGE_COPY.backLabel, href: route("Services.dc.html") }}
-        index={{ n: position + 1, of: SERVICE_DETAILS.length, label: "Service" }}
-        eyebrow={page.eyebrow}
-        titleLead={page.titleLead}
-        titleAccent={page.titleAccent}
-        intro={page.intro}
-        primary={{ label: detail.cta, href: "Contact.dc.html" }}
-        secondary={{ label: "Estimate a campaign budget", href: route("Calculator.dc.html") }}
-        stats={page.stats}
-        statsLabel={SERVICE_PAGE_COPY.statsLabel}
-        contents={{
-          label: SERVICE_PAGE_COPY.onThisPage,
-          items: sections.map((sec) => ({ id: sec.id, name: sec.name })),
-        }}
-        ticker={detail.deliverables}
-      />
+      {page.screen ? (
+        <>
+          <StudioHero
+            back={{ label: SERVICE_PAGE_COPY.backLabel, href: route("Services.dc.html") }}
+            index={{ n: position + 1, of: SERVICE_DETAILS.length, label: "Service" }}
+            eyebrow={page.eyebrow}
+            titleLead={page.titleLead}
+            titleAccent={page.titleAccent}
+            intro={page.intro}
+            primary={{ label: detail.cta, href: "Contact.dc.html" }}
+            secondary={{ label: "Estimate a campaign budget", href: route("Calculator.dc.html") }}
+            stats={page.stats}
+            benefits={detail.benefits}
+            screen={page.screen}
+          />
+          <StudioDeliverables
+            label={SERVICE_PAGE_COPY.deliverablesLabel}
+            intro={SERVICE_PAGE_COPY.deliverablesIntro}
+            sections={sections}
+          />
+          <StudioProcess label={SERVICE_PAGE_COPY.processLabel} steps={page.process} />
+        </>
+      ) : (
+        <>
+          <DetailHero
+            back={{ label: SERVICE_PAGE_COPY.backLabel, href: route("Services.dc.html") }}
+            index={{ n: position + 1, of: SERVICE_DETAILS.length, label: "Service" }}
+            eyebrow={page.eyebrow}
+            titleLead={page.titleLead}
+            titleAccent={page.titleAccent}
+            intro={page.intro}
+            primary={{ label: detail.cta, href: "Contact.dc.html" }}
+            secondary={{ label: "Estimate a campaign budget", href: route("Calculator.dc.html") }}
+            stats={page.stats}
+            statsLabel={SERVICE_PAGE_COPY.statsLabel}
+            contents={{
+              label: SERVICE_PAGE_COPY.onThisPage,
+              items: sections.map((sec) => ({ id: sec.id, name: sec.name })),
+            }}
+            ticker={detail.deliverables}
+          />
 
-      {/* ═══ KEY BENEFITS ══════════════════════════════════════════════════ */}
-      <section className="border-b border-ink/12 bg-panel">
-        <div className="mx-auto grid max-w-[1280px] items-start gap-[clamp(24px,3.5vw,60px)] page-x py-[clamp(36px,4vw,60px)] lg:grid-cols-[minmax(200px,280px)_minmax(0,1fr)]">
-          <div>
-            <Eyebrow>{SERVICE_PAGE_COPY.benefitsLabel}</Eyebrow>
-          </div>
-          <div className="grid gap-x-8 gap-y-3.5 sm:grid-cols-2">
-            {detail.benefits.map((b) => (
-              <div
-                key={b}
-                className="flex items-start gap-3 border-b border-ink/10 pb-3 text-[14.5px] leading-[1.5] text-ink"
-              >
-                <Check size={13} className="mt-1 shrink-0 text-brand" />
-                <span className="text-pretty">{b}</span>
+
+          {/* ═══ KEY BENEFITS ══════════════════════════════════════════════════ */}
+          <section className="border-b border-ink/12 bg-panel">
+            <div className="mx-auto grid max-w-[1280px] items-start gap-[clamp(24px,3.5vw,60px)] page-x py-[clamp(36px,4vw,60px)] lg:grid-cols-[minmax(200px,280px)_minmax(0,1fr)]">
+              <div>
+                <Eyebrow>{SERVICE_PAGE_COPY.benefitsLabel}</Eyebrow>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ DELIVERABLES ══════════════════════════════════════════════════
-          One anchored section per deliverable — these are the targets the
-          mega-menu's "Browse deliverables" links point at. */}
-      <section className="mx-auto max-w-[1280px] page-x py-[clamp(44px,4.5vw,80px)]">
-        <div className="max-w-[62ch]">
-          <Eyebrow>{SERVICE_PAGE_COPY.deliverablesLabel}</Eyebrow>
-          <p className="mt-5 mb-0 text-[clamp(18px,1.8vw,26px)] leading-[1.32] font-medium tracking-[-0.022em] text-ink text-pretty">
-            {SERVICE_PAGE_COPY.deliverablesIntro}
-          </p>
-        </div>
-
-        <div className="mt-[clamp(28px,3vw,48px)] flex flex-col">
-          {sections.map((s, i) => (
-            <article
-              key={s.id}
-              id={s.id}
-              className="grid scroll-mt-24 items-start gap-[clamp(20px,3.5vw,60px)] border-t border-ink/15 py-[clamp(30px,3.5vw,52px)] lg:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)]"
-            >
-              <div className="flex flex-col gap-4 lg:sticky lg:top-26">
-                <div className="flex items-center gap-3.5">
-                  <span className="text-[12px] font-semibold tabular-nums text-brand">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="h-px max-w-[60px] flex-1 bg-ink/20" />
-                </div>
-                <h2 className="m-0 text-[clamp(22px,2.5vw,34px)] leading-[1.1] font-medium tracking-[-0.026em] text-pretty">
-                  {s.name}
-                </h2>
-                {s.copy && (
-                  <p className="m-0 max-w-[46ch] text-[clamp(15px,1.15vw,17px)] leading-[1.65] text-muted text-pretty">
-                    {s.copy.body}
-                  </p>
-                )}
-              </div>
-
-              {s.copy && (
-                <div className="flex flex-col gap-3.5 rounded-ui border border-ink/12 bg-white px-[26px] py-[26px]">
-                  <div className="text-[11px] font-semibold tracking-[0.12em] text-muted-3 uppercase">
-                    Included
+              <div className="grid gap-x-8 gap-y-3.5 sm:grid-cols-2">
+                {detail.benefits.map((b) => (
+                  <div
+                    key={b}
+                    className="flex items-start gap-3 border-b border-ink/10 pb-3 text-[14.5px] leading-[1.5] text-ink"
+                  >
+                    <Check size={13} className="mt-1 shrink-0 text-brand" />
+                    <span className="text-pretty">{b}</span>
                   </div>
-                  {s.copy.points.map((pt) => (
-                    <div
-                      key={pt}
-                      className="flex items-start gap-3 border-b border-ink/9 pb-3 text-[14px] leading-[1.5] text-ink last:border-b-0 last:pb-0"
-                    >
-                      <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
-                      <span className="text-pretty">{pt}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* ═══ PROCESS ═══════════════════════════════════════════════════════ */}
-      <section className="bg-ink text-cream">
-        <div className="mx-auto max-w-[1280px] page-x py-[clamp(44px,4.5vw,76px)]">
-          <Eyebrow tone="coral">{SERVICE_PAGE_COPY.processLabel}</Eyebrow>
-          <div className="mt-8 grid gap-x-6 gap-y-8 [grid-template-columns:repeat(auto-fit,minmax(230px,1fr))]">
-            {page.process.map((step, i) => (
-              <div key={step.title} className="border-t border-cream/18 pt-5">
-                <div className="text-[11px] font-semibold tabular-nums tracking-[0.12em] text-coral">
-                  {String(i + 1).padStart(2, "0")}
-                </div>
-                <div className="mt-3 text-[19px] leading-[1.2] font-medium tracking-[-0.02em] text-pretty">
-                  {step.title}
-                </div>
-                <div className="mt-2.5 text-[13.5px] leading-[1.6] text-cream/62 text-pretty">
-                  {step.body}
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
+          </section>
+
+          {/* ═══ DELIVERABLES ══════════════════════════════════════════════════
+              One anchored section per deliverable — these are the targets the
+              mega-menu's "Browse deliverables" links point at. */}
+          <section className="mx-auto max-w-[1280px] page-x py-[clamp(44px,4.5vw,80px)]">
+            <div className="max-w-[62ch]">
+              <Eyebrow>{SERVICE_PAGE_COPY.deliverablesLabel}</Eyebrow>
+              <p className="mt-5 mb-0 text-[clamp(18px,1.8vw,26px)] leading-[1.32] font-medium tracking-[-0.022em] text-ink text-pretty">
+                {SERVICE_PAGE_COPY.deliverablesIntro}
+              </p>
+            </div>
+
+            <div className="mt-[clamp(28px,3vw,48px)] flex flex-col">
+              {sections.map((s, i) => (
+                <article
+                  key={s.id}
+                  id={s.id}
+                  className="grid scroll-mt-24 items-start gap-[clamp(20px,3.5vw,60px)] border-t border-ink/15 py-[clamp(30px,3.5vw,52px)] lg:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)]"
+                >
+                  <div className="flex flex-col gap-4 lg:sticky lg:top-26">
+                    <div className="flex items-center gap-3.5">
+                      <span className="text-[12px] font-semibold tabular-nums text-brand">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="h-px max-w-[60px] flex-1 bg-ink/20" />
+                    </div>
+                    <h2 className="m-0 text-[clamp(22px,2.5vw,34px)] leading-[1.1] font-medium tracking-[-0.026em] text-pretty">
+                      {s.name}
+                    </h2>
+                    {s.copy && (
+                      <p className="m-0 max-w-[46ch] text-[clamp(15px,1.15vw,17px)] leading-[1.65] text-muted text-pretty">
+                        {s.copy.body}
+                      </p>
+                    )}
+                  </div>
+
+                  {s.copy && (
+                    <div className="flex flex-col gap-3.5 rounded-ui border border-ink/12 bg-white px-[26px] py-[26px]">
+                      <div className="text-[11px] font-semibold tracking-[0.12em] text-muted-3 uppercase">
+                        Included
+                      </div>
+                      {s.copy.points.map((pt) => (
+                        <div
+                          key={pt}
+                          className="flex items-start gap-3 border-b border-ink/9 pb-3 text-[14px] leading-[1.5] text-ink last:border-b-0 last:pb-0"
+                        >
+                          <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+                          <span className="text-pretty">{pt}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* ═══ PROCESS ═══════════════════════════════════════════════════════ */}
+          <section className="bg-ink text-cream">
+            <div className="mx-auto max-w-[1280px] page-x py-[clamp(44px,4.5vw,76px)]">
+              <Eyebrow tone="coral">{SERVICE_PAGE_COPY.processLabel}</Eyebrow>
+              <div className="mt-8 grid gap-x-6 gap-y-8 [grid-template-columns:repeat(auto-fit,minmax(230px,1fr))]">
+                {page.process.map((step, i) => (
+                  <div key={step.title} className="border-t border-cream/18 pt-5">
+                    <div className="text-[11px] font-semibold tabular-nums tracking-[0.12em] text-coral">
+                      {String(i + 1).padStart(2, "0")}
+                    </div>
+                    <div className="mt-3 text-[19px] leading-[1.2] font-medium tracking-[-0.02em] text-pretty">
+                      {step.title}
+                    </div>
+                    <div className="mt-2.5 text-[13.5px] leading-[1.6] text-cream/62 text-pretty">
+                      {step.body}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+        </>
+      )}
 
       {/* ═══ FAQ ═══════════════════════════════════════════════════════════ */}
       <section className="mx-auto max-w-[1280px] page-x py-[clamp(44px,4.5vw,76px)]">

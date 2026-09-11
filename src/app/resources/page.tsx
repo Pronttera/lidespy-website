@@ -5,13 +5,13 @@ import SiteNav from "@/components/SiteNav";
 import NewsletterForm from "@/components/NewsletterForm";
 import { ArrowUpRight } from "@/components/icons";
 import { TextArrowLink } from "@/components/ui";
-import { route } from "@/lib/routes";
 import { RESOURCES_COPY } from "@/i18n/dictionaries/en/resources";
 import ResourceLibrary from "./ResourceLibrary";
 
 const { meta, mediaKit, cta } = RESOURCES_COPY;
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources" },
   title: meta.title,
   description: meta.description,
 };
@@ -48,6 +48,9 @@ export default async function ResourcesPage({
             <p className="m-0 text-[15px] leading-[1.6] text-muted text-pretty">
               {mediaKit.body}
             </p>
+            <TextArrowLink href="/resources/media-kit" className="mt-6">
+              {mediaKit.action}
+            </TextArrowLink>
           </div>
           {/* One bordered list rather than three small boxes: the rows fill the
               column beside the heading and the labels stop wrapping mid-word. */}
@@ -55,7 +58,7 @@ export default async function ResourcesPage({
             {mediaKit.items.map((m) => (
               <li key={m.title}>
                 <Link
-                  href={route("Resources.dc.html#media-kit")}
+                  href={m.href}
                   className="group flex items-center justify-between gap-5 px-[22px] py-[18px] text-ink transition-colors hover:bg-panel/70"
                 >
                   <span className="flex flex-col gap-1">

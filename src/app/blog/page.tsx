@@ -6,12 +6,13 @@ import SiteNav from "@/components/SiteNav";
 import { ArrowRight } from "@/components/icons";
 import { Slot } from "@/components/ui";
 import { FEATURED, POSTS } from "@/i18n/dictionaries/en/blog";
-import { route } from "@/lib/routes";
+import { blogHref, route } from "@/lib/routes";
 import NewsletterForm from "@/components/NewsletterForm";
 import PostGrid from "./PostGrid";
 
 export const metadata: Metadata = {
-  title: "Blog · Lidespy",
+  alternates: { canonical: "/blog" },
+  title: "Blog · B2B Demand Generation Insights · Lidespy",
   description:
     "Practical writing on ABM, intent data, content syndication and deliverability from the team running the campaigns.",
 };
@@ -73,14 +74,12 @@ export default function BlogPage() {
       {/* FEATURED */}
       <section className="mx-auto max-w-[1280px] page-x pt-[clamp(36px,4vw,56px)]">
         <Link
-          href={route("Blog.dc.html")}
+          href={blogHref(FEATURED.slug)}
           className="grid overflow-hidden rounded-card border border-ink/15 bg-white text-ink transition-colors hover:border-brand/55 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,.95fr)]"
         >
           <Slot
-            src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1400&q=70"
-            alt={FEATURED.title}
-            credit="Photo by Austin Distel on Unsplash"
-            creditHref="https://unsplash.com/@austindistel"
+            src={FEATURED.img}
+            alt={FEATURED.alt}
             className="min-h-[300px]"
           />
           <div className="flex flex-col justify-center gap-[18px] p-[clamp(28px,3.5vw,48px)]">
@@ -126,8 +125,8 @@ export default function BlogPage() {
             Rather see it run on your data?
           </h2>
           <p className="m-0 max-w-[600px] text-[clamp(15px,1.2vw,18px)] leading-[1.6] text-ink/82 text-pretty">
-            We&apos;ll audit a sample of your database and map a six-week program
-            to your pipeline target.
+            Get a qualified intent database and map a six-week program to your
+            pipeline target.
           </p>
           <Link
             href={route("Contact.dc.html")}

@@ -27,6 +27,12 @@ export type ServicePage = {
   faq: { q: string; a: string }[];
   /** Other services worth a look from here. */
   related: ServicePageKey[];
+  /**
+   * Opts the page into the studio layout — a light hero around a product
+   * mock-up instead of the dark editorial one — for the services that are
+   * agency and build work rather than lead generation. The value picks the mock-up.
+   */
+  screen?: "dashboard" | "browser";
 };
 
 export const SERVICE_PAGES: Record<ServicePageKey, ServicePage> = {
@@ -842,10 +848,11 @@ export const SERVICE_PAGES: Record<ServicePageKey, ServicePage> = {
       { q: "How quickly will we see results?", a: "Expect four to six weeks before the data is worth drawing conclusions from, and a quarter before the optimisation compounds into a stable cost per opportunity." },
     ],
     related: ["demand-generation", "website-design"],
+    screen: "dashboard",
   },
 
   "website-design": {
-    eyebrow: "Service 12 · Website Design & Development",
+    eyebrow: "Service 12 · IT Development",
     titleLead: "A B2B website built to",
     titleAccent: "convert the visit.",
     intro:
@@ -916,6 +923,7 @@ export const SERVICE_PAGES: Record<ServicePageKey, ServicePage> = {
       { q: "What do you need from us?", a: "Content and brand assets, one decision-maker who can sign off, and access to your CRM and analytics. Content is usually what sets the real timeline." },
     ],
     related: ["performance-marketing", "gtm-strategy"],
+    screen: "browser",
   },
 };
 

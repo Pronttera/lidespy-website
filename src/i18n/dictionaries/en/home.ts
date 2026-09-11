@@ -1,4 +1,5 @@
 /** Content for the Home artboard (`Lidespy Home.dc.html`). */
+import { POSTS as BLOG_POSTS } from "./blog";
 
 export const LOGOS = [
   "Client 01", "Client 02", "Client 03", "Client 04",
@@ -34,18 +35,22 @@ export const HOME_SERVICES = [
     credit: "Photo by 1981 Digital on Unsplash", creditHref: "https://unsplash.com/@1981digital",
     tag: "Data", title: "Verified contact data & database building",
     body: "ICP-mapped databases built from scratch or enriched from your CRM — every record verified before it reaches a sequence." },
+  { img: "https://images.unsplash.com/photo-1622675363311-3e1904dc1885?auto=format&fit=crop&w=800&q=70",
+    credit: "Photo by Mapbox on Unsplash", creditHref: "https://unsplash.com/@mapbox",
+    tag: "Content Syndication", title: "Content syndication",
+    body: "Put your assets in front of your ICP and turn engagement into verified, sales-ready leads." },
   { img: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=70",
     credit: "Photo by krakenimages on Unsplash", creditHref: "https://unsplash.com/@krakenimages",
     tag: "Cleansing", title: "Database cleansing & enrichment",
     body: "Dedupe, re-verify and enrich the data you already own. Cut bounce, restore deliverability, keep legal comfortable." },
+  { img: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=70",
+    credit: "Photo by Dylan Gillis on Unsplash", creditHref: "https://unsplash.com/@mainermedia",
+    tag: "Demand Gen", title: "Demand generation",
+    body: "Multi-channel programs that build awareness in your market and turn it into qualified pipeline." },
   { img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=70",
     credit: "Photo by Headway on Unsplash", creditHref: "https://unsplash.com/@headwayio",
-    tag: "Outbound", title: "Cold email outbound & appointment setting",
+    tag: "Outsourced Appt Gen", title: "Outsourced appointment generation",
     body: "Messaging, infrastructure and SDR execution that lands qualified meetings on your AEs’ calendars." },
-  { img: "https://images.unsplash.com/photo-1622675363311-3e1904dc1885?auto=format&fit=crop&w=800&q=70",
-    credit: "Photo by Mapbox on Unsplash", creditHref: "https://unsplash.com/@mapbox",
-    tag: "ABM", title: "Content syndication & ABM",
-    body: "Put your assets in front of named accounts and turn engagement into intent-scored, sales-ready leads." },
 ];
 
 export const CASES = [
@@ -132,20 +137,24 @@ export const QUOTES = [
     name: "Name", role: "RevOps Lead, B2B services" },
 ];
 
+/** The three blog articles the home page's Blogs row leads with. */
 export const POSTS = [
-  { href: "Blog.dc.html", img: "https://images.unsplash.com/photo-1568992687947-868a62a9f521?auto=format&fit=crop&w=900&q=70",
-    credit: "Photo by Redd Francisco on Unsplash", creditHref: "https://unsplash.com/@reddfrancisco",
-    tag: "Data quality", title: "What a 2% bounce rate actually takes: our verification stack, explained",
-    date: "Aug 2026", read: "7 min" },
-  { href: "Blog.dc.html", img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=70",
-    credit: "Photo by Annie Spratt on Unsplash", creditHref: "https://unsplash.com/@anniespratt",
-    tag: "Compliance", title: "Cold outreach under GDPR: legitimate interest, done properly",
-    date: "Jul 2026", read: "9 min" },
-  { href: "Blog.dc.html", img: "https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?auto=format&fit=crop&w=900&q=70",
-    credit: "Photo by Mario Gogh on Unsplash", creditHref: "https://unsplash.com/@mariogogh",
-    tag: "Outbound", title: "Appointment setting vs. SQLs: what to pay a vendor for",
-    date: "Jun 2026", read: "6 min" },
-];
+  "real-cost-of-bad-b2b-data",
+  "b2b-data-compliance-checklist-2026",
+  "in-house-vs-outsourced-appointment-setting",
+].map((slug) => {
+  const p = BLOG_POSTS.find((post) => post.slug === slug)!;
+  return {
+    href: `/blog/${slug}`,
+    img: p.img,
+    alt: p.alt,
+    credit: p.credit,
+    creditHref: p.creditHref,
+    tag: p.topic,
+    title: p.title,
+    read: p.meta,
+  };
+});
 
 /** Copy for the Home page shell — everything outside the data sets above. */
 export const HOME_COPY = {
@@ -228,7 +237,7 @@ export const HOME_COPY = {
     title: "What buyers say.",
   },
   insights: {
-    title: "Insights",
+    title: "Blogs",
   },
   cta: {
     badge: "Free 30-minute data audit",

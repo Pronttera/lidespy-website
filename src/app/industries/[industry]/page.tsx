@@ -27,8 +27,9 @@ export async function generateMetadata({
   const page = industryPageByKey(key);
   if (!industry || !page) return {};
   return {
-    title: `${industry.name} · Industries · Lidespy`,
+    title: `B2B Lead Generation for ${industry.name} · Lidespy`,
     description: page.intro,
+    alternates: { canonical: industryHref(key) },
   };
 }
 

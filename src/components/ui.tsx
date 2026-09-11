@@ -99,8 +99,14 @@ export function Slot({
   /** Extra attributes for the <img> itself — motion hooks target it directly. */
   innerProps?: Record<string, string>;
 }) {
+  // `fill` needs a positioned box. Callers that pin the slot with `absolute`
+  // must not also get `relative`: both set `position`, the stylesheet order
+  // decides the winner, and a relative box with `inset-0` collapses to 0px.
+  const positioned = /(^|\s)(absolute|fixed|sticky)(\s|$)/.test(className);
   return (
-    <div className={`relative overflow-hidden bg-panel ${className}`}>
+    <div
+      className={`${positioned ? "" : "relative "}overflow-hidden bg-panel ${className}`}
+    >
       <Image
         src={src}
         alt={alt}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import LegalDoc, { type Section } from "@/components/LegalDoc";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/terms" },
   title: "Terms of Service · Lidespy",
   description:
     "The terms governing use of the Lidespy website and the delivery of our B2B demand generation services.",

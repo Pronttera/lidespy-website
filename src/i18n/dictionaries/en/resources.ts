@@ -1,4 +1,6 @@
 /** Content for the Resources artboard. */
+import { articleBySlug } from "./blog-articles";
+
 const U = (id: string, w = 1000) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=70`;
 
@@ -6,8 +8,10 @@ export type ResourceCategory = "blog" | "reports" | "insights";
 
 export type Resource = {
   cat: ResourceCategory;
-  /** Reports and insights have a page at `/resources/<slug>`; blog posts do not. */
+  /** Reports and insights have a page at `/resources/<slug>`. */
   slug?: string;
+  /** Blog resources point at their article at `/blog/<article>`. */
+  article?: string;
   type: string;
   meta: string;
   title: string;
@@ -18,11 +22,32 @@ export type Resource = {
   creditHref: string;
 };
 
+/**
+ * A blog card built from its article, so the title, summary and read time in
+ * the library always match the page it opens.
+ */
+function fromArticle(slug: string): Resource {
+  const a = articleBySlug(slug);
+  if (!a) throw new Error(`Unknown blog article: ${slug}`);
+  return {
+    cat: "blog",
+    article: slug,
+    type: "Blog",
+    meta: a.readTime,
+    title: a.title,
+    body: a.description,
+    action: "Read article",
+    img: U(a.img),
+    credit: "Photo on Unsplash",
+    creditHref: "https://unsplash.com",
+  };
+}
+
 export const RESOURCES: Resource[] = [
-  { cat: "blog", type: "Blog", meta: "6 min read", title: "ABM vs Demand Gen: which should you run first?", body: "When account-based plays beat volume programs — and how to combine the two without doubling budget.", action: "Read article", img: U("photo-1553877522-43269d4ea984"), credit: "Photo by Austin Distel on Unsplash", creditHref: "https://unsplash.com/@austindistel" },
-  { cat: "blog", type: "Blog", meta: "8 min read", title: "How to use intent data without drowning in noise", body: "A practical framework for turning intent signals into prioritized account lists your SDRs will actually work.", action: "Read article", img: U("photo-1460925895917-afdab827c52f"), credit: "Photo by Carlos Muza on Unsplash", creditHref: "https://unsplash.com/@kmuza" },
-  { cat: "blog", type: "Blog", meta: "5 min read", title: "Content syndication best practices for 2026", body: "Qualification filters, asset selection and follow-up sequencing that keep syndicated leads out of the junk pile.", action: "Read article", img: U("photo-1499750310107-5fef28a66643"), credit: "Photo by Andrew Neel on Unsplash", creditHref: "https://unsplash.com/@andrewtneel" },
-  { cat: "blog", type: "Blog", meta: "7 min read", title: "Email deliverability for B2B: the 2026 checklist", body: "Domain warm-up, authentication, list hygiene and sending cadence — everything between you and the inbox.", action: "Read article", img: U("photo-1596526131083-e8c633c948d2"), credit: "Photo by Solen Feyissa on Unsplash", creditHref: "https://unsplash.com/@solenfeyissa" },
+  fromArticle("abm-guide-mid-market-2026"),
+  fromArticle("buyer-intent-data-explained"),
+  fromArticle("b2b-content-syndication-worth-it-2026"),
+  fromArticle("is-cold-email-still-worth-it-2026"),
   { cat: "reports", type: "Industry report", meta: "Annual · Gated", slug: "b2b-demand-generation-benchmark-report", title: "B2B Demand Generation Benchmark Report", body: "CPL, conversion and channel performance benchmarks drawn from 500+ executed campaigns.", action: "Download", img: U("photo-1551288049-bebda4e38f71"), credit: "Photo by Luke Chesser on Unsplash", creditHref: "https://unsplash.com/@lukechesser" },
   { cat: "reports", type: "Industry report", meta: "Annual · Gated", slug: "state-of-abm-report", title: "State of ABM Report", body: "What actually moves pipeline in account-based programs — intent, coverage and orchestration.", action: "Download", img: U("photo-1543286386-713bdd548da4"), credit: "Photo by Isaac Smith on Unsplash", creditHref: "https://unsplash.com/@isaacmsmith" },
   { cat: "reports", type: "Industry report", meta: "Gated", slug: "content-syndication-performance-report", title: "Content Syndication Performance Report", body: "Asset types, qualification filters and follow-up timing that convert syndicated leads into meetings.", action: "Download", img: U("photo-1504868584819-f8e8b4b6d7e3"), credit: "Photo by Carlos Muza on Unsplash", creditHref: "https://unsplash.com/@kmuza" },
@@ -40,7 +65,7 @@ export const RESOURCE_FILTERS: { id: "all" | ResourceCategory; label: string }[]
 /** Copy for the Resources page shell. */
 export const RESOURCES_COPY = {
   meta: {
-    title: "Resources · Lidespy",
+    title: "Resources · B2B Marketing Guides, Reports & Webinars · Lidespy",
     description:
       "B2B demand generation insights, research and resources — guides, benchmarks and reports.",
   },
@@ -90,10 +115,11 @@ export const RESOURCES_COPY = {
     label: "Media kit",
     title: "Brand assets for press and partners.",
     body: "Logo files, company overview and key stats for press and partner use.",
+    action: "Open the media kit",
     items: [
-      { title: "Logo pack", sub: "SVG · PNG · Dark & light" },
-      { title: "Company overview", sub: "One-page PDF" },
-      { title: "Key stats", sub: "500+ campaigns · 12+ industries · 50+ countries" },
+      { title: "Logo pack", sub: "PNG · Light & dark · Vector on request", href: "/resources/media-kit#logo" },
+      { title: "Company overview", sub: "Boilerplate and key facts", href: "/resources/media-kit#boilerplate" },
+      { title: "Key stats", sub: "500+ campaigns · 12+ industries · 50+ countries", href: "/resources/media-kit#facts" },
     ],
   },
 };

@@ -1,6 +1,8 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Bold } from "@/components/Bold";
+import JsonLd from "@/components/JsonLd";
 import SiteFooter from "@/components/SiteFooter";
 import SiteNav from "@/components/SiteNav";
 import Splash from "@/components/Splash";
@@ -8,6 +10,7 @@ import HomeMotion from "@/components/HomeMotion";
 import ButtonMotion from "@/components/ButtonMotion";
 import { ArrowCta, Eyebrow, Slot, TextArrowLink } from "@/components/ui";
 import { ArrowUpRight, Check } from "@/components/icons";
+import { absoluteUrl } from "@/lib/site";
 import {
   CASES,
   CHALLENGE_CARDS,
@@ -32,11 +35,52 @@ const CHALLENGE_POS = [
   { right: "12%", top: "78%" },
 ] as const;
 
+const HOME_TITLE = "Lidespy · B2B Demand Generation & Lead Generation Agency";
+const HOME_DESCRIPTION =
+  "Qualified leads, booked meetings and measurable pipeline for B2B technology and SaaS teams — content syndication, ABM, intent data and appointment generation, run by one team.";
+
+export const metadata: Metadata = {
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: { title: HOME_TITLE, description: HOME_DESCRIPTION, url: "/" },
+};
+
+/**
+ * The home page as a speakable WebPage (voice assistants read the headline
+ * and intro aloud) plus the hero film as a VideoObject, so video search and
+ * AI answers can surface it.
+ */
+const HOME_SCHEMA = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    url: absoluteUrl("/"),
+    isPartOf: { "@id": `${absoluteUrl("/")}#website` },
+    about: { "@id": `${absoluteUrl("/")}#organization` },
+    speakable: { "@type": "SpeakableSpecification", cssSelector: ["h1", "h1 + p"] },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: "Lidespy — B2B demand generation",
+    description: HOME_DESCRIPTION,
+    thumbnailUrl:
+      "https://images.pexels.com/videos/7147921/colleagues-computer-laptop-conference-room-corporate-7147921.jpeg?auto=compress&cs=tinysrgb&w=1260",
+    contentUrl: "https://videos.pexels.com/video-files/7147921/7147921-hd_1920_1080_25fps.mp4",
+    uploadDate: "2026-09-01",
+    publisher: { "@id": `${absoluteUrl("/")}#organization` },
+  },
+];
+
 export default function HomePage() {
   const rows = COMPARE_ROWS[COMPARE];
 
   return (
     <div data-gsap-root className="dc-rules min-h-screen overflow-x-clip bg-cream text-ink">
+      <JsonLd data={HOME_SCHEMA} />
       <Splash />
       <HomeMotion />
       <ButtonMotion />
@@ -61,14 +105,6 @@ export default function HomePage() {
                 src="https://videos.pexels.com/video-files/7147921/7147921-hd_1920_1080_25fps.mp4"
                 className="absolute inset-0 h-full w-full object-cover"
               />
-              <a
-                href="https://www.pexels.com/video/team-meeting-7147921/"
-                target="_blank"
-                rel="noopener"
-                className="absolute bottom-2 left-2.5 rounded-card bg-ink/55 px-[7px] py-[3px] text-[10px] text-white/85"
-              >
-                Video by Tiger Lily · Pexels
-              </a>
             </div>
             <div className="flex flex-col justify-center gap-9 px-[clamp(24px,4vw,56px)] py-[clamp(27px,4vw,51px)]">
               <p className="m-0 text-[clamp(15px,1.23vw,18px)] leading-[1.6] text-muted text-pretty">
@@ -87,15 +123,15 @@ export default function HomePage() {
                 </TextArrowLink>
               </div>
               <div className="flex items-center gap-4">
-                <div className="flex h-16 w-16 items-center justify-center rounded-card border border-ink/15 bg-white text-center text-[11px] leading-[1.2] font-bold tracking-[0.06em] text-brand">
-                  ISO
-                  <br />
-                  9001
-                </div>
                 <div>
-                  <div className="text-[14px] text-ink">
-                    ISO 9001:2015 <span className="text-muted-2">certified</span>
-                  </div>
+                  <a
+                    href="https://www.iafcertsearch.org/certification/yogvFoT2EVlCPpHm5Vj6rh7d"
+                    target="_blank"
+                    rel="noopener"
+                    className="text-[14px] text-ink underline decoration-ink/25 underline-offset-4 transition-colors hover:text-brand hover:decoration-brand"
+                  >
+                    Certified <span className="text-muted-2">· verify on IAF CertSearch ↗</span>
+                  </a>
                   <div className="mt-1 text-[13px] text-brand">
                     GDPR framework · Est. 2023 · LLP
                   </div>
@@ -211,11 +247,11 @@ export default function HomePage() {
 
           <div
             data-ch-item="hero"
-            className="ld-fade-b relative mx-auto aspect-[670/425] w-full max-w-[380px] lg:absolute lg:right-0 lg:bottom-[8vh] lg:left-0 lg:max-h-[42vh] lg:w-[clamp(340px,34vw,520px)] lg:max-w-none"
+            className="relative mx-auto aspect-[15/16] w-full max-w-[320px] lg:absolute lg:right-0 lg:bottom-[8vh] lg:left-0 lg:max-h-[46vh] lg:w-[clamp(300px,28vw,440px)] lg:max-w-none"
           >
             <Image
-              src="/challenge-visual.png"
-              alt="Marketer working through a messy contact database"
+              src="/challenge-figure.png"
+              alt="Marketer in an armchair working on a laptop"
               fill
               sizes="(max-width: 1024px) 380px, 34vw"
               className="object-contain object-bottom"
@@ -353,12 +389,12 @@ export default function HomePage() {
             We bridge the gap between the data you have and the pipeline you need.
           </h2>
           <p className="m-0 text-[15px] leading-[1.6] text-[#4E554C] text-pretty">
-            From building and verifying the database to running outbound,
-            syndication and ABM — we do what most teams split across three
-            vendors.
+            From building and verifying the database to running demand gen,
+            syndication and appointment setting — we do what most teams split
+            across three vendors.
           </p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {HOME_SERVICES.map((s) => (
             <Link
               key={s.title}
@@ -605,14 +641,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* INSIGHTS */}
+      {/* BLOGS */}
       <section id="insights" className="mx-auto max-w-[1280px] page-x py-24">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
           <h2 className="m-0 text-[clamp(28px,2.95vw,38px)] leading-[1.06] font-medium tracking-[-0.025em]">
-            Insights
+            Blogs
           </h2>
           <Link
-            href={route("Resources.dc.html")}
+            href={route("Blog.dc.html")}
             className="text-[12px] font-semibold text-muted transition-colors hover:text-brand"
           >
             View all →
@@ -620,10 +656,10 @@ export default function HomePage() {
         </div>
         <div className="grid gap-5 md:grid-cols-3">
           {POSTS.map((a) => (
-            <Link key={a.title} href={route(a.href)} data-lift className="group flex flex-col gap-4 text-ink">
+            <Link key={a.title} href={a.href} data-lift className="group flex flex-col gap-4 text-ink">
               <Slot
                 src={a.img}
-                alt={a.title}
+                alt={a.alt}
                 credit={a.credit}
                 creditHref={a.creditHref}
                 sizes="(max-width: 768px) 100vw, 33vw"
@@ -636,7 +672,7 @@ export default function HomePage() {
                 {a.title}
               </h3>
               <div className="text-[11px] text-muted-2">
-                {a.date} · {a.read}
+                {a.read}
               </div>
             </Link>
           ))}

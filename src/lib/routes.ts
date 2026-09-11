@@ -77,10 +77,16 @@ export function industryHref(key: string): string {
 }
 
 /**
- * Where a resource card points. Reports and insights have a page of their own;
- * blog-category resources belong to the blog and land on its index until post
- * pages exist.
+ * Where a resource card points. Reports and insights have a page of their own,
+ * blog-category resources open their article, and anything else lands on the
+ * blog index.
  */
-export function resourceHref(resource: { slug?: string }): string {
-  return resource.slug ? `/resources/${resource.slug}` : "/blog";
+export function resourceHref(resource: { slug?: string; article?: string }): string {
+  if (resource.slug) return `/resources/${resource.slug}`;
+  return resource.article ? blogHref(resource.article) : "/blog";
+}
+
+/** A blog article's page. */
+export function blogHref(slug: string): string {
+  return `/blog/${slug}`;
 }

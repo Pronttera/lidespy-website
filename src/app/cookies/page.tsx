@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import LegalDoc, { type Section } from "@/components/LegalDoc";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/cookies" },
   title: "Cookie Policy · Lidespy",
   description:
     "What cookies and similar technologies Lidespy uses on lidespy.com, why we use them, and how to control them.",

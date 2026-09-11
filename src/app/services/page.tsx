@@ -7,7 +7,8 @@ import { SERVICE_DETAILS } from "@/i18n/dictionaries/en/services";
 import { hasServicePage, route, serviceHref } from "@/lib/routes";
 
 export const metadata: Metadata = {
-  title: "Services · Lidespy",
+  alternates: { canonical: "/services" },
+  title: "B2B Demand Generation Services · Lidespy",
   description:
     "Demand generation services that drive real revenue — from audience intelligence to appointment setting.",
 };

@@ -8,7 +8,8 @@ import { route } from "@/lib/routes";
 import StudyList from "./StudyList";
 
 export const metadata: Metadata = {
-  title: "Case Studies · Lidespy",
+  alternates: { canonical: "/case-studies" },
+  title: "Case Studies · B2B Demand Generation Results · Lidespy",
   description:
     "Proven B2B demand generation campaigns that drove real pipeline — challenge, solution and the numbers.",
 };

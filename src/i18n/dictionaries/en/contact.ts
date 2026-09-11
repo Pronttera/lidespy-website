@@ -2,7 +2,7 @@
 
 export const CONTACT = {
   meta: {
-    title: "Contact · Lidespy",
+    title: "Contact Lidespy · Book a Free Strategy Call",
     description:
       "Let's talk about your pipeline. Book a 30-minute discovery call with the Lidespy demand generation team.",
   },

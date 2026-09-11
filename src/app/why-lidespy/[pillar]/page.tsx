@@ -20,8 +20,9 @@ export async function generateMetadata({
   const pillar = pillarByKey((await params).pillar);
   if (!pillar) return {};
   return {
-    title: `${pillar.name} · Lidespy`,
+    title: `${pillar.name} · Why Lidespy`,
     description: pillar.intro,
+    alternates: { canonical: pillarHref(pillar.key) },
   };
 }
 

@@ -79,7 +79,7 @@ export const HEADLINE_STATS = [
 /** Copy for the Case Studies page shell. */
 export const CASE_STUDIES_COPY = {
   meta: {
-    title: "Case Studies · Lidespy",
+    title: "Case Studies · B2B Demand Generation Results · Lidespy",
     description:
       "Proven B2B demand generation campaigns that drove real pipeline — challenge, solution and the numbers.",
   },

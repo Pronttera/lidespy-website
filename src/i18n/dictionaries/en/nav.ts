@@ -137,7 +137,7 @@ export const SERVICES: Service[] = [
   },
   {
     key: "website-design",
-    name: "Website Design & Dev",
+    name: "IT Development",
     overview:
       "Conversion-optimized B2B websites designed to generate leads and communicate your value proposition — from landing pages to full builds.",
     deliverables: [
@@ -249,7 +249,8 @@ export const MENUS: Record<MegaKey, Menu> = {
 
 /**
  * A card with an `objective` or `industry` key routes to that detail page;
- * the rest fall back to their `href` through the artboard map.
+ * the rest fall back to their `href` — an artboard href resolved through the
+ * artboard map, or an app path ("/resources/webinars") used as-is.
  */
 export type GridCard = {
   name: string;
@@ -281,10 +282,10 @@ export const GRIDS: Record<"enable" | "why" | "resources", GridCard[]> = {
   resources: [
     { name: "Blog", body: "Learn how to upgrade your demand generation.", href: "Blog.dc.html" },
     { name: "Reports and Benchmarks", body: "Data-driven insights for better decisions.", href: "Resources.dc.html?type=reports#library" },
-    { name: "Webinars", body: "Actionable insights from industry experts.", href: "Resources.dc.html?type=insights#library" },
-    { name: "Whitepapers", body: "Deep dives on ABM, intent data and syndication.", href: "Resources.dc.html?type=reports#library" },
+    { name: "Webinars", body: "Actionable insights from industry experts.", href: "/resources/webinars" },
+    { name: "Whitepapers", body: "Deep dives on ABM, intent data and syndication.", href: "/resources/whitepapers" },
     { name: "Campaign Budget Calculator", body: "Model budget, CPL and pipeline potential.", href: "Calculator.dc.html" },
-    { name: "Media Kit", body: "Brand assets, logos and company boilerplate.", href: "Resources.dc.html#media-kit" },
+    { name: "Media Kit", body: "Brand assets, logos and company boilerplate.", href: "/resources/media-kit" },
   ],
 };
 

@@ -17,11 +17,14 @@ export type Section = {
   blocks: Block[];
 };
 
-/** The three legal pages, so each can point at the other two. */
+/** The legal and compliance pages, so each can point at the others. */
 const LEGAL_PAGES = [
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
   { label: "Cookie Policy", href: "/cookies" },
+  { label: "GDPR", href: "/compliance/gdpr" },
+  { label: "CAN-SPAM", href: "/compliance/can-spam" },
+  { label: "CASL", href: "/compliance/casl" },
 ];
 
 function Blocks({ blocks }: { blocks: Block[] }) {
