@@ -1,61 +1,93 @@
-# Apache configuration for the Lidespy static export.
+# Lidespy — static hosting on Hostinger (Apache / LiteSpeed).
 #
-# Lives in `public/` so `next build` copies it into `out/` — upload the
-# contents of `out/` to the web root and this comes along. Editing the copy on
-# the server means the next deploy overwrites it.
+# The site is a Next.js static export: `next build` writes the whole thing to
+# out/, and there is no Node process in production. The jobs the Next server
+# used to do therefore land here instead. Next copies everything in public/
+# into out/, so this file ships with the build.
 #
-# The 403 this solves: the export writes a page as `about.html` AND a directory
-# `about/` holding only React payload files. A request for `/about` matches the
-# directory, which has no index.html, and shared hosting answers 403 rather
-# than falling through to `about.html`. The rewrite below maps the clean URL to
-# the .html file before Apache ever considers the directory.
+# Upload the CONTENTS of out/ to the web root, dotfiles included — an FTP
+# client that silently skips files beginning with a dot leaves whatever
+# .htaccess was there before in charge of the site.
 
-# ---------------------------------------------------------------- URL mapping
+Options -Indexes
 
-Options -Indexes -MultiViews
+# The export writes /services/abm as the file services/abm.html. MultiViews
+# would also "find" it, but by guessing, and it guesses differently across
+# hosts — the explicit rewrite below is the one that decides.
+Options -MultiViews
 
 # Without this, Apache 301s /about to /about/ before the rewrite can run —
-# and /about/ is the directory that produces the 403.
+# and /about/ is the payload directory, which has no index.html in it.
 DirectorySlash Off
 
 DirectoryIndex index.html
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  RewriteBase /
 
-  # Force HTTPS. Remove this block if the site is served over plain HTTP.
+  # Force HTTPS. Remove this block if the site is ever served over plain HTTP.
   RewriteCond %{HTTPS} !=on
   RewriteCond %{HTTP:X-Forwarded-Proto} !https
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
-  # Serve real files and the React payload .txt files untouched.
+  # ------------------------------------------------------------------------
+  # Retired locale prefix.
+  #
+  # A previous .htaccess on this domain negotiated a language at the root and
+  # sent every visitor to /en. This site has one locale and never built those
+  # pages, so that redirect landed the home page on a 404. Anything already
+  # linked or crawled under /en comes home to the real page here.
+  # ------------------------------------------------------------------------
+  RewriteRule ^en/?$ / [R=301,L]
+  RewriteRule ^en/(.*)$ /$1 [R=301,L]
+
+  # Serve real files — including the React payload .txt files — untouched.
   RewriteCond %{REQUEST_FILENAME} -f
   RewriteRule ^ - [L]
 
-  # /about -> /about.html, /services/abm -> /services/abm.html.
+  # ------------------------------------------------------------------------
+  # Extensionless URLs.
+  #
+  # Every link, canonical and sitemap entry on this site is written without a
+  # .html suffix (/services/abm), and the export writes the files with one
+  # (services/abm.html). This maps one to the other.
+  #
+  # Note there is no `!-d` guard, deliberately: out/services is BOTH a
+  # directory (it holds abm.html and the rest) and a page (services.html).
+  # Skipping the rewrite for directories would send /services to a directory
+  # with no index.html in it — a 403 on a real page.
+  #
   # Matching on DOCUMENT_ROOT/$1.html rather than REQUEST_FILENAME means a
   # request with a trailing slash resolves too.
+  # ------------------------------------------------------------------------
   RewriteCond %{DOCUMENT_ROOT}/$1.html -f
   RewriteRule ^(.+?)/?$ /$1.html [L]
 </IfModule>
 
+# out/404.html is Next's own not-found page, styled like the rest of the site.
 ErrorDocument 404 /404.html
 
-# ------------------------------------------------------------------- caching
-
 <IfModule mod_headers.c>
-  # Build assets carry a content hash in the filename, so they can be held
-  # forever — a changed file gets a new name.
-  <IfModule mod_rewrite.c>
-    <If "%{REQUEST_URI} =~ m#^/_next/static/#">
-      Header set Cache-Control "public, max-age=31536000, immutable"
-    </If>
-  </IfModule>
+  # Everything under /_next/static carries a content hash in its filename, so a
+  # given name can never change its contents — cache it for a year. Un-hashed
+  # files from public/ (the logo, team photos, the rate card) are matched by
+  # the shorter rule below instead, which is why this one is path-scoped.
+  <If "%{REQUEST_URI} =~ m#^/_next/static/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
 
-  # HTML and payloads must revalidate, or a deploy stays invisible to anyone
-  # who has visited before.
+  # The HTML is the pointer to those hashed bundles, and with no ISR left it is
+  # also the only thing that changes when the site is rebuilt. If a browser
+  # caches it, a deploy stays invisible until that cache expires. The .txt
+  # payloads the router fetches on navigation go stale the same way.
   <FilesMatch "\.(html|txt)$">
-    Header set Cache-Control "public, max-age=0, must-revalidate"
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # Regenerated on every build, and crawlers should not be served a stale copy.
+  <FilesMatch "^(robots\.txt|sitemap\.xml)$">
+    Header set Cache-Control "no-cache, must-revalidate"
   </FilesMatch>
 
   <FilesMatch "\.(png|jpe?g|gif|webp|avif|svg|ico|woff2?|ttf|otf|pdf)$">
@@ -89,6 +121,12 @@ ErrorDocument 404 /404.html
 </IfModule>
 
 # -------------------------------------------------------------------- privacy
+
+# The deploy workflow leaves a record of what it uploaded in the web root.
+# It is harmless, but it lists every file on the site — don't serve it.
+<FilesMatch "^\.ftp-deploy-.*\.json$">
+  Require all denied
+</FilesMatch>
 
 # Never serve local env files, even if one is uploaded by accident.
 <FilesMatch "^\.(env|env\..*)$">
