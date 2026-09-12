@@ -69,7 +69,7 @@ const HOME_SCHEMA = [
     description: HOME_DESCRIPTION,
     thumbnailUrl:
       "https://images.pexels.com/videos/7147921/colleagues-computer-laptop-conference-room-corporate-7147921.jpeg?auto=compress&cs=tinysrgb&w=1260",
-    contentUrl: "https://videos.pexels.com/video-files/7147921/7147921-hd_1920_1080_25fps.mp4",
+    contentUrl: "/hero.mp4",
     uploadDate: "2026-09-01",
     publisher: { "@id": `${absoluteUrl("/")}#organization` },
   },
@@ -88,54 +88,64 @@ export default function HomePage() {
 
       {/* HERO */}
       <div className="bg-cream">
-        <section className="mx-auto flex max-w-[1280px] flex-col gap-14 page-x pt-16 pb-10">
-          <h1 className="m-0 max-w-[1240px] text-[clamp(38px,5.41vw,83px)] leading-[1.02] font-normal tracking-[-0.03em] text-pretty">
-            Build a <span className="text-brand">verified B2B pipeline</span> your
-            revenue team can actually trust
-          </h1>
-          <div className="grid border-y border-ink/15 md:grid-cols-2">
-            <div className="relative min-h-[380px] overflow-hidden bg-ink">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                poster="https://images.pexels.com/videos/7147921/colleagues-computer-laptop-conference-room-corporate-7147921.jpeg?auto=compress&cs=tinysrgb&w=1260"
-                src="https://videos.pexels.com/video-files/7147921/7147921-hd_1920_1080_25fps.mp4"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
+        <section className="relative mx-auto max-w-[1280px] page-x pt-12 pb-10 lg:pt-16">
+          {/* The video is the layer behind: from the large screens up it runs
+              off the right edge of the viewport, so the only edge of it you
+              see is the one the copy column cuts across. */}
+          <div className="relative mt-9 min-h-[300px] overflow-hidden rounded-card bg-ink lg:absolute lg:inset-y-0 lg:right-[calc(50%-50vw)] lg:left-[38%] lg:mt-0 lg:min-h-0 lg:rounded-l-card lg:rounded-r-none">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster="https://images.pexels.com/videos/7147921/colleagues-computer-laptop-conference-room-corporate-7147921.jpeg?auto=compress&cs=tinysrgb&w=1260"
+              src="/hero.mp4"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            {/* Darkens the edge the copy sits against, so the overlap reads as
+                depth rather than a panel dropped on top. */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(18,21,15,0.72),rgba(18,21,15,0.12)_42%,transparent_70%)]"
+            />
+          </div>
+
+          {/* Column one — everything a visitor reads, over the video. */}
+          <div className="relative z-1 flex flex-col gap-8 lg:w-[54%]">
+            <h1 className="m-0 text-[clamp(38px,4.2vw,64px)] leading-[1.04] font-normal tracking-[-0.03em] text-pretty">
+              Build a <span className="text-brand">verified B2B pipeline</span> your
+              revenue team can actually trust
+            </h1>
+
+            <p className="m-0 max-w-[52ch] text-[clamp(15px,1.23vw,18px)] leading-[1.6] text-muted text-pretty">
+              Lidespy helps SaaS, technology and B2B services firms turn{" "}
+              <span className="text-brand">
+                verified contact data into qualified meetings
+              </span>
+              . Database building, cleansing, cold outbound, content syndication
+              and ABM — GDPR-compliant across North America, the UK, the EU and
+              APAC.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-8">
+              <ArrowCta href="#cta">Book a strategy call</ArrowCta>
+              <TextArrowLink href="#work" className="text-[13px]">
+                See our work
+              </TextArrowLink>
             </div>
-            <div className="flex flex-col justify-center gap-9 px-[clamp(24px,4vw,56px)] py-[clamp(27px,4vw,51px)]">
-              <p className="m-0 text-[clamp(15px,1.23vw,18px)] leading-[1.6] text-muted text-pretty">
-                Lidespy helps SaaS, technology and B2B services firms turn{" "}
-                <span className="text-brand">
-                  verified contact data into qualified meetings
-                </span>
-                . Database building, cleansing, cold outbound, content syndication
-                and ABM — GDPR-compliant across North America, the UK, the EU and
-                APAC.
-              </p>
-              <div className="flex flex-wrap items-center gap-8">
-                <ArrowCta href="#cta">Book a strategy call</ArrowCta>
-                <TextArrowLink href="#work" className="text-[13px]">
-                  See our work
-                </TextArrowLink>
-              </div>
-              <div className="flex items-center gap-4">
-                <div>
-                  <a
-                    href="https://www.iafcertsearch.org/certification/yogvFoT2EVlCPpHm5Vj6rh7d"
-                    target="_blank"
-                    rel="noopener"
-                    className="text-[14px] text-ink underline decoration-ink/25 underline-offset-4 transition-colors hover:text-brand hover:decoration-brand"
-                  >
-                    Certified <span className="text-muted-2">· verify on IAF CertSearch ↗</span>
-                  </a>
-                  <div className="mt-1 text-[13px] text-brand">
-                    GDPR framework · Est. 2023 · LLP
-                  </div>
-                </div>
+
+            <div className="border-t border-ink/15 pt-6">
+              <a
+                href="https://www.iafcertsearch.org/certification/yogvFoT2EVlCPpHm5Vj6rh7d"
+                target="_blank"
+                rel="noopener"
+                className="text-[14px] text-ink underline decoration-ink/25 underline-offset-4 transition-colors hover:text-brand hover:decoration-brand"
+              >
+                Certified <span className="text-muted-2">· verify on IAF CertSearch ↗</span>
+              </a>
+              <div className="mt-1 text-[13px] text-brand">
+                GDPR framework · Est. 2023 · LLP
               </div>
             </div>
           </div>
