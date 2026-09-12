@@ -1,6 +1,9 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 
+/** The site is statically exported, so this file is generated at build time. */
+export const dynamic = "force-static";
+
 /**
  * Everything on the site is public marketing content, so all crawlers —
  * search engines and the AI assistants that cite pages in their answers — are

@@ -1,0 +1,96 @@
+# Apache configuration for the Lidespy static export.
+#
+# Lives in `public/` so `next build` copies it into `out/` — upload the
+# contents of `out/` to the web root and this comes along. Editing the copy on
+# the server means the next deploy overwrites it.
+#
+# The 403 this solves: the export writes a page as `about.html` AND a directory
+# `about/` holding only React payload files. A request for `/about` matches the
+# directory, which has no index.html, and shared hosting answers 403 rather
+# than falling through to `about.html`. The rewrite below maps the clean URL to
+# the .html file before Apache ever considers the directory.
+
+# ---------------------------------------------------------------- URL mapping
+
+Options -Indexes -MultiViews
+
+# Without this, Apache 301s /about to /about/ before the rewrite can run —
+# and /about/ is the directory that produces the 403.
+DirectorySlash Off
+
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Force HTTPS. Remove this block if the site is served over plain HTTP.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  # Serve real files and the React payload .txt files untouched.
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^ - [L]
+
+  # /about -> /about.html, /services/abm -> /services/abm.html.
+  # Matching on DOCUMENT_ROOT/$1.html rather than REQUEST_FILENAME means a
+  # request with a trailing slash resolves too.
+  RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+  RewriteRule ^(.+?)/?$ /$1.html [L]
+</IfModule>
+
+ErrorDocument 404 /404.html
+
+# ------------------------------------------------------------------- caching
+
+<IfModule mod_headers.c>
+  # Build assets carry a content hash in the filename, so they can be held
+  # forever — a changed file gets a new name.
+  <IfModule mod_rewrite.c>
+    <If "%{REQUEST_URI} =~ m#^/_next/static/#">
+      Header set Cache-Control "public, max-age=31536000, immutable"
+    </If>
+  </IfModule>
+
+  # HTML and payloads must revalidate, or a deploy stays invisible to anyone
+  # who has visited before.
+  <FilesMatch "\.(html|txt)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+
+  <FilesMatch "\.(png|jpe?g|gif|webp|avif|svg|ico|woff2?|ttf|otf|pdf)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# --------------------------------------------------------------- compression
+
+# AddOutputFilterByType comes from mod_filter, not mod_deflate — guarding on
+# mod_deflate alone 500s the whole site on a host without mod_filter.
+<IfModule mod_deflate.c>
+  <IfModule mod_filter.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+    AddOutputFilterByType DEFLATE application/javascript application/json
+    AddOutputFilterByType DEFLATE application/xml image/svg+xml
+  </IfModule>
+</IfModule>
+
+# ----------------------------------------------------------------- mime types
+
+<IfModule mod_mime.c>
+  AddType application/json .json
+  AddType image/svg+xml .svg
+  AddType font/woff2 .woff2
+  AddCharset UTF-8 .html .css .js .json .txt .svg
+</IfModule>
+
+# -------------------------------------------------------------------- privacy
+
+# Never serve local env files, even if one is uploaded by accident.
+<FilesMatch "^\.(env|env\..*)$">
+  Require all denied
+</FilesMatch>

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { ArrowRight, Close } from "@/components/icons";
 import { Slot } from "@/components/ui";
 import { resourceHref } from "@/lib/routes";
@@ -33,7 +34,10 @@ const COUNTS: Record<Filter, number> = RESOURCE_FILTERS.reduce(
  * they share a single piece of state: the active category filter. Splitting
  * them would mean lifting that state into a context for no gain.
  */
-export default function ResourceLibrary({ type }: { type?: string }) {
+export default function ResourceLibrary() {
+  // The site is a static export, so the query string is read here rather than
+  // from the page's `searchParams` — there is no server render to read it on.
+  const type = useSearchParams().get("type") ?? undefined;
   const deepLinked: Filter = RESOURCE_FILTERS.some((f) => f.id === type)
     ? (type as Filter)
     : "all";

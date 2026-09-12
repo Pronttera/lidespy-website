@@ -14,6 +14,9 @@ import {
 import { SERVICE_PAGE_KEYS } from "@/lib/service-keys";
 import { absoluteUrl } from "@/lib/site";
 
+/** The site is statically exported, so this file is generated at build time. */
+export const dynamic = "force-static";
+
 type Entry = MetadataRoute.Sitemap[number];
 
 const page = (

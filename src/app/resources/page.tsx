@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 import SiteNav from "@/components/SiteNav";
@@ -16,21 +17,17 @@ export const metadata: Metadata = {
   description: meta.description,
 };
 
-export default async function ResourcesPage({
-  searchParams,
-}: PageProps<"/resources">) {
-  // Reading the param here — rather than `useSearchParams` in the client
-  // component — means the Resources menu re-renders this page with the new
-  // value on every click, including clicks made from this page itself.
-  const { type } = await searchParams;
-
+export default function ResourcesPage() {
   return (
     <div className="dc-rules min-h-screen overflow-x-clip bg-cream text-ink">
       <SiteNav active="resources" />
 
       {/* Hero, filter chips and the results grid share one piece of state, so
-          they live together in a single client component. */}
-      <ResourceLibrary type={typeof type === "string" ? type : undefined} />
+          they live together in a single client component. Its `useSearchParams`
+          needs a boundary to fall back to while the client takes over. */}
+      <Suspense fallback={null}>
+        <ResourceLibrary />
+      </Suspense>
 
       {/* MEDIA KIT */}
       <section
