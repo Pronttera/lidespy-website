@@ -64,44 +64,30 @@ export const ABOUT = {
   },
   team: {
     eyebrow: "Team & expertise",
-    title: "Specialists, researchers and GTM advisors.",
+    title: "Founder-led, and close to every campaign.",
     intro:
-      "Our team brings together B2B demand generation specialists, data researchers, campaign managers, content strategists, and GTM advisors with experience across technology, SaaS, cybersecurity, and enterprise markets.",
+      "Lidespy is led by its three founders, working alongside a team of demand generation specialists, data researchers, campaign managers and content strategists with experience across technology, SaaS, cybersecurity and enterprise markets.",
     workWithUs: "Work with us",
     joinTheTeam: "Join the team",
-    /**
-     * The About artboard left these image slots empty. The photos below are the
-     * ones the design itself assigned to `team-1..4` in the Home artboard, so the
-     * casting stays the designer's choice rather than a fresh guess.
-     */
+    /** The three founders, photographed for the site. */
     members: [
       {
-        name: "Founder & CEO",
-        role: "Leadership · Pune",
-        img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=700&q=70",
-        credit: "Photo by Ali Morshedlou on Unsplash",
-        creditHref: "https://unsplash.com/@alimorshedlou",
+        name: "Umer Karim",
+        role: "Co-Founder, Strategic Partnerships",
+        img: "/team/umer-karim.jpg",
+        linkedin: "https://www.linkedin.com/in/umer-karim-b0b278202/",
       },
       {
-        name: "Head of Research",
-        role: "Audience intelligence & data",
-        img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=700&q=70",
-        credit: "Photo by Christina @ wocintechchat.com on Unsplash",
-        creditHref: "https://unsplash.com/@wocintechchat",
+        name: "Wajid Desai",
+        role: "Co-Founder, Operations",
+        img: "/team/wajid-desai.jpg",
+        linkedin: "https://www.linkedin.com/in/wajid-desai-28ba64230/",
       },
       {
-        name: "Head of Campaigns",
-        role: "Multi-channel execution",
-        img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=700&q=70",
-        credit: "Photo by Jurica Koletić on Unsplash",
-        creditHref: "https://unsplash.com/@juricakoletic",
-      },
-      {
-        name: "GTM Advisor",
-        role: "Strategy & positioning",
-        img: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=700&q=70",
-        credit: "Photo by ThisisEngineering on Unsplash",
-        creditHref: "https://unsplash.com/@thisisengineering",
+        name: "Aseem Sayyed",
+        role: "Co-Founder, Growth & Strategy",
+        img: "/team/aseem-sayyed.jpg",
+        linkedin: "https://www.linkedin.com/in/aseemsayyed/",
       },
     ],
   },

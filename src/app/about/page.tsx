@@ -35,39 +35,25 @@ const REGIONS = [
   { name: "Middle East & Africa", detail: "GCC and emerging markets" },
 ];
 
-/**
- * The About artboard left these image slots empty. The photos below are the
- * ones the design itself assigned to `team-1..4` in the Home artboard, so the
- * casting stays the designer's choice rather than a fresh guess.
- */
+/** The three founders, photographed for the site. */
 const TEAM = [
   {
-    name: "Founder & CEO",
-    role: "Leadership · Pune",
-    img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=700&q=70",
-    credit: "Photo by Ali Morshedlou on Unsplash",
-    creditHref: "https://unsplash.com/@alimorshedlou",
+    name: "Umer Karim",
+    role: "Co-Founder, Strategic Partnerships",
+    img: "/team/umer-karim.jpg",
+    linkedin: "https://www.linkedin.com/in/umer-karim-b0b278202/",
   },
   {
-    name: "Head of Research",
-    role: "Audience intelligence & data",
-    img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=700&q=70",
-    credit: "Photo by Christina @ wocintechchat.com on Unsplash",
-    creditHref: "https://unsplash.com/@wocintechchat",
+    name: "Wajid Desai",
+    role: "Co-Founder, Operations",
+    img: "/team/wajid-desai.jpg",
+    linkedin: "https://www.linkedin.com/in/wajid-desai-28ba64230/",
   },
   {
-    name: "Head of Campaigns",
-    role: "Multi-channel execution",
-    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=700&q=70",
-    credit: "Photo by Jurica Koletić on Unsplash",
-    creditHref: "https://unsplash.com/@juricakoletic",
-  },
-  {
-    name: "GTM Advisor",
-    role: "Strategy & positioning",
-    img: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=700&q=70",
-    credit: "Photo by ThisisEngineering on Unsplash",
-    creditHref: "https://unsplash.com/@thisisengineering",
+    name: "Aseem Sayyed",
+    role: "Co-Founder, Growth & Strategy",
+    img: "/team/aseem-sayyed.jpg",
+    linkedin: "https://www.linkedin.com/in/aseemsayyed/",
   },
 ];
 
@@ -258,18 +244,18 @@ export default function AboutPage() {
               <Eyebrow>Team &amp; expertise</Eyebrow>
             </div>
             <h2 className="m-0 text-[clamp(28px,3.2vw,44px)] leading-[1.05] font-medium tracking-[-0.028em] text-pretty">
-              Specialists, researchers and GTM advisors.
+              Founder-led, and close to every campaign.
             </h2>
           </div>
           <p className="m-0 text-[clamp(15px,1.15vw,17px)] leading-[1.65] text-muted text-pretty">
-            Our team brings together B2B demand generation specialists, data
-            researchers, campaign managers, content strategists, and GTM advisors
-            with experience across technology, SaaS, cybersecurity, and
-            enterprise markets.
+            Lidespy is led by its three founders, working alongside a team of
+            demand generation specialists, data researchers, campaign managers
+            and content strategists with experience across technology, SaaS,
+            cybersecurity and enterprise markets.
           </p>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {TEAM.map((m) => (
             <div
               key={m.name}
@@ -278,9 +264,7 @@ export default function AboutPage() {
               <Slot
                 src={m.img}
                 alt={m.name}
-                credit={m.credit}
-                creditHref={m.creditHref}
-                sizes="(max-width: 640px) 100vw, 25vw"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 className="aspect-square"
               />
               <div className="flex flex-col gap-1.5 px-5 pt-[18px] pb-5">
@@ -289,7 +273,7 @@ export default function AboutPage() {
                 </div>
                 <div className="text-[12.5px] text-muted-2">{m.role}</div>
                 <a
-                  href="https://www.linkedin.com/company/lidespy/"
+                  href={m.linkedin}
                   target="_blank"
                   rel="noopener"
                   className="mt-1.5 inline-flex items-center gap-1.5 text-[11px] font-semibold text-muted transition-colors hover:text-brand"
