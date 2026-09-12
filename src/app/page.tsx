@@ -87,12 +87,12 @@ export default function HomePage() {
       <SiteNav />
 
       {/* HERO */}
-      <div className="bg-cream">
+      <div className="bg-ink">
         <section className="relative mx-auto max-w-[1280px] page-x pt-12 pb-10 lg:pt-16">
           {/* The video is the layer behind: from the large screens up it runs
               off the right edge of the viewport, so the only edge of it you
               see is the one the copy column cuts across. */}
-          <div className="relative mt-9 min-h-[300px] overflow-hidden rounded-card bg-ink lg:absolute lg:inset-y-0 lg:right-[calc(50%-50vw)] lg:left-[38%] lg:mt-0 lg:min-h-0 lg:rounded-l-card lg:rounded-r-none">
+          <div className="relative mt-9 min-h-[300px] overflow-hidden rounded-card bg-ink lg:absolute lg:inset-y-0 lg:right-[calc(50%-50vw)] lg:left-[38%] lg:mt-0 lg:min-h-0 lg:rounded-none">
             <video
               autoPlay
               muted
@@ -113,12 +113,12 @@ export default function HomePage() {
 
           {/* Column one — everything a visitor reads, over the video. */}
           <div className="relative z-1 flex flex-col gap-8 lg:w-[54%]">
-            <h1 className="m-0 text-[clamp(38px,4.2vw,64px)] leading-[1.04] font-normal tracking-[-0.03em] text-pretty">
+            <h1 className="m-0 text-[clamp(38px,4.2vw,64px)] leading-[1.04] font-normal tracking-[-0.03em] text-cream text-pretty">
               Build a <span className="text-brand">verified B2B pipeline</span> your
               revenue team can actually trust
             </h1>
 
-            <p className="m-0 max-w-[52ch] text-[clamp(15px,1.23vw,18px)] leading-[1.6] text-muted text-pretty">
+            <p className="m-0 max-w-[52ch] text-[clamp(15px,1.23vw,18px)] leading-[1.6] text-cream/75 text-pretty">
               Lidespy helps SaaS, technology and B2B services firms turn{" "}
               <span className="text-brand">
                 verified contact data into qualified meetings
@@ -135,16 +135,16 @@ export default function HomePage() {
               </TextArrowLink>
             </div>
 
-            <div className="border-t border-ink/15 pt-6">
+            <div className="border-t border-cream/15 pt-6">
               <a
                 href="https://www.iafcertsearch.org/certification/yogvFoT2EVlCPpHm5Vj6rh7d"
                 target="_blank"
                 rel="noopener"
-                className="text-[14px] text-ink underline decoration-ink/25 underline-offset-4 transition-colors hover:text-brand hover:decoration-brand"
+                className="text-[14px] text-coral underline decoration-coral/25 underline-offset-4 transition-colors hover:text-brand hover:decoration-brand"
               >
                 Certified <span className="text-muted-2">· verify on IAF CertSearch ↗</span>
               </a>
-              <div className="mt-1 text-[13px] text-brand">
+              <div className="mt-1 text-[13px] text-cream/60">
                 GDPR framework · Est. 2023 · LLP
               </div>
             </div>
