@@ -5,13 +5,12 @@ import Link from "next/link";
 import { route } from "@/lib/routes";
 import {
   CAMPAIGN_TYPES,
-  CPL,
   INDUSTRIES,
   INITIAL_STATE,
-  LEADS,
+  MIN_LEADS,
   REGIONS,
   SIZES,
-  estimate,
+  calculate,
   type CalculatorState,
   type CampaignType,
 } from "@/lib/calculator";
@@ -21,6 +20,11 @@ import { ArrowRight, Check, ChevronDown } from "./icons";
 const T = CALCULATOR;
 
 const money = (n: number) => "$" + Math.round(n).toLocaleString("en-US");
+/** Rate-card figures are ranges; a flat price prints as a single number. */
+const moneyRange = (lo: number, hi: number) =>
+  Math.round(lo) === Math.round(hi)
+    ? money(lo)
+    : `${money(lo)} – ${money(hi)}`;
 
 /**
  * Eases a figure from its previous value to the next one, so a changed input
@@ -116,13 +120,12 @@ export default function Calculator() {
   const [shared, setShared] = useState(false);
   const sharedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const result = useMemo(() => estimate(state), [state]);
-  const { openEnded } = result.values;
-  const plus = openEnded ? "+" : "";
+  const result = useMemo(() => calculate(state), [state]);
 
   const budget = useCountUp(result.values.budget);
-  const pipeline = useCountUp(result.values.pipeline);
+  const budgetMax = useCountUp(result.values.budgetMax);
   const cpl = useCountUp(result.values.cpl, 360);
+  const cplMax = useCountUp(result.values.cplMax, 360);
   const leads = useCountUp(result.values.leads, 360);
 
   useEffect(
@@ -132,11 +135,11 @@ export default function Calculator() {
     [],
   );
 
-  // The phone bar only earns its place while the estimate card is off-screen.
-  const estimateRef = useRef<HTMLDivElement>(null);
+  // The phone bar only earns its place while the result card is off-screen.
+  const resultRef = useRef<HTMLDivElement>(null);
   const [barVisible, setBarVisible] = useState(false);
   useEffect(() => {
-    const el = estimateRef.current;
+    const el = resultRef.current;
     if (!el) return;
     // Seed from the card's position, so the bar is right before the first
     // observer callback lands.
@@ -151,6 +154,18 @@ export default function Calculator() {
   }, []);
 
   const selectType = (t: CampaignType) => setState((s) => ({ ...s, type: t }));
+
+  // The lead goal is typed, so the field keeps its own raw text: a half-typed
+  // or empty box must not push an invalid goal into the model.
+  const [leadGoal, setLeadGoal] = useState(String(INITIAL_STATE.leads));
+  const changeLeadGoal = (raw: string) => {
+    const digits = raw.replace(/[^0-9]/g, "");
+    setLeadGoal(digits);
+    const n = Number(digits);
+    if (digits && n >= MIN_LEADS) setState((s) => ({ ...s, leads: n }));
+  };
+  // On blur, an empty or sub-minimum box snaps back to the goal in force.
+  const commitLeadGoal = () => setLeadGoal(String(state.leads));
 
   const share = async () => {
     try {
@@ -240,7 +255,6 @@ export default function Calculator() {
           >
             {CAMPAIGN_TYPES.map((t) => {
               const on = state.type === t;
-              const price = money(CPL[t] ?? 0);
               const note =
                 T.campaignTypeNotes[t as keyof typeof T.campaignTypeNotes];
               return (
@@ -277,13 +291,6 @@ export default function Calculator() {
                       {note}
                     </span>
                   )}
-                  <span
-                    className={`mt-auto text-[12px] font-semibold tabular-nums ${
-                      on ? "text-coral" : "text-brand"
-                    }`}
-                  >
-                    {T.inputs.perLead.replace("{cpl}", price)}
-                  </span>
                 </button>
               );
             })}
@@ -293,32 +300,34 @@ export default function Calculator() {
         {/* 03 — goal */}
         <div className="flex flex-col gap-5 border-t border-ink/12 pt-8">
           <Step n={3} title={T.inputs.steps.goal} />
-          <div className="flex flex-col gap-2.5">
+          <label className="flex flex-col gap-2.5">
             <span className="text-[12px] font-semibold text-ink">
               {T.inputs.leadGoal}
             </span>
-            <div className="flex flex-wrap gap-2">
-              {LEADS.map(([label], i) => (
-                <button
-                  key={label}
-                  type="button"
-                  aria-pressed={state.lead === i}
-                  onClick={() => setState((s) => ({ ...s, lead: i }))}
-                  className={chipClass(state.lead === i)}
-                >
-                  {T.leadRanges[i] ?? label}
-                </button>
-              ))}
+            <div className="relative max-w-[260px]">
+              <input
+                type="number"
+                inputMode="numeric"
+                min={MIN_LEADS}
+                step={1}
+                value={leadGoal}
+                onChange={(e) => changeLeadGoal(e.target.value)}
+                onBlur={commitLeadGoal}
+                className="w-full rounded-ui border border-ink/20 bg-cream py-3.5 pr-[68px] pl-3.5 text-[14px] tabular-nums text-ink outline-none transition-colors hover:border-ink/50 focus:border-ink [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              />
+              <span className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-[12px] text-muted-3">
+                {T.inputs.leadGoalUnit}
+              </span>
             </div>
             <Hint>{T.inputs.leadGoalHint}</Hint>
-          </div>
+          </label>
         </div>
       </div>
 
-      {/* ── Live estimate ── */}
+      {/* ── Live result ── */}
       <div
-        id="estimate"
-        ref={estimateRef}
+        id="result"
+        ref={resultRef}
         className="relative flex scroll-mt-24 flex-col gap-6 overflow-hidden rounded-card bg-ink p-6 text-cream sm:p-[34px] lg:sticky lg:top-24"
       >
         {/* A warm bloom in the corner so the black reads as depth. */}
@@ -342,9 +351,8 @@ export default function Calculator() {
 
         <div className="relative" aria-live="polite">
           <div className="mb-2 text-[11.5px] text-cream/60">{T.result.budgetLabel}</div>
-          <div className="text-[clamp(38px,3.8vw,56px)] leading-none font-medium tracking-[-0.04em] tabular-nums text-coral">
-            {money(budget)}
-            {plus}
+          <div className="text-[clamp(30px,3.2vw,48px)] leading-none font-medium tracking-[-0.04em] tabular-nums text-coral">
+            {moneyRange(budget, budgetMax)}
           </div>
           <div className="mt-2.5 text-[12.5px] text-cream/55">{result.budgetNote}</div>
         </div>
@@ -364,8 +372,8 @@ export default function Calculator() {
         <div className="relative grid grid-cols-2 gap-3">
           <div className="rounded-ui border border-cream/16 p-4">
             <div className="mb-2 text-[11px] text-cream/55">{T.result.cplLabel}</div>
-            <div className="text-[24px] leading-none font-medium tracking-[-0.03em] tabular-nums">
-              {money(cpl)}
+            <div className="text-[20px] leading-none font-medium tracking-[-0.03em] tabular-nums">
+              {moneyRange(cpl, cplMax)}
             </div>
           </div>
           <div className="rounded-ui border border-cream/16 p-4">
@@ -374,19 +382,8 @@ export default function Calculator() {
             </div>
             <div className="text-[24px] leading-none font-medium tracking-[-0.03em] tabular-nums">
               {Math.round(leads).toLocaleString("en-US")}
-              {plus}
             </div>
           </div>
-        </div>
-
-        <div className="relative rounded-ui border border-cream/16 p-4">
-          <div className="mb-2 text-[11px] text-cream/55">{T.result.pipelineLabel}</div>
-          <div className="text-[24px] leading-none font-medium tracking-[-0.03em] tabular-nums">
-            {money(pipeline)}
-            {plus}
-          </div>
-
-          <div className="mt-2 text-[11px] text-cream/50">{T.result.pipelineNote}</div>
         </div>
 
         <div className="relative">
@@ -427,7 +424,7 @@ export default function Calculator() {
         </div>
       </div>
 
-      {/* On phones the estimate sits below the inputs: keep the headline
+      {/* On phones the result sits below the inputs: keep the headline
           figure in view and offer a jump to the full card. */}
       <div
         aria-hidden={!barVisible}
@@ -440,13 +437,12 @@ export default function Calculator() {
             <div className="text-[10px] tracking-[0.1em] text-cream/55 uppercase">
               {T.result.mobileBar.label}
             </div>
-            <div className="text-[20px] leading-none font-medium tracking-[-0.03em] tabular-nums text-coral">
-              {money(budget)}
-              {plus}
+            <div className="text-[17px] leading-none font-medium tracking-[-0.03em] tabular-nums text-coral">
+              {moneyRange(budget, budgetMax)}
             </div>
           </div>
           <a
-            href="#estimate"
+            href="#result"
             className="inline-flex items-center gap-2 rounded-ui bg-brand-cta px-4 py-3 text-[11px] font-semibold tracking-[0.04em] text-white uppercase"
           >
             {T.result.mobileBar.jump}

@@ -1,7 +1,51 @@
 [
-  { "campaignType": "Content Syndication", "pricePerLead": 65 },
-  { "campaignType": "ABM", "pricePerLead": 190 },
-  { "campaignType": "Email Marketing", "pricePerLead": 48 },
-  { "campaignType": "Webinar Promotion", "pricePerLead": 95 },
-  { "campaignType": "Appointment Generation", "pricePerLead": 380 }
+  {
+    "campaignType": "Good Fit Data",
+    "pricePerLead": 4,
+    "pricePerLeadMax": 4,
+    "whatYouGet": "100% human-verified contacts matched to your exact ICP (title, company size, geography). Delivered as a structured, clean database.",
+    "benchmark": "$4 – $10 (B2B list data)"
+  },
+  {
+    "campaignType": "Intent Data",
+    "pricePerLead": 7,
+    "pricePerLeadMax": 7,
+    "whatYouGet": "Contacts actively researching solutions like yours. Sourced from trusted platforms and Lidespy's internal repository. Each record backend-verified.",
+    "benchmark": "$6 – $15 (intent enrichment)"
+  },
+  {
+    "campaignType": "Content Syndication",
+    "pricePerLead": 10,
+    "pricePerLeadMax": 20,
+    "whatYouGet": "Targeted distribution of your e-books, case studies, whitepapers and blogs via email marketing. Supports both account-based (ABM) and broad audience campaigns.",
+    "benchmark": "$10 – $20 (content syndication)"
+  },
+  {
+    "campaignType": "MQL",
+    "pricePerLead": 20,
+    "pricePerLeadMax": 35,
+    "whatYouGet": "Prospect is introduced to your product, pain points probed, and your value proposition presented. Lead confirms interest and relevance.",
+    "benchmark": "$15 – $25 (B2B SaaS MQL)"
+  },
+  {
+    "campaignType": "HQL",
+    "pricePerLead": 35,
+    "pricePerLeadMax": 50,
+    "whatYouGet": "MQL plus two custom qualification questions focused on specific needs and current challenges, followed by a callback for deeper engagement.",
+    "benchmark": "$25 – $45 (HQL standard)"
+  },
+  {
+    "campaignType": "BANT Qualified Lead",
+    "pricePerLead": 100,
+    "pricePerLeadMax": 150,
+    "whatYouGet": "Full BANT qualification (Budget, Authority, Need, Timeline) gathered via structured call and verified by callback. Highest-intent pre-sales lead.",
+    "benchmark": "$75 – $150 (BANT/qualified)"
+  },
+  {
+    "campaignType": "Appointment Setting",
+    "pricePerLead": 750,
+    "pricePerLeadMax": 1000,
+    "whatYouGet": "BANT-qualified lead converted into a scheduled sales meeting with confirmed date, time and decision-maker attendance.",
+    "benchmark": "$150 – $300 (confirmed appt.)"
+  }
 ]

@@ -229,7 +229,7 @@ export const MENUS: Record<MegaKey, Menu> = {
     rail: {
       label: "Featured",
       items: [
-        { name: "Campaign Budget Calculator", body: "Estimate campaign budgets, expected lead volume and pipeline potential in minutes. No commitment required." },
+        { name: "Campaign Budget Calculator", body: "Work out campaign budgets and expected lead volume in minutes. No commitment required." },
         { name: "B2B Demand Gen Benchmark Report", body: "Annual benchmarks on CPL, conversion rates and channel performance across technology, SaaS and enterprise programs." },
         { name: "State of ABM Report", body: "What actually moves pipeline in account-based programs — intent data, buying committee coverage and channel orchestration." },
       ],
@@ -241,7 +241,7 @@ export const MENUS: Record<MegaKey, Menu> = {
       { name: "Blog", overview: "Weekly insights on ABM, demand generation, content syndication, intent data and B2B marketing strategy.", deliverables: ["ABM vs Demand Gen", "How to Use Intent Data", "Email Deliverability for B2B"] },
       { name: "Industry Reports", overview: "Annual research and benchmarks for B2B marketing and revenue teams, built from live campaign data.", deliverables: ["B2B Demand Generation Benchmark Report", "State of ABM Report", "Content Syndication Performance Report"] },
       { name: "Insights", overview: "Data-driven commentary on B2B buyer behavior, intent trends and marketing ROI from our research team.", deliverables: ["Buyer behavior trends", "Intent data signals", "Marketing ROI analysis"] },
-      { name: "Campaign Budget Calculator", overview: "Model budget range, CPL, lead volume, channel mix and pipeline potential for your next campaign in a few clicks.", deliverables: ["Estimated budget range", "Estimated CPL and lead volume", "Recommended channel mix"] },
+      { name: "Campaign Budget Calculator", overview: "Model budget range, CPL, lead volume and channel mix for your next campaign in a few clicks.", deliverables: ["Budget range", "CPL and lead volume", "Recommended channel mix"] },
       { name: "Media Kit", overview: "Brand assets, logo files, company overview and key stats for press and partner use.", deliverables: ["Logo and brand assets", "Company overview", "Key stats and boilerplate"] },
     ],
   },
