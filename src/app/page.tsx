@@ -130,7 +130,7 @@ export default function HomePage() {
 
             <div className="flex flex-wrap items-center gap-8">
               <ArrowCta href="#cta">Book a strategy call</ArrowCta>
-              <TextArrowLink href="#work" className="text-[13px]">
+              <TextArrowLink href="#work" className="text-[13px] text-cream">
                 See our work
               </TextArrowLink>
             </div>
