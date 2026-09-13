@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { industryHref, objectiveHref, pillarHref, route, serviceHref } from "@/lib/routes";
@@ -19,6 +19,20 @@ export default function SiteNav({ active }: { active?: MegaKey }) {
   const [activeSvc, setActiveSvc] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<MegaKey | null>(null);
+  const headerRef = useRef<HTMLElement>(null);
+
+  /* Publish the sticky header's height as --nav-h so full-viewport sections
+     below it can size themselves to the space that is actually left. */
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const set = () =>
+      document.documentElement.style.setProperty("--nav-h", `${el.offsetHeight}px`);
+    set();
+    const ro = new ResizeObserver(set);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   // The drawer overlays the page, so the page behind it must not scroll.
   useEffect(() => {
@@ -62,6 +76,7 @@ export default function SiteNav({ active }: { active?: MegaKey }) {
 
   return (
     <header
+      ref={headerRef}
       onMouseLeave={() => setMega(null)}
       className="sticky top-0 z-60 bg-cream border-b border-ink/15"
     >

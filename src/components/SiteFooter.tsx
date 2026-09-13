@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { hasServicePage, route, serviceHref } from "@/lib/routes";
 import { ArrowUpRight } from "./icons";
+import OptOutDialog from "./OptOutDialog";
 
 const COLUMNS: { title: string; links: { label: string; href: string; accent?: boolean }[] }[] = [
   {
@@ -14,7 +15,7 @@ const COLUMNS: { title: string; links: { label: string; href: string; accent?: b
       { label: "Audience Intelligence", href: "Services.dc.html#audience-intelligence" },
       { label: "High-Intent B2B Data", href: "Services.dc.html#b2b-data" },
       { label: "Appointment Generation", href: "Services.dc.html#appointment-generation" },
-      { label: "All 12 services", href: "Services.dc.html", accent: true },
+      { label: "All 13 services", href: "Services.dc.html", accent: true },
     ],
   },
   {
@@ -130,7 +131,7 @@ export default function SiteFooter() {
 
       <div className="mx-auto mt-10 flex max-w-[1280px] flex-wrap justify-between gap-4 border-t border-ink/11 page-x pt-6 pb-8 text-[11px] text-muted-2">
         <span>© 2026 Lidespy. All rights reserved.</span>
-        <div className="flex flex-wrap gap-5">
+        <div className="flex flex-wrap items-center gap-5">
           {LEGAL.map((l) => (
             <Link
               key={l.href}
@@ -140,6 +141,7 @@ export default function SiteFooter() {
               {l.label}
             </Link>
           ))}
+          <OptOutDialog />
         </div>
       </div>
     </footer>

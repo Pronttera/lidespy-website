@@ -1,9 +1,31 @@
 /** Content for the Home artboard (`Lidespy Home.dc.html`). */
 import { POSTS as BLOG_POSTS } from "./blog";
 
-export const LOGOS = [
-  "Client 01", "Client 02", "Client 03", "Client 04",
-  "Client 05", "Client 06", "Client 07", "Client 08",
+/**
+ * The client marquee on the home page. `src` points at the brand's own logo
+ * under `public/logos` (sourced from Wikipedia/Wikimedia); a logo we have no
+ * file for falls back to its name set as a wordmark, which is how the whole
+ * strip used to read.
+ */
+export type LogoItem = {
+  name: string;
+  src?: string;
+  /** Intrinsic size of the file, so the marquee reserves the right box. */
+  w?: number;
+  h?: number;
+  /** Rendered height in the strip, tuned so the marks read as one weight. */
+  height?: number;
+};
+
+export const LOGOS: LogoItem[] = [
+  { name: "Oracle NetSuite", src: "/logos/netsuite.png", w: 417, h: 152, height: 28 },
+  { name: "Lenovo", src: "/logos/lenovo.svg", w: 705, h: 116, height: 19 },
+  { name: "Dialpad" },
+  { name: "RingCentral", src: "/logos/ringcentral.svg", w: 2753, h: 416, height: 21 },
+  { name: "Dell", src: "/logos/dell.svg", w: 72, h: 72, height: 34 },
+  { name: "Procore", src: "/logos/procore.jpg", w: 899, h: 111, height: 15 },
+  { name: "Microsoft", src: "/logos/microsoft.svg", w: 338, h: 72, height: 24 },
+  { name: "Google", src: "/logos/google.svg", w: 272, h: 92, height: 26 },
 ];
 
 export const CHALLENGE_CARDS = [

@@ -86,9 +86,13 @@ export default function HomePage() {
       <ButtonMotion />
       <SiteNav />
 
+      {/* HERO + LOGO MARQUEE together fill the first viewport (minus the
+          sticky nav): the marquee keeps its natural height and the hero
+          takes whatever is left. */}
+      <div className="flex min-h-[calc(100svh-var(--nav-h,71px))] flex-col">
       {/* HERO */}
-      <div className="bg-ink">
-        <section className="relative mx-auto max-w-[1280px] page-x pt-12 pb-10 lg:pt-16">
+      <div className="flex flex-1 bg-ink">
+        <section className="relative mx-auto flex w-full max-w-[1280px] flex-col justify-center page-x pt-12 pb-10 lg:py-16">
           {/* The video is the layer behind: from the large screens up it runs
               off the right edge of the viewport, so the only edge of it you
               see is the one the copy column cuts across. */}
@@ -153,7 +157,7 @@ export default function HomePage() {
       </div>
 
       {/* LOGO MARQUEE */}
-      <section className="relative z-1 bg-cream shadow-[0_0_0_100vmax_var(--color-cream)] [clip-path:inset(0_-100vmax)]">
+      <section className="relative z-1 shrink-0 bg-cream shadow-[0_0_0_100vmax_var(--color-cream)] [clip-path:inset(0_-100vmax)]">
         <div className="mx-auto grid max-w-[1280px] items-center gap-10 overflow-hidden page-x py-10 lg:grid-cols-[minmax(200px,320px)_minmax(0,1fr)]">
           <div className="flex flex-col items-start gap-2.5 lg:border-r-2 lg:border-brand lg:pr-10">
             <div className="text-[13px] leading-[1.35] font-bold tracking-[0.02em] uppercase">
@@ -163,18 +167,33 @@ export default function HomePage() {
           </div>
           <div className="ld-fade-x overflow-hidden">
             <div className="ld-marquee">
-              {[...LOGOS, ...LOGOS].map((t, i) => (
+              {[...LOGOS, ...LOGOS].map((logo, i) => (
                 <div
                   key={i}
                   className="flex h-11 shrink-0 items-center px-9 text-[22px] font-bold tracking-[-0.01em] text-muted-3"
                 >
-                  {t}
+                  {logo.src ? (
+                    /* Greyscaled to one weight so no single brand dominates the
+                       strip, and multiplied so the white behind a raster logo
+                       drops into the cream. */
+                    <Image
+                      src={logo.src}
+                      alt={logo.name}
+                      width={logo.w ?? 120}
+                      height={logo.h ?? 40}
+                      style={{ height: logo.height ?? 24, width: "auto" }}
+                      className="max-w-[170px] object-contain opacity-70 grayscale mix-blend-multiply"
+                    />
+                  ) : (
+                    logo.name
+                  )}
                 </div>
               ))}
             </div>
           </div>
         </div>
       </section>
+      </div>
 
       {/* FEATURED TESTIMONIAL */}
       <section id="love" className="relative z-1 bg-cream shadow-[0_0_0_100vmax_var(--color-cream)] [clip-path:inset(0_-100vmax)]">

@@ -26,7 +26,7 @@ export default function ServicesPage() {
         <div className="relative mx-auto grid max-w-[1280px] items-start gap-[clamp(32px,5vw,80px)] page-x pt-[clamp(64px,7vw,104px)] pb-[clamp(48px,5vw,72px)] lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,.8fr)]">
           <div className="flex flex-col gap-7">
             <div className="inline-block self-start border border-coral/45 px-3 py-1.5 text-[11px] font-semibold tracking-[0.12em] text-coral uppercase">
-              Services · 12 ways to fill your pipeline
+              Services · 13 ways to fill your pipeline
             </div>
             <h1 className="m-0 text-[clamp(40px,5.2vw,80px)] leading-none font-normal tracking-[-0.035em] text-pretty">
               Demand generation services that drive{" "}

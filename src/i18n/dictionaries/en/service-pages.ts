@@ -851,8 +851,83 @@ export const SERVICE_PAGES: Record<ServicePageKey, ServicePage> = {
     screen: "dashboard",
   },
 
+  "digital-marketing": {
+    eyebrow: "Service 12 · Digital Marketing",
+    titleLead: "The channels that keep working",
+    titleAccent: "between campaigns.",
+    intro:
+      "Paid spend stops the day the budget does. Search, content, organic social and nurture keep compounding — we run them as one programme so your brand is already familiar by the time a campaign reaches the same buyer.",
+    stats: [
+      { value: "4", label: "Owned channels run as one programme" },
+      { value: "6–9 mo", label: "Before organic search compounds" },
+      { value: "Monthly", label: "Reporting across every channel" },
+      { value: "1", label: "Team, not four separate agencies" },
+    ],
+    deliverables: {
+      "Digital channel audit and strategy": {
+        body: "We start with what you already have — rankings, traffic, social reach, the automation platform nobody has opened in a year — and work out which channels are worth investing in for your buyer, rather than running all of them at half strength.",
+        points: [
+          "Search, social, content and automation audited against your ICP",
+          "Competitor share-of-voice benchmarked per channel",
+          "Channel priorities set against deal size and cycle length",
+          "12-month roadmap with owners, cadence and targets",
+        ],
+      },
+      "SEO and content programme": {
+        body: "Content mapped to the questions your buyers actually search, published on a cadence that holds, and built on technical foundations that let it rank. Not a blog nobody asked for.",
+        points: [
+          "Keyword and topic clusters built from buyer search intent",
+          "Technical SEO fixes prioritised by traffic impact",
+          "Editorial calendar with a volume you can sustain",
+          "Internal linking and schema applied as content ships",
+        ],
+      },
+      "Organic social and LinkedIn management": {
+        body: "LinkedIn is where B2B buyers form an opinion of you before any form gets filled. We run the company page and support your executives' presence with a cadence that survives a busy quarter.",
+        points: [
+          "Company page calendar and post production",
+          "Executive and founder post support and ghostwriting",
+          "Community management and comment response",
+          "Employee advocacy programme where you have the appetite",
+        ],
+      },
+      "Marketing automation and nurture journeys": {
+        body: "Most B2B leads are not ready when they first raise a hand. Nurture keeps them warm on their timeline instead of your quarter, and hands sales a contact with a history attached.",
+        points: [
+          "Lifecycle stages and lead scoring defined with sales",
+          "Nurture journeys per persona and funnel stage",
+          "Platform build in HubSpot, Marketo or Pardot",
+          "Sales alerts triggered on real buying behaviour",
+        ],
+      },
+      "Monthly digital performance reporting": {
+        body: "One report across every owned channel, tied to pipeline rather than vanity reach. It says what moved, what did not, and what we are changing next month.",
+        points: [
+          "Traffic, rankings, engagement and pipeline in one view",
+          "Channel-level contribution to opportunities created",
+          "What changed this month and what it produced",
+          "Next month's priorities agreed on the call",
+        ],
+      },
+    },
+    process: [
+      { title: "Audit", body: "We benchmark your current search, social, content and automation against your ICP and your competitors, and agree which channels earn investment." },
+      { title: "Foundations", body: "Technical SEO, tracking, lifecycle stages and the content model are put right first, so everything published afterwards compounds instead of leaking." },
+      { title: "Run", body: "Content, social and nurture ship on a published cadence, with the calendar visible to your team a month ahead." },
+      { title: "Compound", body: "Monthly reporting drives the next month's priorities, and budget shifts toward whichever channel is producing opportunities." },
+    ],
+    faq: [
+      { q: "How is this different from your performance marketing service?", a: "Performance marketing is paid media — you buy attention and it stops when spend stops. This is the owned side: search, content, organic social and nurture, which take longer to build and keep working afterwards. Most clients run both." },
+      { q: "How long before SEO shows results?", a: "Technical fixes can move things inside a quarter. New content ranking at scale is usually a six to nine month story. We will tell you up front if your timeline needs paid to bridge the gap." },
+      { q: "Do you write the content or do we?", a: "We write it, working from interviews with your subject-matter experts. You approve everything before it publishes." },
+      { q: "Which automation platforms do you work in?", a: "HubSpot, Marketo and Pardot most often. We work in your instance, and you keep the build and the data." },
+    ],
+    related: ["performance-marketing", "content-syndication", "ai-visibility"],
+    screen: "dashboard",
+  },
+
   "website-design": {
-    eyebrow: "Service 12 · IT Development",
+    eyebrow: "Service 13 · Technology Development",
     titleLead: "A B2B website built to",
     titleAccent: "convert the visit.",
     intro:

@@ -19,6 +19,7 @@ export const SERVICE_PAGE_KEYS = [
   "gtm-strategy",
   "ai-visibility",
   "performance-marketing",
+  "digital-marketing",
   "website-design",
 ] as const;
 

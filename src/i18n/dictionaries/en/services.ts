@@ -102,8 +102,16 @@ export const SERVICE_DETAILS: ServiceDetail[] = [
     cta: "Launch a performance marketing campaign",
   },
   {
+    key: "digital-marketing",
+    name: "Digital Marketing",
+    overview: "Own the channels your buyers already search, read and scroll. We run organic search, social, content and marketing automation as one programme, so your brand keeps showing up between campaigns — not only while paid spend is live.",
+    benefits: ["Always-on visibility between paid campaigns", "SEO and content built around buyer search intent", "Organic LinkedIn and social presence with a real cadence", "Marketing automation and nurture that keeps leads warm", "One reporting view across every owned channel"],
+    deliverables: ["Digital channel audit and strategy", "SEO and content programme", "Organic social and LinkedIn management", "Marketing automation and nurture journeys", "Monthly digital performance reporting"],
+    cta: "Build your digital marketing engine",
+  },
+  {
     key: "website-design",
-    name: "IT Development",
+    name: "Technology Development",
     overview: "Modern, conversion-optimized B2B websites designed to generate leads and communicate your value proposition. From landing pages to full website builds.",
     benefits: ["Conversion-focused B2B website design", "Lead capture and form optimization", "CMS development (WordPress, Webflow)", "SEO-ready architecture", "Mobile-first, fast-loading builds"],
     deliverables: ["Website discovery and wireframes", "UI/UX design (desktop + mobile)", "Front-end and back-end development", "CMS setup and content migration", "QA, launch, and post-launch support"],
@@ -119,7 +127,7 @@ export const SERVICES_COPY = {
       "Demand generation services that drive real revenue — from audience intelligence to appointment setting.",
   },
   hero: {
-    eyebrow: "Services · 12 ways to fill your pipeline",
+    eyebrow: "Services · 13 ways to fill your pipeline",
     titleLead: "Demand generation services that drive",
     titleAccent: "real revenue",
     intro:

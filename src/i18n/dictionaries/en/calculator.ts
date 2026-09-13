@@ -48,7 +48,7 @@ export const CALCULATOR = {
   },
   /** Keyed by the campaign types in `src/data/campaign-pricing.json`, `REGIONS` and `INDUSTRY`. */
   campaignTypes: {
-    "Good Fit Data": "Good Fit Data",
+    "Good Fit Data": "Account Based Marketing",
     "Intent Data": "Intent Data",
     "Content Syndication": "Content Syndication",
     MQL: "MQL (Marketing Qualified)",

@@ -419,7 +419,7 @@ export default function Calculator() {
           </button>
         </div>
 
-        <div className="relative text-[10.5px] leading-[1.5] text-cream/45">
+        <div className="relative text-[1rem] leading-[1.5] text-white">
           {T.result.disclaimer}
         </div>
       </div>

@@ -136,8 +136,19 @@ export const SERVICES: Service[] = [
     ],
   },
   {
+    key: "digital-marketing",
+    name: "Digital Marketing",
+    overview:
+      "Own the channels your buyers already use — SEO, content, organic social and marketing automation run as one always-on programme, not a campaign burst.",
+    deliverables: [
+      "SEO and content programme",
+      "Organic social and LinkedIn management",
+      "Marketing automation and nurture journeys",
+    ],
+  },
+  {
     key: "website-design",
-    name: "IT Development",
+    name: "Technology Development",
     overview:
       "Conversion-optimized B2B websites designed to generate leads and communicate your value proposition — from landing pages to full builds.",
     deliverables: [

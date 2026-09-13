@@ -50,7 +50,7 @@ export const FOOTER = {
         { label: "Audience Intelligence", href: "Services.dc.html#audience-intelligence" },
         { label: "High-Intent B2B Data", href: "Services.dc.html#b2b-data" },
         { label: "Appointment Generation", href: "Services.dc.html#appointment-generation" },
-        { label: "All 12 services", href: "Services.dc.html", accent: true },
+        { label: "All 13 services", href: "Services.dc.html", accent: true },
       ],
     },
     {
