@@ -74,8 +74,8 @@ export const MIN_LEADS = 1;
 export type CalculatorState = {
   region: Region;
   industry: Industry;
-  /** index into SIZES */
-  size: number;
+  /** indices into SIZES — one or more target company sizes */
+  sizes: number[];
   type: CampaignType;
   /** How many leads the campaign has to deliver. Always >= MIN_LEADS. */
   leads: number;
@@ -84,7 +84,7 @@ export type CalculatorState = {
 export const INITIAL_STATE: CalculatorState = {
   region: "North America",
   industry: "Technology",
-  size: 3,
+  sizes: [3],
   type: CAMPAIGN_TYPES[0],
   leads: 250,
 };
@@ -136,10 +136,14 @@ export function calculate(s: CalculatorState): Result {
   const add = (c: string) => {
     if (!channels.includes(c)) channels.push(c);
   };
+  const sizeLabel = [...s.sizes]
+    .sort((a, b) => a - b)
+    .map((i) => SIZES[i])
+    .join(", ");
   const next = NEXT_STEP[s.type];
   if (next) add(next);
   // Enterprise account lists are the case where the audience work pays off.
-  if (s.size >= 5) add("Audience Intelligence");
+  if (s.sizes.some((sz) => sz >= 5)) add("Audience Intelligence");
 
   return {
     budget: fmtRange(budget, budgetMax),
@@ -149,7 +153,7 @@ export function calculate(s: CalculatorState): Result {
     channels,
     shareText:
       `Lidespy campaign plan — ${s.region}, ${s.industry}, ` +
-      `${SIZES[s.size]} employees: ${fmtRange(budget, budgetMax)} for ` +
+      `${sizeLabel} employees: ${fmtRange(budget, budgetMax)} for ` +
       `${leads.toLocaleString("en-US")} leads via ${s.type}.`,
     values: { budget, budgetMax, cpl, cplMax, leads },
   };

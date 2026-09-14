@@ -178,10 +178,24 @@ export default function Calculator() {
     sharedTimer.current = setTimeout(() => setShared(false), 1800);
   };
 
+  const toggleSize = (i: number) =>
+    setState((s) => {
+      const on = s.sizes.includes(i);
+      // Always leave at least one size selected.
+      if (on && s.sizes.length === 1) return s;
+      const sizes = on ? s.sizes.filter((sz) => sz !== i) : [...s.sizes, i];
+      return { ...s, sizes };
+    });
+
+  const sizeLabel = [...state.sizes]
+    .sort((a, b) => a - b)
+    .map((i) => T.companySizes[i])
+    .join(", ");
+
   const summary = [
     T.regions[state.region],
     T.industries[state.industry],
-    `${T.companySizes[state.size]} employees`,
+    `${sizeLabel} employees`,
   ];
 
   return (
@@ -225,14 +239,18 @@ export default function Calculator() {
             <span className="text-[12px] font-semibold text-ink">
               {T.inputs.companySize}
             </span>
-            <div className="flex flex-wrap gap-2">
+            <div
+              role="group"
+              aria-label={T.inputs.companySize}
+              className="flex flex-wrap gap-2"
+            >
               {SIZES.map((label, i) => (
                 <button
                   key={label}
                   type="button"
-                  aria-pressed={state.size === i}
-                  onClick={() => setState((s) => ({ ...s, size: i }))}
-                  className={chipClass(state.size === i)}
+                  aria-pressed={state.sizes.includes(i)}
+                  onClick={() => toggleSize(i)}
+                  className={chipClass(state.sizes.includes(i))}
                 >
                   {T.companySizes[i] ?? label}
                 </button>

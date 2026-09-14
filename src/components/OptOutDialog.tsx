@@ -27,11 +27,7 @@ const COPY = {
   submit: "Remove my data",
   submitting: "Removing…",
   close: "Close",
-  done: {
-    title: "You have been removed.",
-    body: "Every record matching that email has been deleted from our database. You will not receive further outreach from us.",
-    cta: "Done",
-  },
+  done: "You have been removed. Every record matching that email has been deleted from our database.",
   errors: {
     name: "Enter the full name on the record.",
     email: "Enter a valid email address.",
@@ -53,14 +49,16 @@ export default function OptOutDialog() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "done">("idle");
+  const [status, setStatus] = useState<"idle" | "sending">("idle");
   const [fieldErrors, setFieldErrors] = useState<{
     name?: string;
     email?: string;
   }>({});
-  // The toast is the only place a failure is reported, so it outlives the
-  // dialog closing.
-  const [toast, setToast] = useState<string | null>(null);
+  // Toasts outlive the dialog: success is reported after it has closed.
+  const [toast, setToast] = useState<{
+    tone: "success" | "error";
+    text: string;
+  } | null>(null);
   const firstFieldRef = useRef<HTMLInputElement>(null);
 
   // Esc closes, and the page behind must not scroll under the panel.
@@ -104,7 +102,7 @@ export default function OptOutDialog() {
     if (Object.keys(errors).length > 0) return;
 
     if (!ENDPOINT) {
-      setToast(COPY.errors.notConfigured);
+      setToast({ tone: "error", text: COPY.errors.notConfigured });
       return;
     }
 
@@ -128,15 +126,16 @@ export default function OptOutDialog() {
       // data is under a different address than the one they just typed.
       if (!result.removed) {
         setStatus("idle");
-        setToast(COPY.errors.notFound);
+        setToast({ tone: "error", text: COPY.errors.notFound });
         return;
       }
 
-      setStatus("done");
+      close();
+      setToast({ tone: "success", text: COPY.done });
     } catch (error) {
       console.error("[opt-out] failed to submit", error);
       setStatus("idle");
-      setToast(COPY.errors.failed);
+      setToast({ tone: "error", text: COPY.errors.failed });
     }
   }
 
@@ -152,12 +151,18 @@ export default function OptOutDialog() {
 
       {toast && (
         <div
-          role="alert"
-          className="fixed inset-x-4 bottom-5 z-80 mx-auto max-w-[420px] rounded-card border border-brand-cta/50 bg-ink px-4 py-3.5 text-[12.5px] leading-[1.55] text-cream shadow-[0_12px_40px_rgba(0,0,0,0.28)] sm:right-5 sm:left-auto sm:mx-0"
+          role={toast.tone === "error" ? "alert" : "status"}
+          className={`fixed inset-x-4 bottom-5 z-80 mx-auto max-w-[420px] rounded-card border bg-ink px-4 py-3.5 text-[12.5px] leading-[1.55] text-cream shadow-[0_12px_40px_rgba(0,0,0,0.28)] sm:right-5 sm:left-auto sm:mx-0 ${
+            toast.tone === "error" ? "border-brand-cta/50" : "border-brand/60"
+          }`}
         >
           <div className="flex items-start gap-3">
-            <span className="mt-[3px] h-2 w-2 shrink-0 rounded-full bg-brand-cta" />
-            <span className="flex-1">{toast}</span>
+            {toast.tone === "error" ? (
+              <span className="mt-[3px] h-2 w-2 shrink-0 rounded-full bg-brand-cta" />
+            ) : (
+              <Check size={11} className="mt-[3px] shrink-0 text-brand" />
+            )}
+            <span className="flex-1">{toast.text}</span>
             <button
               type="button"
               onClick={() => setToast(null)}
@@ -190,29 +195,6 @@ export default function OptOutDialog() {
               <Close size={12} />
             </button>
 
-            {status === "done" ? (
-              <div className="flex flex-col gap-3.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-cta text-white">
-                  <Check size={13} />
-                </div>
-                <h2
-                  id="optout-title"
-                  className="m-0 text-[20px] leading-[1.2] font-medium tracking-[-0.02em] text-ink"
-                >
-                  {COPY.done.title}
-                </h2>
-                <p className="m-0 text-[13.5px] leading-[1.6] text-muted-2 text-pretty">
-                  {COPY.done.body}
-                </p>
-                <button
-                  type="button"
-                  onClick={close}
-                  className="mt-1 cursor-pointer self-start rounded-ui bg-ink px-6 py-3.5 text-[12px] font-semibold tracking-[0.04em] text-coral uppercase"
-                >
-                  {COPY.done.cta}
-                </button>
-              </div>
-            ) : (
               <form onSubmit={submit} noValidate className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2 pr-8">
                   <h2
@@ -279,7 +261,6 @@ export default function OptOutDialog() {
                   {status === "sending" ? COPY.submitting : COPY.submit}
                 </button>
               </form>
-            )}
           </div>
         </div>
       )}

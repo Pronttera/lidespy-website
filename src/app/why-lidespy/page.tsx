@@ -415,19 +415,17 @@ export default function WhyLidespyPage() {
         <div data-reveal-group className="relative grid gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-5">
           <div
             aria-hidden
-            className="absolute top-[13px] right-0 left-0 hidden h-px origin-left bg-brand/45 lg:block"
+            className="absolute top-[4px] right-0 left-0 hidden h-px origin-left bg-brand/20 lg:block"
           >
-            <span data-pipe-rule className="block h-px w-full origin-left bg-brand" />
+            <span data-pipe-rule className="block h-px w-full origin-left bg-brand/60" />
           </div>
           {compliance.steps.map((st) => (
-            <div key={st.n} data-reveal className="relative flex flex-col gap-3">
-              <div className="relative z-1 flex items-center gap-3">
-                <span className="h-[9px] w-[9px] shrink-0 rounded-full bg-brand-cta ring-4 ring-cream" />
-                <span className="text-[11.5px] font-semibold tracking-[0.1em] tabular-nums text-brand">
-                  {st.n}
-                </span>
-              </div>
-              <h3 className="m-0 text-[17px] leading-[1.25] font-medium tracking-[-0.018em] text-pretty">
+            <div key={st.n} data-reveal className="relative flex flex-col lg:pr-4">
+              <span className="relative z-1 block h-[9px] w-[9px] rounded-full bg-brand-cta ring-[5px] ring-cream" />
+              <span className="mt-5 text-[11.5px] font-semibold tracking-[0.1em] tabular-nums text-brand">
+                {st.n}
+              </span>
+              <h3 className="m-0 mt-2 mb-3 text-[17px] leading-[1.25] font-medium tracking-[-0.018em] text-pretty">
                 {st.title}
               </h3>
               <p className="m-0 text-[13.5px] leading-[1.6] text-muted-2 text-pretty">

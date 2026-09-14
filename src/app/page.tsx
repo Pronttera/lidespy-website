@@ -196,7 +196,7 @@ export default function HomePage() {
       </div>
 
       {/* FEATURED TESTIMONIAL */}
-      <section id="love" className="relative z-1 bg-cream shadow-[0_0_0_100vmax_var(--color-cream)] [clip-path:inset(0_-100vmax)]">
+      <section id="love" hidden className="relative z-1 bg-cream shadow-[0_0_0_100vmax_var(--color-cream)] [clip-path:inset(0_-100vmax)]">
         <div className="mx-auto max-w-[1280px] page-x pt-10 pb-8">
           <div className="relative grid items-center gap-[clamp(24px,5vw,72px)] overflow-hidden rounded-card bg-ink p-[clamp(28px,4.5vw,56px)] text-cream md:grid-cols-[minmax(160px,300px)_minmax(0,1fr)]">
             <div className="pointer-events-none absolute -top-8 right-6 text-[clamp(180px,22vw,320px)] leading-none font-bold text-coral/7 select-none">

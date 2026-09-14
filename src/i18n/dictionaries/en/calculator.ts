@@ -29,7 +29,7 @@ export const CALCULATOR = {
     region: "Target region",
     industry: "Industry",
     companySize: "Target company size",
-    companySizeHint: "Employees at the accounts you want to reach",
+    companySizeHint: "Employees at the accounts you want to reach — select all that apply",
     campaignType: "Campaign type",
     campaignTypeHint: "Select one",
     leadGoal: "Lead goal",
