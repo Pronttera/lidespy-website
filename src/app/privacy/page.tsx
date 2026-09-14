@@ -126,6 +126,7 @@ const SECTIONS: Section[] = [
           "Client and campaign records — for the term of the engagement and up to 7 years afterwards, to meet contractual, tax and audit obligations.",
           "Marketing contact records — until you opt out, or after a period of sustained non-engagement.",
           "Suppression lists — retained indefinitely, because we must remember not to contact you again.",
+          "Opt-out requests — the name and email you submit, the time of the request and how many records were removed, kept as evidence that we actioned it.",
           "Website and analytics logs — typically up to 26 months.",
         ],
       },
@@ -139,7 +140,10 @@ const SECTIONS: Section[] = [
         p: "Depending on where you live, you may have the right to access, correct, delete, restrict or object to our processing of your personal data, to receive a portable copy, to withdraw consent, and to opt out of marketing. Residents of California and other US states with comprehensive privacy laws may also have rights to know, delete, correct, and to opt out of targeted advertising or the sharing of personal information.",
       },
       {
-        p: "To exercise any right, email info@lidespy.com. We respond within 30 days, or sooner where the law requires it, and we will not treat you differently for exercising a right. If you are unhappy with our response you may complain to your local data protection authority.",
+        p: "To have your contact details removed, use the Opt-out / Unsubscribe link in the footer of any page on this site. Enter the name and email you gave us and every matching record is deleted from our contact database immediately and permanently. We keep a minimal record of the request itself, as described under How long we keep data.",
+      },
+      {
+        p: "To exercise any other right, or if the form cannot find your address, email info@lidespy.com. We respond within 30 days, or sooner where the law requires it, and we will not treat you differently for exercising a right. If you are unhappy with our response you may complain to your local data protection authority.",
       },
     ],
   },
@@ -178,7 +182,7 @@ export default function PrivacyPage() {
       eyebrow="Legal"
       title="Privacy Policy"
       lead="How we collect, use, share and protect personal data across our website and our B2B demand generation services."
-      updated="1 September 2026"
+      updated="14 September 2026"
       sections={SECTIONS}
       current="/privacy"
     />

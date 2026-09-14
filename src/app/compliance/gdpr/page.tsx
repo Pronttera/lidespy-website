@@ -62,6 +62,7 @@ const SECTIONS: Section[] = [
       },
       {
         ul: [
+          "Erasure from our own contact database is self-service: the Opt-out / Unsubscribe form in the site footer deletes every matching record immediately, and each request is logged so it can be evidenced later.",
           "Requests are acknowledged promptly and answered within one month, extendable only where the law allows.",
           "Objections and erasure requests are added to a central suppression list so the person is not re-imported from another source later.",
           "Where we act as a processor, we pass requests to the client controller without delay and help them respond.",
@@ -108,7 +109,7 @@ export default function GdprPage() {
       eyebrow="Compliance"
       title="GDPR Compliance"
       lead="How we run B2B demand generation in line with the EU GDPR and UK GDPR — from the lawful basis for outreach to how we answer a data subject request."
-      updated="11 September 2026"
+      updated="14 September 2026"
       sections={SECTIONS}
       current="/compliance/gdpr"
     />
