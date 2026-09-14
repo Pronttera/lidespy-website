@@ -226,7 +226,6 @@ export const WHY = {
     ],
     quote: {
       text: "Testimonial placeholder — a revenue leader on why they consolidated three vendors into one Lidespy retainer.",
-      name: "Name",
       role: "VP Demand Generation, Enterprise SaaS",
     },
     linkLabel: "Read the case studies",

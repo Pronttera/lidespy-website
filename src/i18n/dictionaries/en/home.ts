@@ -141,22 +141,14 @@ export const COMPARE_ROWS: Record<CompareKey, { k: string; us: string; them: str
 };
 
 export const QUOTES = [
-  { img: "https://images.unsplash.com/photo-1652471943570-f3590a4e52ed?auto=format&fit=crop&w=300&q=70",
-    credit: "Photo by Tony Luginsland on Unsplash", creditHref: "https://unsplash.com/@tonyluginsland",
-    text: "Testimonial placeholder — a revenue leader on data quality and how few records bounced.",
-    name: "Name", role: "CRO, SaaS" },
-  { img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=70",
-    credit: "Photo by Michael Dam on Unsplash", creditHref: "https://unsplash.com/@michaeldam",
-    text: "Testimonial placeholder — a marketing leader on GDPR comfort and legal sign-off.",
-    name: "Name", role: "VP Marketing, Fintech" },
-  { img: "https://images.unsplash.com/photo-1629425733761-caae3b5f2e50?auto=format&fit=crop&w=300&q=70",
-    credit: "Photo by Willian Souza on Unsplash", creditHref: "https://unsplash.com/@willsouzabr",
-    text: "Testimonial placeholder — on meeting quality and show rate.",
-    name: "Name", role: "Head of Sales, Technology" },
-  { img: "https://images.unsplash.com/photo-1627161683077-e34782c24d81?auto=format&fit=crop&w=300&q=70",
-    credit: "Photo by Clay Elliot on Unsplash", creditHref: "https://unsplash.com/@ibidsy",
-    text: "Testimonial placeholder — on reporting and working with a named partner.",
-    name: "Name", role: "RevOps Lead, B2B services" },
+  { text: "Testimonial placeholder — a revenue leader on data quality and how few records bounced.",
+    role: "CRO, SaaS" },
+  { text: "Testimonial placeholder — a marketing leader on GDPR comfort and legal sign-off.",
+    role: "VP Marketing, Fintech" },
+  { text: "Testimonial placeholder — on meeting quality and show rate.",
+    role: "Head of Sales, Technology" },
+  { text: "Testimonial placeholder — on reporting and working with a named partner.",
+    role: "RevOps Lead, B2B services" },
 ];
 
 /** The three blog articles the home page's Blogs row leads with. */
@@ -214,7 +206,6 @@ export const HOME_COPY = {
     textAccent1: "two to three sentences",
     textMiddle: "on data quality, compliance and the meetings that actually",
     textAccent2: "showed up",
-    name: "Client name",
     role: "Title, Company",
     stats: [
       { v: "1.8%", l: "Bounce rate" },

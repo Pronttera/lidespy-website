@@ -226,13 +226,8 @@ export default function HomePage() {
                 <strong className="font-semibold text-coral">showed up</strong>.
               </p>
               <div className="flex flex-wrap items-center justify-between gap-6 border-t border-cream/14 pt-[22px]">
-                <div className="flex flex-col gap-[5px]">
-                  <div className="text-[16px] font-semibold tracking-[-0.01em]">
-                    Client name
-                  </div>
-                  <div className="text-[13px] text-cream/60">
-                    Title, Company
-                  </div>
+                <div className="text-[16px] font-semibold tracking-[-0.01em]">
+                  Title, Company
                 </div>
                 <div className="flex gap-7">
                   {[
@@ -651,19 +646,7 @@ export default function HomePage() {
                 <p className="m-0 flex-1 text-[14px] leading-[1.55] text-muted text-pretty">
                   {q.text}
                 </p>
-                <div className="flex items-center gap-3">
-                  <Image
-                    src={q.img}
-                    alt=""
-                    width={40}
-                    height={40}
-                    className="h-10 w-10 rounded-full object-cover"
-                  />
-                  <div>
-                    <div className="text-[12px] font-semibold">{q.name}</div>
-                    <div className="text-[11px] text-muted-2">{q.role}</div>
-                  </div>
-                </div>
+                <div className="text-[12px] font-semibold">{q.role}</div>
               </div>
             ))}
           </div>

@@ -585,11 +585,8 @@ export default function WhyLidespyPage() {
             <blockquote className="m-0 text-[clamp(19px,2vw,28px)] leading-[1.32] font-medium tracking-[-0.022em] text-white text-pretty">
               “{proof.quote.text}”
             </blockquote>
-            <figcaption className="flex flex-col gap-1 border-t border-white/25 pt-5">
-              <span className="text-[14px] font-semibold text-white">
-                {proof.quote.name}
-              </span>
-              <span className="text-[12.5px] text-white/75">{proof.quote.role}</span>
+            <figcaption className="border-t border-white/25 pt-5 text-[14px] font-semibold text-white">
+              {proof.quote.role}
             </figcaption>
           </figure>
 
