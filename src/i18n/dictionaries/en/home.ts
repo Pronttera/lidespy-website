@@ -54,45 +54,36 @@ export const STEPS = [
 
 export const HOME_SERVICES = [
   { img: "https://images.unsplash.com/photo-1686061593213-98dad7c599b9?auto=format&fit=crop&w=800&q=70",
-    credit: "Photo by 1981 Digital on Unsplash", creditHref: "https://unsplash.com/@1981digital",
     tag: "Data", title: "Verified contact data & database building",
     body: "ICP-mapped databases built from scratch or enriched from your CRM — every record verified before it reaches a sequence." },
   { img: "https://images.unsplash.com/photo-1622675363311-3e1904dc1885?auto=format&fit=crop&w=800&q=70",
-    credit: "Photo by Mapbox on Unsplash", creditHref: "https://unsplash.com/@mapbox",
     tag: "Content Syndication", title: "Content syndication",
     body: "Put your assets in front of your ICP and turn engagement into verified, sales-ready leads." },
   { img: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=70",
-    credit: "Photo by krakenimages on Unsplash", creditHref: "https://unsplash.com/@krakenimages",
     tag: "Cleansing", title: "Database cleansing & enrichment",
     body: "Dedupe, re-verify and enrich the data you already own. Cut bounce, restore deliverability, keep legal comfortable." },
   { img: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=70",
-    credit: "Photo by Dylan Gillis on Unsplash", creditHref: "https://unsplash.com/@mainermedia",
     tag: "Demand Gen", title: "Demand generation",
     body: "Multi-channel programs that build awareness in your market and turn it into qualified pipeline." },
   { img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=70",
-    credit: "Photo by Headway on Unsplash", creditHref: "https://unsplash.com/@headwayio",
-    tag: "Outsourced Appt Gen", title: "Outsourced appointment generation",
+    tag: "In-House Appt Gen", title: "In-house appointment generation",
     body: "Messaging, infrastructure and SDR execution that lands qualified meetings on your AEs’ calendars." },
 ];
 
 export const CASES = [
   { img: "https://images.unsplash.com/photo-1758518732175-5d608ba3abdf?auto=format&fit=crop&w=1200&q=70",
-    credit: "Photo by Vitaly Gariev on Unsplash", creditHref: "https://unsplash.com/@silverkblack",
     segment: "SaaS", region: "North America", title: "Series B database rebuild",
     sub: "Database · outbound · 6 weeks", span: 7, minH: 420,
     v1: "48k", m1: "Verified records", v2: "37", m2: "Meetings / month" },
   { img: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=70",
-    credit: "Photo by Dylan Gillis on Unsplash", creditHref: "https://unsplash.com/@mainermedia",
     segment: "Technology", region: "UK & EU", title: "GDPR outbound, four EU markets",
     sub: "Compliance · email · 4 markets", span: 5, minH: 420,
     v1: "1.8%", m1: "Bounce rate", v2: "112", m2: "Qualified meetings" },
   { img: "https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&fit=crop&w=1200&q=70",
-    credit: "Photo by Christina @ wocintechchat.com on Unsplash", creditHref: "https://unsplash.com/@wocintechchat",
     segment: "B2B services", region: "APAC", title: "ABM into 120 named accounts",
     sub: "ABM · buying committees · 1 quarter", span: 5, minH: 380,
     v1: "84", m1: "Accounts engaged", v2: "$2.1M", m2: "Pipeline sourced" },
   { img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=70",
-    credit: "Photo by Campaign Creators on Unsplash", creditHref: "https://unsplash.com/@campaign_creators",
     segment: "Fintech", region: "UK", title: "Database cleanse & re-verification",
     sub: "Data hygiene · CRM sync · 3 weeks", span: 7, minH: 380,
     v1: "-91%", m1: "Bounce cut", v2: "26k", m2: "Records recovered" },
@@ -140,15 +131,30 @@ export const COMPARE_ROWS: Record<CompareKey, { k: string; us: string; them: str
   ],
 };
 
+/**
+ * Home testimonials. The first entry is the featured client story; the rest
+ * are the result cards beneath it. Each one is written against the program in
+ * `case-studies.ts` it belongs to, so its numbers match that study.
+ * TODO(client): replace with approved client quotes before launch — see
+ * CLIENT-CONTENT-CHECKLIST.md §2.
+ */
 export const QUOTES = [
-  { text: "Testimonial placeholder — a revenue leader on data quality and how few records bounced.",
-    role: "CRO, SaaS" },
-  { text: "Testimonial placeholder — a marketing leader on GDPR comfort and legal sign-off.",
-    role: "VP Marketing, Fintech" },
-  { text: "Testimonial placeholder — on meeting quality and show rate.",
-    role: "Head of Sales, Technology" },
-  { text: "Testimonial placeholder — on reporting and working with a named partner.",
-    role: "RevOps Lead, B2B services" },
+  { text: "We inherited lists from three vendors and a **31% bounce rate**. Six weeks later we had 48k verified records, bounces under 2%, and SDRs **booking meetings instead of cleaning spreadsheets**.",
+    role: "VP Revenue", context: "Series B SaaS · North America",
+    program: "Series B database rebuild · 6 weeks",
+    stats: [{ v: "1.8%", l: "Bounce rate after rebuild" }, { v: "37", l: "Meetings per month" }] },
+  { text: "Legal had blocked outbound entirely. Lidespy documented a lawful basis for every market, our counsel signed it off, and the first campaign went out in six weeks.",
+    role: "VP Marketing", context: "Technology · UK & EU",
+    program: "GDPR outbound across four EU markets",
+    stats: [{ v: "112", l: "Qualified meetings, zero complaints" }] },
+  { text: "Deals used to die the day our champion changed jobs. Now we are talking to four or five people on every buying committee, and the pipeline shows it.",
+    role: "Head of Sales", context: "Cybersecurity · APAC",
+    program: "ABM into 120 named accounts",
+    stats: [{ v: "$2.1M", l: "Pipeline sourced in one quarter" }] },
+  { text: "Our webinar went from 40 registrants, mostly existing customers, to 400 of the right people. Routing no-shows into their own sequence gave sales a reason to call both groups.",
+    role: "RevOps Lead", context: "B2B services · US & Canada",
+    program: "Webinar series from 40 to 400 registrants",
+    stats: [{ v: "61", l: "Meetings from the series" }] },
 ];
 
 /** The three blog articles the home page's Blogs row leads with. */
@@ -162,8 +168,6 @@ export const POSTS = [
     href: `/blog/${slug}`,
     img: p.img,
     alt: p.alt,
-    credit: p.credit,
-    creditHref: p.creditHref,
     tag: p.topic,
     title: p.title,
     read: p.meta,
@@ -181,8 +185,6 @@ export const HOME_COPY = {
     titleLead: "Build a",
     titleAccent: "verified B2B pipeline",
     titleTail: "your revenue team can actually trust",
-    videoCredit: "Video by Tiger Lily · Pexels",
-    videoCreditHref: "https://www.pexels.com/video/team-meeting-7147921/",
     introLead: "Lidespy helps SaaS, technology and B2B services firms turn",
     introAccent: "verified contact data into qualified meetings",
     introTail:
@@ -195,22 +197,6 @@ export const HOME_COPY = {
   logos: {
     heading:
       "Trusted by revenue teams across North America, the UK, the EU & APAC",
-  },
-  featuredQuote: {
-    label: "Client story",
-    imageAlt: "Client photo",
-    imageCredit: "Photo by LinkedIn Sales Solutions on Unsplash",
-    imageCreditHref: "https://unsplash.com/@linkedinsalesnavigator",
-    img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=70",
-    textLead: "Featured client quote —",
-    textAccent1: "two to three sentences",
-    textMiddle: "on data quality, compliance and the meetings that actually",
-    textAccent2: "showed up",
-    role: "Title, Company",
-    stats: [
-      { v: "1.8%", l: "Bounce rate" },
-      { v: "37", l: "Meetings / month" },
-    ],
   },
   challenge: {
     eyebrow: "Challenge",
@@ -247,7 +233,10 @@ export const HOME_COPY = {
     ourColumn: "Lidespy",
   },
   testimonials: {
-    title: "What buyers say.",
+    eyebrow: "Client proof",
+    title: "What revenue teams say after the first quarter.",
+    intro: "Every quote comes from a program in our case studies, and the numbers beside it are that program's results.",
+    linkLabel: "Read the case studies",
   },
   insights: {
     title: "Blogs",

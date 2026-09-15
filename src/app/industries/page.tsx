@@ -92,8 +92,6 @@ export default function IndustriesPage() {
               <Slot
                 src={i.img}
                 alt={i.name}
-                credit={i.credit}
-                creditHref={i.creditHref}
                 sizes="(max-width: 640px) 100vw, 33vw"
                 className="aspect-video"
               />

@@ -14,8 +14,6 @@ export default function PostCard({ post: p }: { post: Post }) {
       <Slot
         src={p.img}
         alt={p.alt}
-        // No credit link here: an <a> inside the card's <a> is invalid, and the
-        // parser splits the card apart. The article cover carries the credit.
         sizes="(max-width: 640px) 100vw, 33vw"
         className="aspect-video"
       />

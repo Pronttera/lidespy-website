@@ -92,8 +92,6 @@ export default function AboutPage() {
           <Slot
             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=70"
             alt="The Lidespy team"
-            credit="Photo by Annie Spratt on Unsplash"
-            creditHref="https://unsplash.com/@anniespratt"
             className="min-h-[360px]"
           />
           <div className="flex flex-col justify-between gap-7 bg-ink p-[clamp(28px,4vw,52px)] text-cream">

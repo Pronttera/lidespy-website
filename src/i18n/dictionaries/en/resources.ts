@@ -18,8 +18,6 @@ export type Resource = {
   body: string;
   action: string;
   img: string;
-  credit: string;
-  creditHref: string;
 };
 
 /**
@@ -38,8 +36,6 @@ function fromArticle(slug: string): Resource {
     body: a.description,
     action: "Read article",
     img: U(a.img),
-    credit: "Photo on Unsplash",
-    creditHref: "https://unsplash.com",
   };
 }
 
@@ -48,11 +44,11 @@ export const RESOURCES: Resource[] = [
   fromArticle("buyer-intent-data-explained"),
   fromArticle("b2b-content-syndication-worth-it-2026"),
   fromArticle("is-cold-email-still-worth-it-2026"),
-  { cat: "reports", type: "Industry report", meta: "Annual · Gated", slug: "b2b-demand-generation-benchmark-report", title: "B2B Demand Generation Benchmark Report", body: "CPL, conversion and channel performance benchmarks drawn from 500+ executed campaigns.", action: "Download", img: U("photo-1551288049-bebda4e38f71"), credit: "Photo by Luke Chesser on Unsplash", creditHref: "https://unsplash.com/@lukechesser" },
-  { cat: "reports", type: "Industry report", meta: "Annual · Gated", slug: "state-of-abm-report", title: "State of ABM Report", body: "What actually moves pipeline in account-based programs — intent, coverage and orchestration.", action: "Download", img: U("photo-1543286386-713bdd548da4"), credit: "Photo by Isaac Smith on Unsplash", creditHref: "https://unsplash.com/@isaacmsmith" },
-  { cat: "reports", type: "Industry report", meta: "Gated", slug: "content-syndication-performance-report", title: "Content Syndication Performance Report", body: "Asset types, qualification filters and follow-up timing that convert syndicated leads into meetings.", action: "Download", img: U("photo-1504868584819-f8e8b4b6d7e3"), credit: "Photo by Carlos Muza on Unsplash", creditHref: "https://unsplash.com/@kmuza" },
-  { cat: "insights", type: "Insight", meta: "Q3 2026", slug: "b2b-buyer-research-phase", title: "B2B buyer behavior: the research phase is getting longer", body: "Data-driven commentary on intent trends across 12 industries — and what it means for your campaign timing.", action: "Read insight", img: U("photo-1552664730-d307ca884978"), credit: "Photo by Campaign Creators on Unsplash", creditHref: "https://unsplash.com/@campaign_creators" },
-  { cat: "insights", type: "Insight", meta: "Q2 2026", slug: "marketing-roi-pipeline-not-mqls", title: "Marketing ROI: measuring pipeline, not MQLs", body: "Why sourced pipeline is the only metric revenue teams trust — and how to report it.", action: "Read insight", img: U("photo-1543286386-2e659306cd6c"), credit: "Photo by Isaac Smith on Unsplash", creditHref: "https://unsplash.com/@isaacmsmith" },
+  { cat: "reports", type: "Industry report", meta: "Annual · Gated", slug: "b2b-demand-generation-benchmark-report", title: "B2B Demand Generation Benchmark Report", body: "CPL, conversion and channel performance benchmarks drawn from 500+ executed campaigns.", action: "Download", img: U("photo-1551288049-bebda4e38f71") },
+  { cat: "reports", type: "Industry report", meta: "Annual · Gated", slug: "state-of-abm-report", title: "State of ABM Report", body: "What actually moves pipeline in account-based programs — intent, coverage and orchestration.", action: "Download", img: U("photo-1543286386-713bdd548da4") },
+  { cat: "reports", type: "Industry report", meta: "Gated", slug: "content-syndication-performance-report", title: "Content Syndication Performance Report", body: "Asset types, qualification filters and follow-up timing that convert syndicated leads into meetings.", action: "Download", img: U("photo-1504868584819-f8e8b4b6d7e3") },
+  { cat: "insights", type: "Insight", meta: "Q3 2026", slug: "b2b-buyer-research-phase", title: "B2B buyer behavior: the research phase is getting longer", body: "Data-driven commentary on intent trends across 12 industries — and what it means for your campaign timing.", action: "Read insight", img: U("photo-1552664730-d307ca884978") },
+  { cat: "insights", type: "Insight", meta: "Q2 2026", slug: "marketing-roi-pipeline-not-mqls", title: "Marketing ROI: measuring pipeline, not MQLs", body: "Why sourced pipeline is the only metric revenue teams trust — and how to report it.", action: "Read insight", img: U("photo-1543286386-2e659306cd6c") },
 ];
 
 export const RESOURCE_FILTERS: { id: "all" | ResourceCategory; label: string }[] = [
@@ -103,8 +99,6 @@ export const RESOURCES_COPY = {
     title: "Annual B2B Demand Generation Benchmark Report",
     body: "CPL, conversion rates and channel performance across 500+ campaigns in technology, SaaS and enterprise markets — what worked, what didn’t, and what to budget for next year.",
     cta: "Download the report",
-    imageCredit: "Photo by Luke Chesser on Unsplash",
-    imageCreditHref: "https://unsplash.com/@lukechesser",
     img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=70",
   },
   grid: {

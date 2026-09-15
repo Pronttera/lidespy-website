@@ -76,14 +76,11 @@ export function TextArrowLink({
 }
 
 /**
- * Stand-in for the design's `<image-slot>` element: a filled, credited photo.
- * Credits stay visible because the source images are Unsplash/Pexels demo art.
+ * Stand-in for the design's `<image-slot>` element: a filled photo.
  */
 export function Slot({
   src,
   alt,
-  credit,
-  creditHref,
   className = "",
   sizes = "(max-width: 768px) 100vw, 50vw",
   priority = false,
@@ -91,8 +88,6 @@ export function Slot({
 }: {
   src: string;
   alt: string;
-  credit?: string;
-  creditHref?: string;
   className?: string;
   sizes?: string;
   priority?: boolean;
@@ -116,16 +111,6 @@ export function Slot({
         className="object-cover"
         {...innerProps}
       />
-      {credit && creditHref && (
-        <a
-          href={creditHref}
-          target="_blank"
-          rel="noopener"
-          className="absolute bottom-2 left-2.5 z-10 rounded-card bg-ink/55 px-[7px] py-[3px] text-[10px] text-white/85"
-        >
-          {credit}
-        </a>
-      )}
     </div>
   );
 }

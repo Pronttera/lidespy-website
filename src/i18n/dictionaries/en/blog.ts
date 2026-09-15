@@ -13,8 +13,6 @@ export type Post = {
   author: string;
   img: string;
   alt: string;
-  credit: string;
-  creditHref: string;
 };
 
 /** Index cards, derived from the articles so the two never drift apart. */
@@ -27,8 +25,6 @@ export const POSTS: Post[] = ARTICLES.map((a) => ({
   author: a.author,
   img: U(a.img),
   alt: a.alt,
-  credit: "Photo on Unsplash",
-  creditHref: "https://unsplash.com",
 }));
 
 export const TOPICS = [
@@ -73,8 +69,6 @@ export const BLOG_COPY = {
   },
   featured: {
     label: "Editor’s pick",
-    imageCredit: "Photo on Unsplash",
-    imageCreditHref: "https://unsplash.com",
     authorImg:
       "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=70",
   },

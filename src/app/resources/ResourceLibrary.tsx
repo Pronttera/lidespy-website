@@ -100,8 +100,6 @@ export default function ResourceLibrary() {
             <Slot
               src={featured.img}
               alt={featured.title}
-              credit={featured.imageCredit}
-              creditHref={featured.imageCreditHref}
               sizes="(max-width: 1024px) 100vw, 33vw"
               className="aspect-[16/9] rounded-card"
             />
@@ -240,8 +238,6 @@ export default function ResourceLibrary() {
                   <Slot
                     src={r.img}
                     alt={r.title}
-                    credit={r.credit}
-                    creditHref={r.creditHref}
                     sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
                     className="aspect-video"
                     innerProps={{
@@ -257,8 +253,7 @@ export default function ResourceLibrary() {
                       <span className="text-[11px] text-muted-3">{r.meta}</span>
                     </div>
                     <h3 className="m-0 text-[18px] leading-[1.22] font-semibold tracking-[-0.018em] text-pretty">
-                      {/* Stretched link: the whole card is clickable, but the
-                        image credit stays a separate, reachable anchor. */}
+                      {/* Stretched link: the whole card is clickable. */}
                       <Link
                         href={resourceHref(r)}
                         className="after:absolute after:inset-0"

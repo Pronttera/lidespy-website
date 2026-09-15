@@ -116,8 +116,6 @@ export default async function BlogArticlePage({
         <Slot
           src={post.img.replace("w=1100", "w=1800")}
           alt={article.alt}
-          credit={post.credit}
-          creditHref={post.creditHref}
           sizes="(max-width: 1080px) 100vw, 1080px"
           priority
           className="aspect-[16/9] rounded-card border border-ink/10 sm:aspect-[21/9]"

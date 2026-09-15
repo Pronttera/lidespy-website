@@ -89,8 +89,6 @@ export default async function ResourcePage({
           <Slot
             src={resource.img}
             alt={resource.title}
-            credit={resource.credit}
-            creditHref={resource.creditHref}
             sizes="(max-width: 1024px) 100vw, 45vw"
             className="aspect-[16/10] rounded-ui"
           />

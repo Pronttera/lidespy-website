@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import JsonLd from "@/components/JsonLd";
 import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
 import { satoshi } from "./fonts";
@@ -116,6 +117,20 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="font-sans min-h-full flex flex-col bg-cream text-ink">
         <JsonLd data={[ORGANIZATION, WEBSITE]} />
         {children}
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-PL0XQ1LZ7M"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-PL0XQ1LZ7M');
+          `}
+        </Script>
       </body>
     </html>
   );

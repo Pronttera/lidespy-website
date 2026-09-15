@@ -205,8 +205,6 @@ export default function HomePage() {
             <Slot
               src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=70"
               alt="Client photo"
-              credit="Photo by LinkedIn Sales Solutions on Unsplash"
-              creditHref="https://unsplash.com/@linkedinsalesnavigator"
               sizes="(max-width: 768px) 240px, 300px"
               className="relative aspect-square w-full max-w-[240px] rounded-card outline-1 outline-offset-8 outline-cream/14 md:max-w-none"
             />
@@ -430,8 +428,6 @@ export default function HomePage() {
                 <Slot
                   src={s.img}
                   alt={s.title}
-                  credit={s.credit}
-                  creditHref={s.creditHref}
                   sizes="(max-width: 640px) 100vw, 25vw"
                   className="absolute inset-0"
                 />
@@ -491,8 +487,6 @@ export default function HomePage() {
                   <Slot
                     src={c.img}
                     alt={c.title}
-                    credit={c.credit}
-                    creditHref={c.creditHref}
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="absolute inset-0"
                     innerProps={{ "data-case-img": "" }}
@@ -629,25 +623,55 @@ export default function HomePage() {
       </section>
 
       {/* TESTIMONIAL WALL */}
-      <section className="overflow-hidden border-y border-ink/11 bg-panel py-[76px]">
-        <div className="mx-auto mb-10 max-w-[1280px] page-x">
-          <h2 className="m-0 text-[clamp(28px,2.95vw,38px)] leading-[1.06] font-medium tracking-[-0.025em]">
-            What buyers say.
-          </h2>
+      <section className="overflow-hidden border-y border-ink/11 bg-panel py-[clamp(64px,6vw,96px)]">
+        <div className="mx-auto mb-[clamp(36px,4vw,56px)] grid max-w-[1280px] items-end gap-6 page-x md:grid-cols-[minmax(0,1fr)_minmax(0,420px)]">
+          <div className="flex flex-col gap-5">
+            <div className="self-start">
+              <Eyebrow>Testimonials</Eyebrow>
+            </div>
+            <h2 className="m-0 text-[clamp(28px,2.95vw,38px)] leading-[1.06] font-medium tracking-[-0.025em]">
+              What buyers say.
+            </h2>
+          </div>
+          <p className="m-0 text-[15px] leading-[1.6] text-muted text-pretty">
+            Revenue, marketing and ops leaders on the programs we ran with them,
+            and the numbers those programs produced.
+          </p>
         </div>
         <div data-quote-rail className="ld-fade-x">
-          <div data-quote-track className="flex w-max gap-4 px-2 will-change-transform">
+          <div data-quote-track className="flex w-max gap-5 px-2 will-change-transform">
             {[...QUOTES, ...QUOTES].map((q, i) => (
-              <div
+              <figure
                 key={i}
-                className="flex w-[78vw] max-w-[360px] shrink-0 flex-col gap-[18px] rounded-card border border-ink/14 bg-white p-[26px] sm:w-[clamp(280px,26vw,360px)]"
+                aria-hidden={i >= QUOTES.length || undefined}
+                className="m-0 flex w-[84vw] max-w-[440px] shrink-0 flex-col rounded-card border border-ink/12 bg-white sm:w-[clamp(340px,31vw,440px)]"
               >
-                <div className="text-[28px] leading-[.5] text-brand">“</div>
-                <p className="m-0 flex-1 text-[14px] leading-[1.55] text-muted text-pretty">
-                  {q.text}
-                </p>
-                <div className="text-[12px] font-semibold">{q.role}</div>
-              </div>
+                <div className="flex flex-1 flex-col gap-6 p-[clamp(24px,2.2vw,32px)]">
+                  <span className="text-[11px] font-semibold tracking-[0.1em] text-brand uppercase">
+                    {q.program}
+                  </span>
+                  <blockquote className="m-0 flex-1 text-[16px] leading-[1.6] tracking-[-0.005em] text-muted text-pretty">
+                    <Bold text={`“${q.text}”`} />
+                  </blockquote>
+                  <div className="flex flex-wrap gap-x-8 gap-y-4 border-t border-dashed border-ink/12 pt-5">
+                    {q.stats.map((s) => (
+                      <div key={s.l} className="flex flex-col gap-1">
+                        <span className="text-[28px] leading-none font-medium tracking-[-0.03em] tabular-nums text-ink">
+                          {s.v}
+                        </span>
+                        <span className="text-[12px] leading-[1.4] text-muted-2">
+                          {s.l}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <figcaption className="flex items-center gap-3 border-t border-ink/10 px-[clamp(24px,2.2vw,32px)] py-4">
+                  <span className="h-2 w-2 shrink-0 rounded-full bg-brand" />
+                  <span className="text-[13px] font-semibold text-ink">{q.role}</span>
+                  <span className="truncate text-[12.5px] text-muted-2">{q.context}</span>
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
@@ -672,8 +696,6 @@ export default function HomePage() {
               <Slot
                 src={a.img}
                 alt={a.alt}
-                credit={a.credit}
-                creditHref={a.creditHref}
                 sizes="(max-width: 768px) 100vw, 33vw"
                 className="h-[190px] rounded-card"
               />
