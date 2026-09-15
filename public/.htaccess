@@ -71,7 +71,7 @@ ErrorDocument 404 /404.html
 <IfModule mod_headers.c>
   # Everything under /_next/static carries a content hash in its filename, so a
   # given name can never change its contents — cache it for a year. Un-hashed
-  # files from public/ (the logo, team photos, the rate card) are matched by
+  # files from public/ (the logo, team photos) are matched by
   # the shorter rule below instead, which is why this one is path-scoped.
   <If "%{REQUEST_URI} =~ m#^/_next/static/#">
     Header set Cache-Control "public, max-age=31536000, immutable"

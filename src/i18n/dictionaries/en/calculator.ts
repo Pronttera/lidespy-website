@@ -109,61 +109,13 @@ export const CALCULATOR = {
     items: [
       {
         title: "Price per lead",
-        body: "Each campaign type carries its price per lead straight from the Lidespy rate card — from verified data at the low end to booked appointments at the top.",
+        body: "Each campaign type carries its price per lead straight from Lidespy pricing — from verified data at the low end to booked appointments at the top.",
       },
       {
         title: "Lead goal",
         body: "Budget is price per lead multiplied by the number of leads you ask for, so the figure moves one-for-one with your goal.",
       },
     ],
-  },
-  /** The published rate card, under the calculator. */
-  rateCard: {
-    eyebrow: "Rate card",
-    /** The edition the published rates come from. */
-    effective: "Effective Q2 2026",
-    title: "Campaign categories and pricing.",
-    intro:
-      "Every category is priced as a pure CPL — you pay for delivered, fully qualified leads that match your spec.",
-    columns: {
-      category: "Campaign category",
-      cpl: "CPL (USD)",
-      whatYouGet: "What you get",
-      benchmark: "Market benchmark",
-    },
-    /** Why the rates hold up, from the rate card. */
-    proof: [
-      {
-        title: "100% human-verified",
-        body: "No automated scrapes delivered as-is. All data passes manual verification checks before delivery.",
-      },
-      {
-        title: "Trusted intent signals",
-        body: "Intent data is pulled exclusively from leading verified platforms and our curated internal repository.",
-      },
-      {
-        title: "Callback verification",
-        body: "Campaigns include rigorous multi-step callback verification starting at the MQL level and above.",
-      },
-      {
-        title: "Pure CPL model",
-        body: "Risk-free pricing — you only pay for delivered, fully qualified leads matching your spec.",
-      },
-      {
-        title: "Full ICP alignment",
-        body: "Every lead is matched against your ideal client profile — title, size, geography — prior to routing.",
-      },
-    ],
-    note:
-      "All pricing is in USD. Deliverable packages are customizable: contract volumes, CPL scaling and targeting filters can be reconfigured to fit your budget and pipeline goals.",
-    /** How the rates compare with the wider market, from the rate card. */
-    marketNote: {
-      label: "Market intelligence",
-      items: [
-        "Globally, the blended CPL across B2B SaaS channels averages $237 (First Page Sage, 2026) — our rates reflect direct human-verified outreach rather than high-overhead paid digital advertising.",
-        "Tech BANT-qualified leads routinely cost $600 – $800 through legacy agencies. Our $100 – $150 CPL for the same qualification is where the ROI advantage sits.",
-      ],
-    },
   },
   cta: {
     title: "Need a custom campaign plan?",
