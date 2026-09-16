@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import CookieConsent from "@/components/CookieConsent";
 import JsonLd from "@/components/JsonLd";
+import MediaKitDialog from "@/components/MediaKitDialog";
 import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
 import { satoshi } from "./fonts";
 import "./globals.css";
@@ -117,6 +118,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="font-sans min-h-full flex flex-col bg-cream text-ink">
         <JsonLd data={[ORGANIZATION, WEBSITE]} />
         {children}
+        <MediaKitDialog />
         <CookieConsent />
       </body>
     </html>

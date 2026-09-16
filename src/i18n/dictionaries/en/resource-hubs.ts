@@ -1,10 +1,9 @@
 /**
- * The library's format hubs — Webinars, Whitepapers and the Media Kit — at
+ * The library's format hubs — Webinars and Whitepapers — at
  * `/resources/<hub>`. The Resources mega menu points at these directly.
  *
  * Nothing here is gated behind a file that does not exist: sessions and
- * whitepapers are requested through the contact form, and the media kit only
- * offers assets that ship with the site.
+ * whitepapers are requested through the contact form.
  */
 
 import type { HeroStat } from "../../../components/DetailHero";
@@ -35,9 +34,9 @@ export type Hub = {
   cta: { title: string; body: string; button: string };
 };
 
-export type HubKey = "webinars" | "whitepapers" | "media-kit";
+export type HubKey = "webinars" | "whitepapers";
 
-/** The three hubs in menu order — drives the hero index and the cross-links. */
+/** The two hubs in menu order — drives the hero index and the cross-links. */
 export const LIBRARY_HUBS: { key: HubKey; href: string; title: string; body: string }[] = [
   {
     key: "webinars",
@@ -50,12 +49,6 @@ export const LIBRARY_HUBS: { key: HubKey; href: string; title: string; body: str
     href: "/resources/whitepapers",
     title: "Whitepapers",
     body: "Deep dives on ABM, intent data, syndication and compliant B2B data.",
-  },
-  {
-    key: "media-kit",
-    href: "/resources/media-kit",
-    title: "Media Kit",
-    body: "Logo files, brand colours, boilerplate and key facts for press and partners.",
   },
 ];
 
@@ -252,92 +245,5 @@ export const HUBS: Record<"webinars" | "whitepapers", Hub> = {
       body: "We will walk you through how any of these applies to your ICP, your data and your pipeline target.",
       button: "Book a strategy call",
     },
-  },
-};
-
-/** The media kit page — everything on it ships with the site. */
-export const MEDIA_KIT_PAGE = {
-  meta: {
-    title: "Media Kit · Brand Assets & Press · Lidespy",
-    description:
-      "Lidespy logo files, brand colours, typography, company boilerplate and key facts for press and partner use.",
-  },
-  eyebrow: "Resources · Media kit",
-  titleLead: "Brand assets for",
-  titleAccent: "press and partners.",
-  intro:
-    "Logo files, brand colours, company boilerplate and key facts — everything you need to write about Lidespy or feature us alongside your own brand. For anything not here, email us and we will send it the same day.",
-  stats: [
-    { value: "500+", label: "Campaigns analysed" },
-    { value: "12+", label: "Industries covered" },
-    { value: "50+", label: "Countries served" },
-    { value: "Pune", label: "Headquarters, serving clients globally" },
-  ],
-  sections: [
-    { id: "logo", name: "Logo" },
-    { id: "colours", name: "Brand colours" },
-    { id: "typography", name: "Typography" },
-    { id: "boilerplate", name: "Boilerplate" },
-    { id: "facts", name: "Key facts" },
-    { id: "usage", name: "Usage guidelines" },
-  ],
-  logo: {
-    body: "The primary logo in full colour for light backgrounds, and reversed out for dark ones. Download the PNG below; vector files are available on request.",
-    download: "Download PNG · 997 × 304",
-    onLight: "On light",
-    onDark: "On dark",
-  },
-  colours: [
-    { name: "Brand red", hex: "#BE1622", use: "Primary brand colour, headings and accents" },
-    { name: "Signal red", hex: "#E11B22", use: "Calls to action" },
-    { name: "Coral", hex: "#FF5A4F", use: "Accents on dark backgrounds" },
-    { name: "Ink", hex: "#12150F", use: "Text and dark surfaces" },
-    { name: "Cream", hex: "#F7F8F4", use: "Page background" },
-    { name: "Panel", hex: "#EFF1EA", use: "Secondary surfaces" },
-  ],
-  typography: {
-    family: "Satoshi",
-    body: "Satoshi is used for every piece of type on the site, from display headlines to body copy. Headlines are set large and tightly tracked; body copy runs at comfortable reading sizes with generous line height.",
-  },
-  boilerplate: {
-    shortLabel: "Short · one line",
-    short: "Lidespy is a B2B demand generation company delivering qualified leads, booked meetings and measurable pipeline.",
-    longLabel: "Long · one paragraph",
-    long: "Lidespy is a B2B demand generation company headquartered in Pune, India, serving clients globally. We combine audience intelligence, verified B2B data and multi-channel campaign expertise to deliver qualified leads, booked meetings and measurable pipeline contribution for technology, SaaS and enterprise revenue teams. Our research executives and GTM specialists work as an extension of our clients' marketing and sales functions — focused on outcomes, not activity.",
-  },
-  facts: [
-    ["Company", "Lidespy"],
-    ["Tagline", "Leads That Drive Growth"],
-    ["Focus", "B2B demand generation"],
-    ["Headquarters", "Pune, India"],
-    ["Coverage", "50+ countries across North America, Europe, Asia Pacific and the Middle East & Africa"],
-    ["Track record", "500+ campaigns across 12+ industries"],
-    ["Website", "lidespy.com"],
-    ["Press and partners", "info@lidespy.com"],
-  ] as [string, string][],
-  usage: {
-    doLabel: "Please do",
-    do: [
-      "Use the logo as supplied, on a clean background with room around it",
-      "Use the reversed logo on dark or photographic backgrounds",
-      "Keep at least the height of the mark as clear space on every side",
-      "Refer to the company as “Lidespy”, capitalised as shown",
-    ],
-    dontLabel: "Please don't",
-    dont: [
-      "Recolour, stretch, rotate or add effects to the logo",
-      "Place the logo on busy backgrounds where it loses contrast",
-      "Combine the logo with other marks into a new lock-up",
-      "Imply a partnership or endorsement without written agreement",
-    ],
-  },
-  press: {
-    title: "Press and partner enquiries",
-    body: "For interviews, commentary, vector logo files or partnership questions, email us and a member of the team will respond within one business day.",
-  },
-  cta: {
-    title: "Writing about B2B demand generation?",
-    body: "Our campaign team is happy to comment on intent data, ABM, deliverability and lead quality — with the numbers behind it.",
-    button: "Get in touch",
   },
 };

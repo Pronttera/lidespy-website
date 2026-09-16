@@ -56,7 +56,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...Object.keys(RESOURCE_PAGES).map((slug) => page(`/resources/${slug}`, 0.6)),
     page("/resources/webinars", 0.6),
     page("/resources/whitepapers", 0.6),
-    page("/resources/media-kit", 0.5),
     ...ARTICLES.map((a) => page(blogHref(a.slug), 0.6)),
 
     page("/compliance/gdpr", 0.4, "yearly"),

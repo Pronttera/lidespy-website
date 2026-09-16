@@ -6,6 +6,7 @@ import Link from "next/link";
 import { industryHref, objectiveHref, pillarHref, route, serviceHref } from "@/lib/routes";
 import { GRIDS, MENUS, NAV_ITEMS, type GridCard, type MegaKey } from "@/i18n/dictionaries/en/nav";
 import { ArrowRight, ArrowUpRight, ChevronDown, ChevronRight } from "./icons";
+import { openMediaKit } from "./MediaKitDialog";
 
 /** A grid card routes to its own detail page where it has one. */
 function gridHref(c: GridCard): string {
@@ -61,7 +62,7 @@ export default function SiteNav({ active }: { active?: MegaKey }) {
             href: serviceHref(s.key),
           })),
         ]
-      : GRIDS[key].map((c) => ({ name: c.name, href: gridHref(c) }));
+      : GRIDS[key].map((c) => ({ name: c.name, href: gridHref(c), mediaKit: c.mediaKit }));
 
   const open = (key: MegaKey) => () => {
     setMega(key);
@@ -164,17 +165,32 @@ export default function SiteNav({ active }: { active?: MegaKey }) {
                 </div>
                 {expanded && (
                   <div className="pb-3">
-                    {mobileLinks(item.key).map((l) => (
-                      <Link
-                        key={l.name + l.href}
-                        href={l.href}
-                        onClick={closeMobile}
-                        className="flex items-center justify-between gap-3 border-t border-ink/8 py-2.5 pl-3 text-[14px] text-muted"
-                      >
-                        <span>{l.name}</span>
-                        <ChevronRight className="shrink-0 text-brand" />
-                      </Link>
-                    ))}
+                    {mobileLinks(item.key).map((l) => {
+                      const cls = "flex w-full cursor-pointer items-center justify-between gap-3 border-t border-ink/8 py-2.5 pl-3 text-left text-[14px] text-muted";
+                      const inner = (
+                        <>
+                          <span>{l.name}</span>
+                          <ChevronRight className="shrink-0 text-brand" />
+                        </>
+                      );
+                      return "mediaKit" in l && l.mediaKit ? (
+                        <button
+                          key={l.name}
+                          type="button"
+                          onClick={() => {
+                            closeMobile();
+                            openMediaKit();
+                          }}
+                          className={cls}
+                        >
+                          {inner}
+                        </button>
+                      ) : (
+                        <Link key={l.name + l.href} href={l.href} onClick={closeMobile} className={cls}>
+                          {inner}
+                        </Link>
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -195,23 +211,39 @@ export default function SiteNav({ active }: { active?: MegaKey }) {
         <div className="pointer-events-none absolute inset-x-0 top-full hidden px-8 pb-6 lg:block">
           <div className="pointer-events-auto mx-auto max-w-[1280px] rounded-card border border-ink/12 bg-cream p-[26px] shadow-[0_40px_80px_-20px_rgba(18,21,15,0.28)]">
             <div className="grid gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
-              {GRIDS[mega].map((c) => (
-                <Link
-                  key={c.name}
-                  href={gridHref(c)}
-                  className="flex min-h-[104px] flex-col gap-2.5 rounded-card border border-transparent bg-panel px-[22px] pt-[22px] pb-6 text-ink transition-colors hover:border-brand/45 hover:bg-white"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="text-[17.5px] leading-[1.22] font-semibold tracking-[-0.018em] text-pretty">
-                      {c.name}
+              {GRIDS[mega].map((c) => {
+                const cls = "flex min-h-[104px] cursor-pointer flex-col gap-2.5 rounded-card border border-transparent bg-panel px-[22px] pt-[22px] pb-6 text-left text-ink transition-colors hover:border-brand/45 hover:bg-white";
+                const inner = (
+                  <>
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="text-[17.5px] leading-[1.22] font-semibold tracking-[-0.018em] text-pretty">
+                        {c.name}
+                      </div>
+                      <ArrowRight className="mt-1 shrink-0 text-brand opacity-75" />
                     </div>
-                    <ArrowRight className="mt-1 shrink-0 text-brand opacity-75" />
-                  </div>
-                  <div className="text-[13.5px] leading-[1.55] text-muted-2 text-pretty">
-                    {c.body}
-                  </div>
-                </Link>
-              ))}
+                    <div className="text-[13.5px] leading-[1.55] text-muted-2 text-pretty">
+                      {c.body}
+                    </div>
+                  </>
+                );
+                return c.mediaKit ? (
+                  <button
+                    key={c.name}
+                    type="button"
+                    onClick={() => {
+                      setMega(null);
+                      openMediaKit();
+                    }}
+                    className={cls}
+                  >
+                    {inner}
+                  </button>
+                ) : (
+                  <Link key={c.name} href={gridHref(c)} className={cls}>
+                    {inner}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>

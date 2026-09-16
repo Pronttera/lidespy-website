@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 import SiteNav from "@/components/SiteNav";
 import NewsletterForm from "@/components/NewsletterForm";
-import { ArrowUpRight } from "@/components/icons";
 import { TextArrowLink } from "@/components/ui";
 import { RESOURCES_COPY } from "@/i18n/dictionaries/en/resources";
 import ResourceLibrary from "./ResourceLibrary";
 
-const { meta, mediaKit, cta } = RESOURCES_COPY;
+const { meta, cta } = RESOURCES_COPY;
 
 export const metadata: Metadata = {
   alternates: { canonical: "/resources" },
@@ -29,53 +27,6 @@ export default function ResourcesPage() {
         <ResourceLibrary />
       </Suspense>
 
-      {/* MEDIA KIT */}
-      <section
-        id="media-kit"
-        className="scroll-mt-24 border-t border-ink/10 bg-panel"
-      >
-        <div className="mx-auto grid max-w-[1280px] items-center gap-[clamp(28px,4vw,64px)] page-x py-[clamp(48px,5vw,72px)] lg:grid-cols-2">
-          <div>
-            <div className="mb-4 text-[11px] font-semibold tracking-[0.12em] text-brand uppercase">
-              {mediaKit.label}
-            </div>
-            <h2 className="m-0 mb-3.5 text-[clamp(26px,2.8vw,38px)] leading-[1.08] font-medium tracking-[-0.025em] text-pretty">
-              {mediaKit.title}
-            </h2>
-            <p className="m-0 text-[15px] leading-[1.6] text-muted text-pretty">
-              {mediaKit.body}
-            </p>
-            <TextArrowLink href="/resources/media-kit" className="mt-6">
-              {mediaKit.action}
-            </TextArrowLink>
-          </div>
-          {/* One bordered list rather than three small boxes: the rows fill the
-              column beside the heading and the labels stop wrapping mid-word. */}
-          <ul className="m-0 list-none divide-y divide-ink/10 rounded-ui border border-ink/12 bg-white p-0">
-            {mediaKit.items.map((m) => (
-              <li key={m.title}>
-                <Link
-                  href={m.href}
-                  className="group flex items-center justify-between gap-5 px-[22px] py-[18px] text-ink transition-colors hover:bg-panel/70"
-                >
-                  <span className="flex flex-col gap-1">
-                    <span className="text-[15px] font-semibold tracking-[-0.01em]">
-                      {m.title}
-                    </span>
-                    <span className="text-[12.5px] leading-[1.5] text-muted-2">
-                      {m.sub}
-                    </span>
-                  </span>
-                  <ArrowUpRight
-                    size={15}
-                    className="shrink-0 text-brand transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                  />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
 
       {/* CTA */}
       <section className="relative overflow-hidden bg-ink text-cream">

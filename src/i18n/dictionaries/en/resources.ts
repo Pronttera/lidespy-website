@@ -105,15 +105,4 @@ export const RESOURCES_COPY = {
     /** `{count}` resources. */
     count: "{count} resources",
   },
-  mediaKit: {
-    label: "Media kit",
-    title: "Brand assets for press and partners.",
-    body: "Logo files, company overview and key stats for press and partner use.",
-    action: "Open the media kit",
-    items: [
-      { title: "Logo pack", sub: "PNG · Light & dark · Vector on request", href: "/resources/media-kit#logo" },
-      { title: "Company overview", sub: "Boilerplate and key facts", href: "/resources/media-kit#boilerplate" },
-      { title: "Key stats", sub: "500+ campaigns · 12+ industries · 50+ countries", href: "/resources/media-kit#facts" },
-    ],
-  },
 };

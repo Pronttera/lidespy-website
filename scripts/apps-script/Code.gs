@@ -1,6 +1,7 @@
 /**
  * Receives Lidespy contact-form enquiries and appends them to the spreadsheet,
- * and handles opt-out requests from the footer by deleting matching rows.
+ * records media kit (pitch deck) download requests on their own tab, and
+ * handles opt-out requests from the footer by deleting matching rows.
  *
  * The website is a static export with no server of its own, so the form posts
  * straight here from the browser.
@@ -22,6 +23,9 @@ const SHEET_NAME = 'Enquiries';
 
 /** Where opt-out requests are recorded once their rows have been deleted. */
 const OPTOUT_SHEET_NAME = 'Opt-outs';
+
+/** Where media kit download requests (name + email) are recorded. */
+const MEDIAKIT_SHEET_NAME = 'Media kit downloads';
 
 /** Column order in the sheet. The header row should match. */
 const COLUMNS = [
@@ -48,6 +52,10 @@ function doPost(e) {
     // removes data, so it has to say so explicitly.
     if (String(params.action || '') === 'optout') {
       return optOut(params);
+    }
+
+    if (String(params.action || '') === 'mediakit') {
+      return mediaKit(params);
     }
 
     const row = COLUMNS.map(function (key) {
@@ -132,6 +140,26 @@ function logOptOut(params, email, removed) {
     // successful opt-out into an error for the visitor.
     console.error('failed to log opt-out', error);
   }
+}
+
+/** Logs who downloaded the pitch deck, so the lead lands in the sheet. */
+function mediaKit(params) {
+  const email = String(params.email || '').trim();
+  if (!email) return json({ ok: false, error: 'missing email' });
+
+  const book = SpreadsheetApp.getActiveSpreadsheet();
+  let log = book.getSheetByName(MEDIAKIT_SHEET_NAME);
+  if (!log) {
+    log = book.insertSheet(MEDIAKIT_SHEET_NAME);
+    log.appendRow(['timestamp', 'fullName', 'email', 'source']);
+  }
+  log.appendRow([
+    new Date(),
+    String(params.fullName || '').slice(0, MAX_LENGTH),
+    email.slice(0, MAX_LENGTH),
+    String(params.source || '').slice(0, MAX_LENGTH),
+  ]);
+  return json({ ok: true });
 }
 
 function sheet() {

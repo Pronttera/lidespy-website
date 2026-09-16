@@ -253,7 +253,6 @@ export const MENUS: Record<MegaKey, Menu> = {
       { name: "Industry Reports", overview: "Annual research and benchmarks for B2B marketing and revenue teams, built from live campaign data.", deliverables: ["B2B Demand Generation Benchmark Report", "State of ABM Report", "Content Syndication Performance Report"] },
       { name: "Insights", overview: "Data-driven commentary on B2B buyer behavior, intent trends and marketing ROI from our research team.", deliverables: ["Buyer behavior trends", "Intent data signals", "Marketing ROI analysis"] },
       { name: "Campaign Budget Calculator", overview: "Model budget range, CPL, lead volume and channel mix for your next campaign in a few clicks.", deliverables: ["Budget range", "CPL and lead volume", "Recommended channel mix"] },
-      { name: "Media Kit", overview: "Brand assets, logo files, company overview and key stats for press and partner use.", deliverables: ["Logo and brand assets", "Company overview", "Key stats and boilerplate"] },
     ],
   },
 };
@@ -269,6 +268,8 @@ export type GridCard = {
   href: string;
   objective?: string;
   industry?: string;
+  /** Opens the gated media kit download instead of navigating. */
+  mediaKit?: boolean;
 };
 
 export const GRIDS: Record<"enable" | "why" | "resources", GridCard[]> = {
@@ -296,7 +297,7 @@ export const GRIDS: Record<"enable" | "why" | "resources", GridCard[]> = {
     { name: "Webinars", body: "Actionable insights from industry experts.", href: "/resources/webinars" },
     { name: "Whitepapers", body: "Deep dives on ABM, intent data and syndication.", href: "/resources/whitepapers" },
     { name: "Campaign Budget Calculator", body: "Model budget, CPL and pipeline potential.", href: "Calculator.dc.html" },
-    { name: "Media Kit", body: "Brand assets, logos and company boilerplate.", href: "/resources/media-kit" },
+    { name: "Media Kit", body: "Download our pitch deck: company overview, services and results.", href: "", mediaKit: true },
   ],
 };
 
