@@ -6,6 +6,7 @@ import JsonLd from "@/components/JsonLd";
 import SiteFooter from "@/components/SiteFooter";
 import SiteNav from "@/components/SiteNav";
 import Splash from "@/components/Splash";
+import HeroVideo from "@/components/HeroVideo";
 import HomeMotion from "@/components/HomeMotion";
 import ButtonMotion from "@/components/ButtonMotion";
 import { ArrowCta, Eyebrow, Slot, TextArrowLink } from "@/components/ui";
@@ -67,10 +68,9 @@ const HOME_SCHEMA = [
     "@type": "VideoObject",
     name: "Lidespy — B2B demand generation",
     description: HOME_DESCRIPTION,
-    thumbnailUrl:
-      "https://images.pexels.com/videos/7147921/colleagues-computer-laptop-conference-room-corporate-7147921.jpeg?auto=compress&cs=tinysrgb&w=1260",
+    thumbnailUrl: absoluteUrl("/hero-poster.jpg"),
     contentUrl: "/hero.mp4",
-    uploadDate: "2026-09-01",
+    uploadDate: "2026-09-16",
     publisher: { "@id": `${absoluteUrl("/")}#organization` },
   },
 ];
@@ -86,72 +86,76 @@ export default function HomePage() {
       <ButtonMotion />
       <SiteNav />
 
-      {/* HERO + LOGO MARQUEE together fill the first viewport (minus the
-          sticky nav): the marquee keeps its natural height and the hero
-          takes whatever is left. */}
-      <div className="flex min-h-[calc(100svh-var(--nav-h,71px))] flex-col">
-      {/* HERO */}
-      <div className="flex flex-1 bg-ink">
-        <section className="relative mx-auto flex w-full max-w-[1280px] flex-col justify-center page-x pt-12 pb-10 lg:py-16">
-          {/* The video is the layer behind: from the large screens up it runs
-              off the right edge of the viewport, so the only edge of it you
-              see is the one the copy column cuts across. */}
-          <div className="relative mt-9 min-h-[300px] overflow-hidden rounded-card bg-ink lg:absolute lg:inset-y-0 lg:right-[calc(50%-50vw)] lg:left-[38%] lg:mt-0 lg:min-h-0 lg:rounded-none">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster="https://images.pexels.com/videos/7147921/colleagues-computer-laptop-conference-room-corporate-7147921.jpeg?auto=compress&cs=tinysrgb&w=1260"
-              src="/hero.mp4"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-            {/* Darkens the edge the copy sits against, so the overlap reads as
-                depth rather than a panel dropped on top. */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(18,21,15,0.72),rgba(18,21,15,0.12)_42%,transparent_70%)]"
-            />
-          </div>
+      {/* HERO + LOGO MARQUEE both sit in the first view: the hero is a
+          compact band sized to its copy (with a floor so the video keeps
+          presence), and the marquee follows directly beneath it. */}
+      <div className="flex flex-col">
+      <div className="relative flex bg-ink lg:min-h-[540px]">
+        {/* Full frame, never cropped. Below lg it is a full-width 16:9 band
+            above the copy. From lg up the box is the clip's own 16:9 shape at
+            full hero height, pinned right, so its left edge is the video's
+            left edge — and that edge fades into the page ink. */}
+        <div className="absolute inset-x-0 top-0 aspect-video overflow-hidden lg:inset-y-0 lg:right-0 lg:left-auto lg:h-full lg:max-w-full">
+          <HeroVideo className="absolute inset-0 h-full w-full object-contain" />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 hidden lg:block lg:bg-[linear-gradient(90deg,var(--color-ink)_0%,rgba(18,21,15,0.75)_12%,rgba(18,21,15,0.3)_26%,transparent_42%)]"
+          />
+        </div>
+        <section className="relative mx-auto flex w-full max-w-[1280px] flex-col justify-center page-x pt-[calc(56.25vw+24px)] pb-8 lg:pt-10 lg:pb-10">
 
           {/* Column one — everything a visitor reads, over the video. */}
-          <div className="relative z-1 flex flex-col gap-8 lg:w-[54%]">
-            <h1 className="m-0 text-[clamp(38px,4.2vw,64px)] leading-[1.04] font-normal tracking-[-0.03em] text-cream text-pretty">
-              Build a <span className="text-brand">verified B2B pipeline</span> your
-              revenue team can actually trust
+          <div className="relative z-1 flex flex-col gap-6 lg:w-[44%] lg:gap-7">
+            <div className="flex items-center gap-2.5 text-[12px] font-bold tracking-[0.14em] uppercase text-cream/60">
+              <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-brand shadow-[0_0_0_4px_rgba(190,22,34,0.22)]" />
+              B2B demand generation agency
+            </div>
+            {/* Two short lines, the promise then the payoff. */}
+            <h1 className="m-0 text-[clamp(32px,3.3vw,50px)] leading-[1.08] font-normal tracking-[-0.035em] text-cream">
+              <span className="block">Verified B2B pipeline</span>
+              <span className="block text-brand">your team can trust.</span>
             </h1>
 
-            <p className="m-0 max-w-[52ch] text-[clamp(15px,1.23vw,18px)] leading-[1.6] text-cream/75 text-pretty">
-              Lidespy helps SaaS, technology and B2B services firms turn{" "}
-              <span className="text-brand">
-                verified contact data into qualified meetings
-              </span>
-              . Database building, cleansing, cold outbound, content syndication
-              and ABM — GDPR-compliant across North America, the UK, the EU and
-              APAC.
+            <p className="m-0 max-w-[46ch] text-[clamp(16px,1.23vw,18px)] leading-[1.55] text-cream/75 text-pretty">
+              We help SaaS, technology and B2B services firms turn{" "}
+              <span className="text-cream">verified contact data</span> into{" "}
+              <span className="text-cream">qualified meetings</span> — GDPR-compliant
+              across North America, the UK, the EU and APAC.
             </p>
 
-            <div className="flex flex-wrap items-center gap-8">
+            <div className="mt-1 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 [&>a]:justify-between sm:[&>a]:justify-start">
               <ArrowCta href="#cta">Book a strategy call</ArrowCta>
-              <TextArrowLink href="#work" className="text-[13px] text-cream! [&_[data-arrow]]:text-cream!">
-                See our work
-              </TextArrowLink>
+              <ArrowCta href="#work" variant="ghost">See our work</ArrowCta>
             </div>
 
-            <div className="border-t border-cream/15 pt-6">
-              <a
-                href="https://www.iafcertsearch.org/certification/yogvFoT2EVlCPpHm5Vj6rh7d"
-                target="_blank"
-                rel="noopener"
-                className="text-[14px] text-coral underline decoration-coral/25 underline-offset-4 transition-colors hover:text-brand hover:decoration-brand"
-              >
-                Certified <span className="text-muted-2">· verify on IAF CertSearch ↗</span>
-              </a>
-              <div className="mt-1 text-[13px] text-cream/60">
-                GDPR framework · Est. 2023 · LLP
-              </div>
-            </div>
+            {/* Proof row: the things a buyer's legal and RevOps teams ask about
+                first, answered before they scroll. */}
+            <ul className="m-0 flex list-none flex-wrap gap-x-6 gap-y-2.5 border-t border-cream/15 p-0 pt-5 text-[13px] text-cream/70">
+              {[
+                { t: "ISO 9001:2015 certified", href: "https://www.iafcertsearch.org/certification/yogvFoT2EVlCPpHm5Vj6rh7d" },
+                { t: "GDPR-compliant outreach" },
+                { t: "Est. 2023 · LLP" },
+              ].map((item) => (
+                <li key={item.t} className="flex items-center gap-2">
+                  <svg aria-hidden viewBox="0 0 16 16" className="h-3.5 w-3.5 shrink-0 text-coral">
+                    <circle cx="8" cy="8" r="7.25" fill="none" stroke="currentColor" strokeOpacity="0.45" strokeWidth="1.5" />
+                    <path d="M4.75 8.25l2.1 2.1 4.4-4.6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener"
+                      className="underline decoration-cream/25 underline-offset-4 transition-colors hover:text-cream hover:decoration-cream"
+                    >
+                      {item.t} <span className="text-cream/45">↗</span>
+                    </a>
+                  ) : (
+                    item.t
+                  )}
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </div>

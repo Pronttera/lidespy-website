@@ -27,23 +27,35 @@ export function ArrowCta({
   href,
   children,
   size = "md",
+  variant = "solid",
+  className = "",
 }: {
   href: string;
   children: ReactNode;
   size?: "sm" | "md";
+  /** `ghost` is the outlined twin for sitting beside a solid one on ink. */
+  variant?: "solid" | "ghost";
+  className?: string;
 }) {
   const box = size === "sm" ? "h-10 w-10 text-[16px]" : "h-12 w-12 text-[17px]";
   const pad = size === "sm" ? "py-1.5 pr-1.5 pl-[22px] text-[11px]" : "py-2 pr-2 pl-7 text-[13px]";
+  const ghost = variant === "ghost";
   return (
     <Link
       href={route(href)}
-      data-btn="red"
-      className={`inline-flex items-center gap-4 rounded-ui bg-brand-cta font-semibold tracking-[0.04em] text-white uppercase ${pad}`}
+      data-btn={ghost ? "ghost" : "red"}
+      className={`inline-flex items-center gap-4 rounded-ui font-semibold tracking-[0.04em] uppercase ${pad} ${
+        ghost
+          ? "bg-transparent text-cream shadow-[inset_0_0_0_1px_rgba(247,248,244,0.3)]"
+          : "bg-brand-cta text-white"
+      } ${className}`}
     >
       {children}
       <span
         data-chip
-        className={`inline-flex items-center justify-center rounded-ui bg-ink text-coral ${box}`}
+        className={`inline-flex items-center justify-center rounded-ui ${
+          ghost ? "bg-cream/10 text-cream" : "bg-ink text-coral"
+        } ${box}`}
       >
         <span className="inline-block">→</span>
       </span>

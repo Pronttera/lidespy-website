@@ -3,14 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
+import { loadHeroVideo, revealHeroVideo, subscribeHeroVideo } from "@/lib/hero-video";
 
 /**
  * The design's opening curtain: three red columns, the logo and words fading
- * up, a counter running to 100, then the content lifting out and the columns
- * wiping up in sequence. Ported one-for-one from the artboard's GSAP timeline.
+ * up, a counter tracking the hero video's download to 100, then the content
+ * lifting out and the columns wiping up in sequence.
  *
- * Scroll is locked while it plays. A hard fallback releases it after 3.6s so a
- * killed timeline can never leave the page frozen.
+ * Scroll is locked while it plays. A hard fallback releases it after 15s so a
+ * killed timeline or stalled download can never leave the page frozen.
  */
 export default function Splash() {
   const [done, setDone] = useState(false);
@@ -20,6 +21,7 @@ export default function Splash() {
   useEffect(() => {
     const release = () => {
       document.documentElement.style.overflow = "";
+      revealHeroVideo();
       setDone(true);
     };
 
@@ -35,32 +37,52 @@ export default function Splash() {
       return;
     }
 
-    // Hard fallback — never blocked by a killed timeline.
-    const kill = setTimeout(release, 3600);
+    // Hard fallback — never blocked by a killed timeline or a stalled
+    // download. The hero keeps loading behind the page if this fires.
+    const kill = setTimeout(release, 15000);
 
-    const counter = counterRef.current;
-    const n = { v: 0 };
-    const tl = gsap
-      .timeline({ onComplete: release })
+    loadHeroVideo();
+
+    const intro = gsap
+      .timeline()
       .to(splash.querySelector("[data-splash-logo]"), { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.1)
       .fromTo(splash.querySelector("[data-splash-logo]"), { y: 18, scale: 0.94 }, { y: 0, scale: 1, duration: 0.8, ease: "expo.out" }, 0.1)
       .to(splash.querySelectorAll("[data-splash-word]"), { opacity: 1, y: 0, duration: 0.5, stagger: 0.12, ease: "power2.out" }, 0.4)
       .fromTo(splash.querySelectorAll("[data-splash-side]"), { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: "power3.out" }, 0.55)
-      .fromTo(splash.querySelectorAll("[data-splash-word]"), { y: 10 }, { y: 0, duration: 0.5, stagger: 0.12 }, 0.4)
-      .to(n, {
-        v: 100,
-        duration: 1.4,
-        ease: "power2.inOut",
-        onUpdate: () => {
-          if (counter) counter.textContent = String(Math.round(n.v));
-        },
-      }, 0.2)
-      .to(splash.querySelector("[data-splash-content]"), { y: -30, opacity: 0, duration: 0.45, ease: "power3.in" }, 1.75)
-      .to(splash.querySelectorAll("[data-splash-col]"), { yPercent: -100, duration: 0.85, ease: "expo.inOut", stagger: 0.13 }, 1.95);
+      .fromTo(splash.querySelectorAll("[data-splash-word]"), { y: 10 }, { y: 0, duration: 0.5, stagger: 0.12 }, 0.4);
+
+    const exit = gsap
+      .timeline({ paused: true, onComplete: release })
+      .to(splash.querySelector("[data-splash-content]"), { y: -30, opacity: 0, duration: 0.45, ease: "power3.in" }, 0)
+      .to(splash.querySelectorAll("[data-splash-col]"), { yPercent: -100, duration: 0.85, ease: "expo.inOut", stagger: 0.13 }, 0.2);
+
+    // The counter chases the real download rather than a fixed tween, eased
+    // so a cached clip still counts up instead of snapping to 100. The
+    // curtain lifts once it reads 100 and the intro has finished.
+    const counter = counterRef.current;
+    let target = 0;
+    let shown = 0;
+    const unsubscribe = subscribeHeroVideo((s) => {
+      target = s.progress * 100;
+    });
+    const tick = () => {
+      shown += Math.max((target - shown) * 0.08, Math.min(0.4, target - shown));
+      if (target >= 100 && shown > 99.5) shown = 100;
+      if (counter) counter.textContent = String(Math.floor(shown));
+      if (shown === 100 && intro.progress() === 1) {
+        gsap.ticker.remove(tick);
+        revealHeroVideo();
+        exit.play();
+      }
+    };
+    gsap.ticker.add(tick);
 
     return () => {
       clearTimeout(kill);
-      tl.kill();
+      gsap.ticker.remove(tick);
+      unsubscribe();
+      intro.kill();
+      exit.kill();
       document.documentElement.style.overflow = "";
     };
   }, []);
