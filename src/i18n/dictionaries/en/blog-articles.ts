@@ -832,16 +832,16 @@ export const ARTICLES: Article[] = [
     ]
   },
   {
-    "slug": "in-house-vs-outsourced-appointment-setting",
+    "slug": "in-house-appointment-generation",
     "topic": "Outbound",
     "author": "Campaign team",
     "readTime": "3 min read",
-    "title": "In-House vs. Outsourced Appointment Setting: The Real 2026 Cost Comparison",
-    "description": "The salary line item for an in-house SDR isn't the real cost. Here's the fuller comparison B2B leaders are actually running in 2026 before deciding whether to build or outsource pipeline generation.",
+    "title": "In-House Appointment Generation: The Real 2026 Cost and How to Get It Right",
+    "description": "The salary line item for an in-house SDR isn't the real cost. Here's the fuller picture B2B leaders are running in 2026 before building an in-house appointment generation team.",
     "img": "photo-1542744173-8e7e53415bb0",
     "alt": "A sales team meeting around a table",
     "intro": [
-      "\"Should we hire an SDR or outsource appointment setting?\" gets answered too often by comparing a recruiter's salary estimate to an agency's monthly retainer, which is a comparison that leaves out most of the actual cost on both sides. Here's the fuller picture worth running before that decision."
+      "\"Should we hire an SDR team to book our meetings?\" gets answered too often by looking at a recruiter's salary estimate and nothing else — a number that leaves out most of what in-house appointment generation actually costs. Here's the fuller picture worth running before that decision."
     ],
     "sections": [
       {
@@ -859,26 +859,26 @@ export const ARTICLES: Article[] = [
         ]
       },
       {
-        "id": "what-outsourced-appointment-setting-actually-costs",
-        "title": "What outsourced appointment setting actually costs",
+        "id": "what-in-house-appointment-generation-gives-you",
+        "title": "What in-house appointment generation gives you",
         "blocks": [
           {
             "type": "p",
-            "text": "A managed appointment setting program typically costs meaningfully less than the fully-loaded cost of an equivalent in-house function, largely because the infrastructure — data, dialers, sequencing tools, trained callers — is already built and running across multiple clients instead of being stood up from zero for one team. Programs can also go live in a matter of weeks rather than the months an in-house hire needs to ramp, which matters most when there's a near-term pipeline gap to fill."
+            "text": "The return on that investment is control and product depth. A rep who sits in your Slack every day builds intuitive product knowledge, hears objections first-hand, and feeds what they learn straight back into messaging, positioning and the ICP itself."
           },
           {
             "type": "p",
-            "text": "The tradeoff is control and product depth. An outsourced team won't develop the same intuitive product knowledge as someone who sits in your Slack every day, and results depend heavily on how well the provider actually understands your ICP and message — not just how many dials they make."
+            "text": "It also compounds. The playbooks, call recordings, sequences and qualification criteria an in-house team builds stay with the company, and become the foundation for a much larger sales development function later."
           }
         ]
       },
       {
-        "id": "the-comparison-that-actually-matters",
-        "title": "The comparison that actually matters",
+        "id": "the-numbers-that-actually-matter",
+        "title": "The numbers that actually matter",
         "blocks": [
           {
             "type": "p",
-            "text": "Cost per hire vs. cost per retainer misses the point. The real comparison is:"
+            "text": "Headcount and salary miss the point. The numbers worth tracking are:"
           },
           {
             "type": "list",
@@ -889,34 +889,34 @@ export const ARTICLES: Article[] = [
               },
               {
                 "lead": "Time to first meaningful pipeline",
-                "text": "In-house ramp time vs. outsourced go-live time, weighed against how urgent the pipeline need actually is"
+                "text": "How long ramp takes, weighed against how urgent the pipeline need actually is"
               },
               {
-                "text": "Lead-to-opportunity conversion rate, tracked over the first 90 days for either option — this is where a mismatched provider or a slow-ramping hire both show up clearly"
+                "text": "Lead-to-opportunity conversion rate, tracked over each rep's first 90 days — this is where a slow ramp or a messaging gap shows up clearly"
               },
               {
                 "lead": "What your AEs are actually spending time on",
-                "text": "If closers are still doing their own prospecting, neither option is solving the real problem"
+                "text": "If closers are still doing their own prospecting, the team isn't solving the real problem yet"
               }
             ]
           }
         ]
       },
       {
-        "id": "when-each-option-actually-makes-sense",
-        "title": "When each option actually makes sense",
+        "id": "how-to-make-an-in-house-team-work",
+        "title": "How to make an in-house team work",
         "blocks": [
           {
             "type": "p",
-            "text": "In-house tends to win when your ICP is still being discovered, your sales motion is complex enough that product depth matters more than volume, or you're building toward a long-term team that will eventually run a much larger function."
+            "text": "In-house appointment generation works best when your ICP is still being discovered, your sales motion is complex enough that product depth matters more than volume, or you're building toward a long-term team that will eventually run a much larger function."
           },
           {
             "type": "p",
-            "text": "Outsourcing tends to win when you need pipeline moving faster than a hire-and-ramp cycle allows, when appointment setting is a clearly defined, repeatable motion rather than something evolving weekly, or when the true fully-loaded cost of building the function in-house doesn't pencil out yet at your current pipeline needs."
+            "text": "Give it the conditions to succeed: verified contact data from day one, a documented qualification standard agreed with sales, realistic ramp targets, and a clear career path so the reps you train stay long enough to pay back that investment."
           },
           {
             "type": "p",
-            "text": "Plenty of companies land on a hybrid — a lean in-house team handling the accounts that need real product depth, with an outsourced partner running volume on the rest. The honest version of this decision isn't \"build vs. buy\" as a permanent choice. It's \"which one fits where we are right now,\" revisited as the pipeline need changes."
+            "text": "The honest version of this decision isn't a one-off hire. It's a function you design, measure on qualified pipeline, and revisit as the pipeline need changes."
           }
         ]
       }

@@ -42,6 +42,9 @@ DirectoryIndex index.html
   RewriteRule ^en/?$ / [R=301,L]
   RewriteRule ^en/(.*)$ /$1 [R=301,L]
 
+  # Renamed blog article.
+  RewriteRule ^blog/in-house-vs-outsourced-appointment-setting/?$ /blog/in-house-appointment-generation [R=301,L]
+
   # Serve real files — including the React payload .txt files — untouched.
   RewriteCond %{REQUEST_FILENAME} -f
   RewriteRule ^ - [L]

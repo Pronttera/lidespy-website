@@ -161,7 +161,7 @@ export const QUOTES = [
 export const POSTS = [
   "real-cost-of-bad-b2b-data",
   "b2b-data-compliance-checklist-2026",
-  "in-house-vs-outsourced-appointment-setting",
+  "in-house-appointment-generation",
 ].map((slug) => {
   const p = BLOG_POSTS.find((post) => post.slug === slug)!;
   return {
