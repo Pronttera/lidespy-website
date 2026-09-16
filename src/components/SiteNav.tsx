@@ -22,7 +22,7 @@ export default function SiteNav({ active }: { active?: MegaKey }) {
   const [mobileSection, setMobileSection] = useState<MegaKey | null>(null);
   const headerRef = useRef<HTMLElement>(null);
 
-  /* Publish the sticky header's height as --nav-h so full-viewport sections
+  /* Publish the fixed header's height as --nav-h so full-viewport sections
      below it can size themselves to the space that is actually left. */
   useEffect(() => {
     const el = headerRef.current;
@@ -76,10 +76,14 @@ export default function SiteNav({ active }: { active?: MegaKey }) {
   const svc = menu.items[Math.min(activeSvc, menu.items.length - 1)];
 
   return (
+    <>
+    {/* Fixed, not sticky: it stays pinned whatever its ancestors do. The
+        spacer below holds its place in the flow at the measured height
+        (--nav-h), with the rendered heights as pre-hydration fallbacks. */}
     <header
       ref={headerRef}
       onMouseLeave={() => setMega(null)}
-      className="sticky top-0 z-60 bg-cream border-b border-ink/15"
+      className="fixed inset-x-0 top-0 z-60 bg-cream border-b border-ink/15"
     >
       <nav className="mx-auto flex max-w-[1280px] items-center justify-between gap-3 page-x py-3.5 sm:gap-6 sm:py-[18px] lg:grid lg:grid-cols-[auto_1fr_auto]">
         <Link href={route("Lidespy Home.dc.html")} className="flex items-center">
@@ -337,5 +341,7 @@ export default function SiteNav({ active }: { active?: MegaKey }) {
         </div>
       )}
     </header>
+    <div aria-hidden className="h-[var(--nav-h,70px)] sm:h-[var(--nav-h,87px)]" />
+    </>
   );
 }
