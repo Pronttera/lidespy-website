@@ -54,13 +54,13 @@ export const STEPS = [
 
 export const HOME_SERVICES = [
   { img: "https://images.unsplash.com/photo-1686061593213-98dad7c599b9?auto=format&fit=crop&w=800&q=70",
-    tag: "Data", title: "Verified contact data & database building",
+    tag: "ABM", title: "Verified contact data & database building",
     body: "ICP-mapped databases built from scratch or enriched from your CRM — every record verified before it reaches a sequence." },
   { img: "https://images.unsplash.com/photo-1622675363311-3e1904dc1885?auto=format&fit=crop&w=800&q=70",
     tag: "Content Syndication", title: "Content syndication",
     body: "Put your assets in front of your ICP and turn engagement into verified, sales-ready leads." },
   { img: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=70",
-    tag: "Cleansing", title: "Database cleansing & enrichment",
+    tag: "GTM", title: "Database cleansing & enrichment",
     body: "Dedupe, re-verify and enrich the data you already own. Cut bounce, restore deliverability, keep legal comfortable." },
   { img: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=70",
     tag: "Demand Gen", title: "Demand generation",
