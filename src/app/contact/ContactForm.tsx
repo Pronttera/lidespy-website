@@ -4,9 +4,6 @@ import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronDown } from "@/components/icons";
 import { route } from "@/lib/routes";
-import DIAL_CODES from "@/data/dial-codes.json";
-import CountryCombobox, { type Country } from "./CountryCombobox";
-import { flag } from "./flag";
 import { CONTACT } from "@/i18n/dictionaries/en/contact";
 import {
   EMPTY_ENQUIRY,
@@ -38,7 +35,6 @@ const FIELDS = [
     placeholder: T.emailPlaceholder,
   },
   { name: "company", type: "text", autoComplete: "organization" },
-  { name: "title", type: "text", autoComplete: "organization-title" },
 ] as const satisfies readonly {
   name: EnquiryField;
   type: string;
@@ -84,17 +80,6 @@ export default function ContactForm() {
   const blur = (name: EnquiryField) =>
     setTouched((t) => (t[name] ? t : { ...t, [name]: true }));
 
-  // Choosing a country is a strong enough signal to move the dial code with it.
-  const pickCountry = (country: Country) => {
-    const dial = DIAL_CODES.find((d) => d.iso === country.iso)?.dial;
-    setValues((v) => ({
-      ...v,
-      country: country.name,
-      dialCode: dial ?? v.dialCode,
-    }));
-    blur("country");
-  };
-
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitted(true);
@@ -134,10 +119,7 @@ export default function ContactForm() {
           firstName: values.firstName,
           lastName: values.lastName,
           email: values.email,
-          phone: `${values.dialCode} ${values.phone}`,
           company: values.company,
-          title: values.title,
-          country: values.country,
           interest: values.interest,
           goals: values.goals,
           source: "Contact form",
@@ -210,8 +192,6 @@ export default function ContactForm() {
         : null;
 
   const goalsLeft = MAX_LENGTHS.goals - values.goals.length;
-  const dialCountry =
-    DIAL_CODES.find((c) => c.dial === values.dialCode) ?? DIAL_CODES[0];
 
   return (
     <form
@@ -252,74 +232,6 @@ export default function ContactForm() {
             </label>
           );
         })}
-
-        <label className="flex flex-col gap-[7px]">
-          <span className="text-[12px] font-semibold">
-            {FIELD_LABELS.country}
-          </span>
-          <CountryCombobox
-            value={values.country}
-            error={shownError("country")}
-            className={`${inputClass} ${shownError("country") ? errorClass : ""}`}
-            onChange={(v) => change("country", v)}
-            onPick={pickCountry}
-            onBlur={() => blur("country")}
-          />
-          {shownError("country") && (
-            <ErrorText id="country-error">{shownError("country")!}</ErrorText>
-          )}
-        </label>
-
-        {/* Country code and number are one control: the code is a native
-            select (so phones get their own picker) sitting under a label we
-            draw ourselves, which keeps the closed state to "🇮🇳 +91". */}
-        <label className="flex flex-col gap-[7px] sm:col-span-2">
-          <span className="text-[12px] font-semibold">
-            {FIELD_LABELS.phone}
-          </span>
-          <div
-            className={`flex items-stretch overflow-hidden rounded-ui border bg-cream focus-within:outline-2 focus-within:-outline-offset-1 focus-within:outline-brand ${
-              shownError("phone") || shownError("dialCode")
-                ? "border-brand-cta bg-brand-cta/5"
-                : "border-ink/20"
-            }`}
-          >
-            <div className="relative flex shrink-0 items-center gap-1.5 border-r border-ink/15 px-3.5 text-[14px] text-ink">
-              <span aria-hidden className="text-[15px] leading-none">
-                {flag(dialCountry.iso)}
-              </span>
-              <span aria-hidden className="tabular-nums">
-                {values.dialCode}
-              </span>
-              <ChevronDown size={10} aria-hidden className="text-muted-3" />
-              <select
-                name="dialCode"
-                value={values.dialCode}
-                aria-label={FIELD_LABELS.dialCode}
-                onChange={(e) => change("dialCode", e.target.value)}
-                className="absolute inset-0 cursor-pointer opacity-0"
-              >
-                {DIAL_CODES.map((c) => (
-                  <option key={c.iso} value={c.dial}>
-                    {`${flag(c.iso)}  ${c.name} (${c.dial})`}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <input
-              {...fieldProps("phone")}
-              type="tel"
-              autoComplete="tel-national"
-              inputMode="tel"
-              placeholder={T.phonePlaceholder}
-              onChange={(e) => change("phone", e.target.value)}
-              className="min-w-0 flex-1 bg-transparent px-3.5 py-[13px] text-[14px] text-ink outline-none"
-            />
-          </div>
-          {shownError("phone") && (
-            <ErrorText id="phone-error">{shownError("phone")!}</ErrorText>
-          )}
-        </label>
       </div>
 
       <label className="flex flex-col gap-[7px]">

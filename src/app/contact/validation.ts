@@ -4,8 +4,6 @@
  * Apps Script re-checks what it needs, because a hand-rolled POST never went
  * near this file.
  */
-import COUNTRIES from "@/data/countries.json";
-import DIAL_CODES from "@/data/dial-codes.json";
 import { CONTACT } from "@/i18n/dictionaries/en/contact";
 
 const E = CONTACT.form.errors;
@@ -15,10 +13,6 @@ export const ENQUIRY_FIELDS = [
   "lastName",
   "email",
   "company",
-  "title",
-  "country",
-  "dialCode",
-  "phone",
   "interest",
   "goals",
 ] as const;
@@ -32,10 +26,6 @@ export const EMPTY_ENQUIRY: EnquiryValues = {
   lastName: "",
   email: "",
   company: "",
-  title: "",
-  country: "",
-  dialCode: "+1",
-  phone: "",
   interest: "",
   goals: "",
 };
@@ -52,10 +42,6 @@ export const MAX_LENGTHS: Record<EnquiryField, number> = {
   lastName: 80,
   email: 160,
   company: 160,
-  title: 120,
-  country: 80,
-  dialCode: 6,
-  phone: 24,
   interest: 80,
   goals: 4000,
 };
@@ -69,8 +55,6 @@ const MIN_LENGTHS: Partial<Record<EnquiryField, number>> = {
   firstName: 2,
   lastName: 2,
   company: 2,
-  title: 2,
-  country: 2,
   goals: 10,
 };
 
@@ -79,14 +63,8 @@ const MIN_LENGTHS: Partial<Record<EnquiryField, number>> = {
  * turns up in real names and places — O’Neill, Jean-Luc, St. Louis.
  */
 const NAME = /^\p{L}[\p{L}\p{M} .'’-]*$/u;
-/** Company and job titles also carry digits and a little more punctuation. */
+/** Company names also carry digits and a little more punctuation. */
 const ORG = /^[\p{L}\p{N}][\p{L}\p{M}\p{N} .,'’&()/+-]*$/u;
-/** Every country the field offers, as the field spells them. */
-const COUNTRY_NAMES = new Set(COUNTRIES.map((c) => c.name));
-/** Every dial code the select offers — "+1" appears once per country. */
-const DIALS = new Set(DIAL_CODES.map((c) => c.dial));
-/** What people actually type: digits, with spaces, dashes, dots or brackets. */
-const PHONE_SHAPE = /^[\d ().-]+$/;
 
 const EMAIL = /^[^\s@,]+@[^\s@,.]+(\.[^\s@,.]+)*\.[A-Za-z]{2,}$/;
 
@@ -94,7 +72,6 @@ const PATTERNS: Partial<Record<EnquiryField, { re: RegExp; message: string }>> =
   firstName: { re: NAME, message: E.name },
   lastName: { re: NAME, message: E.name },
   company: { re: ORG, message: E.org },
-  title: { re: ORG, message: E.org },
 };
 
 const fill = (template: string, vars: Record<string, string | number>) =>
@@ -131,17 +108,6 @@ export function validateField(
   if (min && value.length < min) return fill(E.tooShort, { label, min });
 
   if (name === "email" && !EMAIL.test(value)) return E.email;
-
-  if (name === "country" && !COUNTRY_NAMES.has(value)) return E.country;
-
-  if (name === "dialCode" && !DIALS.has(value)) return E.dialCode;
-
-  if (name === "phone") {
-    const digits = value.replace(/\D/g, "");
-    if (!PHONE_SHAPE.test(value) || digits.length < 6 || digits.length > 14) {
-      return E.phone;
-    }
-  }
 
   // The select is an allow-list: anything else reached us around the form.
   if (name === "interest" && !CONTACT.form.interests.includes(value)) {

@@ -30,13 +30,8 @@ export const CONTACT = {
       lastName: "Last name",
       email: "Work email",
       company: "Company name",
-      title: "Job title",
-      country: "Country",
-      dialCode: "Country code",
-      phone: "Phone number",
     },
     emailPlaceholder: "you@company.com",
-    phonePlaceholder: "98765 43210",
     interestLabel: "What are you interested in?",
     interestPlaceholder: "Select a service",
     interests: [
@@ -62,9 +57,6 @@ export const CONTACT = {
       name: "{label} can only contain letters, spaces, hyphens and apostrophes.",
       org: "{label} contains characters we can’t accept.",
       email: "Enter a valid email address, like you@company.com.",
-      phone: "Enter a valid phone number — digits only, 6 to 14 of them.",
-      dialCode: "Choose a country code.",
-      country: "Pick a country from the list.",
       interest: "Choose one of the listed services.",
       interestRequired: "Choose the service you’re interested in.",
       /** The banner above the form. `{n}` is how many fields need attention. */
