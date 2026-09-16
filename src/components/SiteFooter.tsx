@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { hasServicePage, route, serviceHref } from "@/lib/routes";
 import { ArrowUpRight } from "./icons";
+import { CookieSettingsButton } from "./CookieConsent";
 import OptOutDialog from "./OptOutDialog";
 
 const COLUMNS: { title: string; links: { label: string; href: string; accent?: boolean }[] }[] = [
@@ -141,6 +142,7 @@ export default function SiteFooter() {
               {l.label}
             </Link>
           ))}
+          <CookieSettingsButton className="cursor-pointer text-muted-2 transition-colors hover:text-brand" />
           <OptOutDialog />
         </div>
       </div>
