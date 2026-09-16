@@ -23,7 +23,7 @@ const T = CONTACT.form;
  * as form-encoded values, which keeps it a "simple" request and so avoids the
  * CORS preflight Apps Script cannot answer.
  */
-const ENDPOINT = process.env.NEXT_PUBLIC_ENQUIRY_ENDPOINT;
+import { SHEET_ENDPOINT, postToSheet } from "@/lib/sheet-endpoint";
 
 const FIELDS = [
   { name: "firstName", type: "text", autoComplete: "given-name" },
@@ -103,7 +103,7 @@ export default function ContactForm() {
       return;
     }
 
-    if (!ENDPOINT) {
+    if (!SHEET_ENDPOINT) {
       setStatus("error");
       setErrorMessage(T.errors.notConfigured);
       return;
@@ -113,19 +113,15 @@ export default function ContactForm() {
     setErrorMessage(null);
     try {
       // Field order is the Apps Script's business; it maps names to columns.
-      const response = await fetch(ENDPOINT, {
-        method: "POST",
-        body: new URLSearchParams({
-          firstName: values.firstName,
-          lastName: values.lastName,
-          email: values.email,
-          company: values.company,
-          interest: values.interest,
-          goals: values.goals,
-          source: "Contact form",
-        }),
+      await postToSheet({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        company: values.company,
+        interest: values.interest,
+        goals: values.goals,
+        source: "Contact form",
       });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
       setSentName(values.firstName);
       setStatus("sent");
     } catch (error) {

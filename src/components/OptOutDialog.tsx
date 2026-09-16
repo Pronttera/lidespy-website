@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Check, Close } from "./icons";
+import { SHEET_ENDPOINT, postToSheet } from "@/lib/sheet-endpoint";
 
 /**
  * The opt-out / unsubscribe control in the footer.
@@ -13,8 +14,6 @@ import { Check, Close } from "./icons";
  * answer, and `action=optout` is what tells the script to delete rather than
  * append.
  */
-const ENDPOINT = process.env.NEXT_PUBLIC_ENQUIRY_ENDPOINT;
-
 const COPY = {
   trigger: "Opt-out / Unsubscribe",
   title: "Opt out of our database",
@@ -104,7 +103,7 @@ export default function OptOutDialog() {
     setFieldErrors(errors);
     if (Object.keys(errors).length > 0) return;
 
-    if (!ENDPOINT) {
+    if (!SHEET_ENDPOINT) {
       setToast({ tone: "error", text: COPY.errors.notConfigured });
       return;
     }
@@ -112,18 +111,11 @@ export default function OptOutDialog() {
     setStatus("sending");
     setToast(null);
     try {
-      const response = await fetch(ENDPOINT, {
-        method: "POST",
-        body: new URLSearchParams({
-          action: "optout",
-          fullName: name.trim(),
-          email: email.trim(),
-        }),
+      await postToSheet({
+        action: "optout",
+        fullName: name.trim(),
+        email: email.trim(),
       });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-      const result: { ok?: boolean } = await response.json();
-      if (!result.ok) throw new Error("script reported a failure");
 
       close();
       setToast({ tone: "success", text: COPY.done });
