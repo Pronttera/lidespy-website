@@ -76,9 +76,8 @@ function doGet() {
 /**
  * Deletes every row whose email matches, and reports how many went.
  *
- * A request that matches nothing is not an error — the caller shows the visitor
- * a "we have no record of that address" message off `removed: 0`, so the two
- * outcomes have to stay distinguishable.
+ * The request is logged even when nothing matched, so an address we have never
+ * held is still on record as opted out.
  */
 function optOut(params) {
   const email = String(params.email || '').trim().toLowerCase();
@@ -86,29 +85,26 @@ function optOut(params) {
 
   const target = sheet();
   const lastRow = target.getLastRow();
-  // Row 1 is the header, so there is nothing to scan until row 2 exists.
-  if (lastRow < 2) return json({ ok: true, removed: 0 });
-
-  const emailColumn = COLUMNS.indexOf('email') + 1;
-  const values = target
-    .getRange(2, emailColumn, lastRow - 1, 1)
-    .getValues();
 
   // Collected first and deleted from the bottom up, so removing one row never
-  // shifts the index of another still on the list.
+  // shifts the index of another still on the list. Row 1 is the header.
   const matches = [];
-  for (let i = 0; i < values.length; i++) {
-    if (String(values[i][0] || '').trim().toLowerCase() === email) {
-      matches.push(i + 2);
+  if (lastRow >= 2) {
+    const emailColumn = COLUMNS.indexOf('email') + 1;
+    const values = target
+      .getRange(2, emailColumn, lastRow - 1, 1)
+      .getValues();
+    for (let i = 0; i < values.length; i++) {
+      if (String(values[i][0] || '').trim().toLowerCase() === email) {
+        matches.push(i + 2);
+      }
+    }
+    for (let i = matches.length - 1; i >= 0; i--) {
+      target.deleteRow(matches[i]);
     }
   }
-  for (let i = matches.length - 1; i >= 0; i--) {
-    target.deleteRow(matches[i]);
-  }
 
-  if (matches.length > 0) {
-    logOptOut(params, email, matches.length);
-  }
+  logOptOut(params, email, matches.length);
   return json({ ok: true, removed: matches.length });
 }
 

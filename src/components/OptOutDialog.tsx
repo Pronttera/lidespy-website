@@ -27,12 +27,10 @@ const COPY = {
   submit: "Remove my data",
   submitting: "Removing…",
   close: "Close",
-  done: "You have been removed. Every record matching that email has been deleted from our database.",
+  done: "You have been opted out. Any record matching that email has been deleted, and we will not contact you again.",
   errors: {
     name: "Enter the full name on the record.",
     email: "Enter a valid email address.",
-    notFound:
-      "We could not find that email in our database — nothing to remove. Check the spelling, or email info@lidespy.com.",
     failed:
       "Something went wrong on our side. Please email info@lidespy.com and we will remove your data by hand.",
     notConfigured:
@@ -64,18 +62,23 @@ export default function OptOutDialog() {
   // Esc closes, and the page behind must not scroll under the panel.
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-    };
-    document.addEventListener("keydown", onKey);
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     firstFieldRef.current?.focus();
     return () => {
-      document.removeEventListener("keydown", onKey);
       document.body.style.overflow = previous;
     };
   }, [open]);
+
+  // A request in flight has to finish before the popup can be dismissed.
+  useEffect(() => {
+    if (!open || status === "sending") return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open, status]);
 
   // A toast that never leaves is a banner; this one has ten seconds.
   useEffect(() => {
@@ -119,16 +122,8 @@ export default function OptOutDialog() {
       });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-      const result: { ok?: boolean; removed?: number } = await response.json();
+      const result: { ok?: boolean } = await response.json();
       if (!result.ok) throw new Error("script reported a failure");
-
-      // No matching row is the one outcome the visitor has to act on: their
-      // data is under a different address than the one they just typed.
-      if (!result.removed) {
-        setStatus("idle");
-        setToast({ tone: "error", text: COPY.errors.notFound });
-        return;
-      }
 
       close();
       setToast({ tone: "success", text: COPY.done });
@@ -182,15 +177,16 @@ export default function OptOutDialog() {
           aria-labelledby="optout-title"
           className="fixed inset-0 z-70 flex items-end justify-center bg-ink/55 p-4 backdrop-blur-[2px] sm:items-center"
           onMouseDown={(e) => {
-            if (e.target === e.currentTarget) close();
+            if (e.target === e.currentTarget && status !== "sending") close();
           }}
         >
           <div className="relative w-full max-w-[440px] rounded-card border border-ink/12 bg-white p-[clamp(22px,3vw,32px)]">
             <button
               type="button"
               onClick={close}
+              disabled={status === "sending"}
               aria-label={COPY.close}
-              className="absolute top-4 right-4 cursor-pointer rounded-ui p-1.5 text-muted-3 transition-colors hover:bg-panel hover:text-ink"
+              className="absolute top-4 right-4 cursor-pointer rounded-ui p-1.5 text-muted-3 transition-colors hover:bg-panel hover:text-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent"
             >
               <Close size={12} />
             </button>
