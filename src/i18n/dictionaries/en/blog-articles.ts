@@ -1067,6 +1067,392 @@ export const ARTICLES: Article[] = [
         ]
       }
     ]
+  },
+  {
+    "slug": "audience-intelligence-explained",
+    "topic": "Intent data",
+    "author": "Research team",
+    "readTime": "3 min read",
+    "title": "Audience Intelligence Explained: Spotting High-Intent B2B Accounts Before the Form Fill",
+    "description": "Most B2B teams only see intent after a form fill. Here's how audience intelligence surfaces buying signals earlier, and how to act on them without overreaching.",
+    "img": "photo-1551288049-bebda4e38f71",
+    "alt": "A dashboard showing account engagement signals across channels",
+    "intro": [
+      "By the time a prospect fills out a form, they've usually been researching for weeks. They've read comparison content, checked pricing pages, maybe asked a peer group for recommendations — and your CRM has none of it. The form fill is the last visible step in a buying journey that was mostly invisible to you. Audience intelligence exists to close that gap: not by predicting intent from a single data point, but by building a fuller picture of who's actually in-market before they raise a hand."
+    ],
+    "sections": [
+      {
+        "id": "how-its-different-from-intent-data-alone",
+        "title": "How it's different from intent data alone",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Third-party intent data tells you a company is researching topics related to what you sell. That's useful, but it's also thin on its own — it tells you almost nothing about who at that company matters, what they've engaged with directly, or where they sit in a buying committee. Audience intelligence layers that signal with firmographic fit, engagement history across your own channels, and role-level detail, so \"this account is showing intent\" becomes \"these three people at this account, in these roles, have engaged with this specific topic twice this month.\""
+          },
+          {
+            "type": "p",
+            "text": "The distinction matters because intent data alone drives a lot of wasted outreach — teams buy an intent feed, get a list of \"surging\" accounts, and blast generic outreach at all of them with no sense of who to actually talk to."
+          }
+        ]
+      },
+      {
+        "id": "what-good-audience-intelligence-actually-tracks",
+        "title": "What good audience intelligence actually tracks",
+        "blocks": [
+          {
+            "type": "list",
+            "items": [
+              {
+                "text": "Content engagement patterns, not just visits — which specific assets someone came back to, and whether they moved from top-of-funnel content into something more evaluative."
+              },
+              {
+                "text": "Role and seniority mapping, so a signal from a VP of Sales carries different weight than the same signal from an individual contributor researching for a report."
+              },
+              {
+                "text": "Cross-channel corroboration — a webinar registration plus a pricing page visit plus a LinkedIn engagement from the same account is a materially stronger signal than any one of those alone."
+              },
+              {
+                "text": "Recency and frequency, since intent decays. An account that showed a burst of activity six weeks ago and nothing since is a different priority than one that's been engaging steadily this week."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "using-it-without-over-investing",
+        "title": "Using it without over-investing",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "The trap most teams fall into is treating every \"high-intent\" flag as a reason to run full ABM outreach. That's expensive and it doesn't scale. A more workable tiering: accounts with strong, corroborated, recent signal get a personalized, multi-touch sequence; accounts with a single weak signal get added to a lighter nurture track; accounts with no signal stay in general demand gen. Audience intelligence is most valuable as a prioritization layer on top of a program you're already running, not a replacement for having one."
+          }
+        ]
+      },
+      {
+        "id": "the-bottom-line",
+        "title": "The bottom line",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Intent data tells you a company might be looking. Audience intelligence tells you who's looking, how seriously, and what they've actually engaged with — which is the difference between outreach that reads as coincidentally well-timed and outreach that reads as a cold guess. Build the layering before you build the volume."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "b2b-cold-email-deliverability-2026",
+    "topic": "Data",
+    "author": "Research team",
+    "readTime": "3 min read",
+    "title": "Email Deliverability in 2026: Why Your Cold Outbound Is Landing in Spam",
+    "description": "Good copy doesn't matter if it never reaches the inbox. Here's what's actually driving B2B cold email deliverability problems in 2026, and the fixes that work.",
+    "img": "photo-1557200134-90327ee9fafa",
+    "alt": "An email inbox with several messages flagged as spam",
+    "intro": [
+      "Teams spend weeks on subject lines, sequencing, and personalization, then wonder why replies dried up — without checking whether the emails ever reached an inbox at all. Deliverability is the least glamorous part of outbound and the most common reason a genuinely good campaign underperforms. Mailbox providers got sharper in 2026, and a lot of B2B senders haven't caught up."
+    ],
+    "sections": [
+      {
+        "id": "the-infrastructure-problem-most-teams-ignore",
+        "title": "The infrastructure problem most teams ignore",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Every sending domain has a reputation, and that reputation is built or damaged by every email sent from it — including ones sent years ago by someone who's no longer at the company. Common, avoidable causes of a damaged reputation:"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "text": "Sending cold outbound from the primary company domain, so one bad sequence risks the same domain your invoices and support emails rely on."
+              },
+              {
+                "text": "Skipping domain warm-up on a new sending domain — mailbox providers trust volume that ramps gradually, not a domain that goes from zero to a thousand sends a day in week one."
+              },
+              {
+                "text": "Missing or misconfigured SPF, DKIM, and DMARC records, which mailbox providers increasingly treat as a baseline trust signal rather than a nice-to-have."
+              },
+              {
+                "text": "High bounce rates from unverified lists, which is as much a deliverability issue as a data-quality one — every hard bounce tells the receiving server your sender is careless with its list."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "what-actually-restores-inbox-placement",
+        "title": "What actually restores inbox placement",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Fixing deliverability is mostly about discipline, not a single silver-bullet setting:"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "text": "Use dedicated sending domains for cold outbound, separate from your primary domain, so a reputation hit doesn't touch email your whole company depends on."
+              },
+              {
+                "text": "Warm up every new domain and mailbox over 2–4 weeks with gradually increasing, genuinely varied send volume before running it at full campaign pace."
+              },
+              {
+                "text": "Verify every record before it's sent to, not after a bounce report comes back — the point is to never send to a dead or invalid address in the first place."
+              },
+              {
+                "text": "Rotate and monitor sending domains across a pool rather than running everything through one, so no single domain absorbs the full volume of an aggressive campaign."
+              },
+              {
+                "text": "Watch spam complaint rates, not just opens, since open-rate tracking has gotten less reliable since major providers started pre-fetching images — complaint and bounce rates are the more honest signal."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "the-part-thats-easy-to-miss",
+        "title": "The part that's easy to miss",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Deliverability isn't a one-time setup. A domain that was warmed up properly six months ago can still slide if send volume spikes suddenly, if list hygiene slips, or if a new team member starts a sequence without checking existing sender limits. Ongoing monitoring — checking blocklist status, complaint rates, and inbox placement on a rolling basis — matters as much as getting the initial setup right."
+          }
+        ]
+      },
+      {
+        "id": "the-bottom-line",
+        "title": "The bottom line",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "No amount of copywriting fixes a deliverability problem, because the recipient never sees the copy. If reply rates have dropped and open rates look suspiciously flat across the board, check inbox placement before touching the sequence. The fix is almost always in the infrastructure, not the message."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "b2b-lead-scoring-model",
+    "topic": "Demand gen",
+    "author": "Research team",
+    "readTime": "3 min read",
+    "title": "Lead Scoring Models That Actually Predict Sales-Ready Accounts",
+    "description": "Most B2B lead scoring models score activity, not intent to buy. Here's how to build one that actually predicts which accounts are sales-ready.",
+    "img": "photo-1526628953301-3e589a6a8b74",
+    "alt": "A lead scoring dashboard ranking accounts by readiness",
+    "intro": [
+      "Most lead scoring models measure the wrong thing well. They track form fills, email opens, and page visits with precision, then add them up into a number that's supposed to mean \"sales-ready\" — but activity isn't intent, and a model built only on activity tends to hand sales a pile of downloaded-the-ebook leads that go nowhere. Building a model that actually predicts readiness takes a different starting point."
+    ],
+    "sections": [
+      {
+        "id": "start-from-closed-won-not-from-the-funnel",
+        "title": "Start from closed-won, not from the funnel",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "The common mistake is designing a scoring model around the stages marketing thinks matter — visited pricing, downloaded a guide, attended a webinar — without ever checking whether those actions actually preceded the deals that closed. The better starting point is to pull your last 12–24 months of closed-won deals and reverse-engineer what those accounts actually did before they became opportunities. Sometimes the strongest predictor is a channel nobody weighted heavily, and sometimes an action everyone assumed mattered — like a whitepaper download — barely correlates with anything."
+          }
+        ]
+      },
+      {
+        "id": "weight-fit-and-behavior-separately",
+        "title": "Weight fit and behavior separately",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "A lead score is really two different questions mashed into one number: does this account fit our ICP, and is this account behaving like it's ready to buy? Collapsing both into a single score hides useful information. A model that scores fit and behavior separately lets you route leads more precisely — a perfect-fit account showing early research behavior gets a different treatment than a poor-fit account with high activity, even if their combined scores land in the same range."
+          }
+        ]
+      },
+      {
+        "id": "build-in-decay",
+        "title": "Build in decay",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Intent isn't permanent. An account that engaged heavily two months ago and has gone quiet since is a worse bet than one that engaged moderately this week. Most static scoring models don't account for this — points accumulate and never disappear, so an account can sit at a \"hot\" score long after it's actually cooled off. Adding time decay to behavioral points, so older activity contributes less than recent activity, keeps the score closer to reality."
+          }
+        ]
+      },
+      {
+        "id": "validate-against-what-sales-actually-says",
+        "title": "Validate against what sales actually says",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "The model isn't finished at launch. The fastest way to tell whether it's working is to sit with the sales team monthly and compare: which \"sales-ready\" leads did they actually want, and which ones did they immediately disqualify? Patterns show up quickly — certain firmographic combinations that score well but never convert, certain lower-scoring signals that sales says are actually strong indicators. Feed that back into the weighting rather than treating the initial model as fixed."
+          }
+        ]
+      },
+      {
+        "id": "the-bottom-line",
+        "title": "The bottom line",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "A lead scoring model earns trust from sales by being right more often than it's wrong, and it stays right by being checked against real outcomes, not left running on assumptions from the day it launched. Score fit and intent separately, weight recent behavior over old behavior, and validate the whole thing against what closed — not just what happened along the way."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "b2b-webinar-lead-generation-2026",
+    "topic": "Demand gen",
+    "author": "Research team",
+    "readTime": "3 min read",
+    "title": "B2B Webinars in 2026: Turning Registrants Into Pipeline",
+    "description": "A packed registrant list means nothing if nobody shows up ready to buy. Here's how B2B teams are running webinars that actually produce pipeline in 2026.",
+    "img": "photo-1540575467063-178a50c2df87",
+    "alt": "A B2B webinar presentation with an engaged live audience panel",
+    "intro": [
+      "A webinar with 400 registrants sounds like a win right up until the show-up rate comes in under 20% and most of those attendees turn out to be existing customers who registered out of habit. Registrant count is the easiest webinar metric to report and the least connected to pipeline. The teams still getting real meetings out of webinars in 2026 have stopped optimizing for the number that looks good in a recap deck."
+    ],
+    "sections": [
+      {
+        "id": "promote-to-the-right-list-not-the-biggest-one",
+        "title": "Promote to the right list, not the biggest one",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "The instinct is to blast the invite to the whole database, because more registrants feels like more opportunity. In practice, a promotion list weighted toward your actual ICP — even if it's smaller — produces more usable pipeline than a broad blast padded with people who will never buy. If your registrant list looks a lot like your customer list plus a stack of students and job-seekers, the promotion targeting is the problem, not the topic."
+          }
+        ]
+      },
+      {
+        "id": "design-the-content-for-buyers-not-for-attendance",
+        "title": "Design the content for buyers, not for attendance",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Webinars that pull a wide, low-intent audience tend to have broad,101-level titles. Webinars that pull a narrower, higher-intent audience tend to get specific — a named problem, a named methodology, sometimes a customer walking through their own numbers. The narrower version will always register fewer people. It will also convert a meaningfully higher share of them into sales conversations, because the people who show up chose to be there for a reason that matches what you sell."
+          }
+        ]
+      },
+      {
+        "id": "treat-no-shows-and-attendees-as-two-different-follow-up-tracks",
+        "title": "Treat no-shows and attendees as two different follow-up tracks",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "This is where most of the lost pipeline actually happens. Sending every registrant the same generic \"thanks for attending\" recap ignores that no-shows and attendees are different audiences with different next steps:"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "text": "Attendees who stayed to the end are your highest-priority follow-up — a direct, personal outreach referencing what they specifically asked or reacted to, sent within a day or two."
+              },
+              {
+                "text": "Attendees who dropped early registered enough interest to show up, but something didn't hold them — worth a lighter follow-up with the specific segment of content they saw."
+              },
+              {
+                "text": "No-shows are not dead leads. Routing them into their own short sequence, with the recording and a specific reason to still engage, regularly recovers a meaningful share of registrants who had real intent but a scheduling conflict."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "measure-meetings-booked-not-registrant-count",
+        "title": "Measure meetings booked, not registrant count",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "If the only number reported after a webinar is registrants, the program will keep optimizing for registrants. Reporting meetings booked, opportunities created, and pipeline sourced — even if those numbers are smaller and less impressive in a slide — is what keeps the program pointed at revenue instead of vanity attendance."
+          }
+        ]
+      },
+      {
+        "id": "the-bottom-line",
+        "title": "The bottom line",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "A webinar isn't a lead gen channel by itself — it's a moment that creates a reason to follow up, and the follow-up is where the pipeline actually gets built. Promote narrower, design for the buyer instead of the crowd, and split your follow-up by whether someone showed up, not just whether they registered."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "linkedin-outbound-2026",
+    "topic": "Outbound",
+    "author": "Campaign team",
+    "readTime": "3 min read",
+    "title": "LinkedIn Outbound in 2026: Does Social Selling Actually Convert for B2B?",
+    "description": "LinkedIn connection limits and algorithm changes shifted reply rates in 2026. Here's what's actually converting in B2B social selling, and how it pairs with email.",
+    "img": "photo-1563986768609-322da13575f3",
+    "alt": "A sales rep reviewing LinkedIn outreach on a laptop",
+    "intro": [
+      "Every SDR team has a LinkedIn Sales Navigator seat nobody's quite sure is earning its cost. Connection requests go out, a handful get accepted, fewer still turn into replies, and almost nobody can say what it actually produced last quarter. Meanwhile LinkedIn keeps tightening what an automated-feeling outbound motion can do on the platform. So does social selling still convert, or is it running on inertia?"
+    ],
+    "sections": [
+      {
+        "id": "what-actually-changed",
+        "title": "What actually changed",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "LinkedIn has steadily lowered tolerance for anything that looks like scripted volume: weekly connection caps are stricter, InMail response tracking is more visible to the recipient, and generic \"congrats on the new role\" openers get reported as spam more than they used to. The platforms that once let three-tool stacks run semi-automated sequences have been cut off one by one. The net effect is that LinkedIn in 2026 rewards fewer, better-targeted touches over high-volume campaigns — which is a real shift in what \"using LinkedIn for outbound\" actually means."
+          }
+        ]
+      },
+      {
+        "id": "where-its-working",
+        "title": "Where it's working",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "The accounts still getting real pipeline from LinkedIn aren't running connection-request blasts. They're doing three specific things:"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "text": "Warm the account before the ask. A comment on a prospect's post, a share of something genuinely relevant to their role, or engagement with their company page — a week or two before the connection request — roughly doubles acceptance rates compared to cold requests with no prior signal."
+              },
+              {
+                "text": "Personalize the reason, not the name. \"Saw your team is hiring three AEs — curious how you're ramping pipeline to match\" converts differently than a templated line with a mail-merge field swapped in. The bar for what reads as personalized has moved up."
+              },
+              {
+                "text": "Use it as a research and warm-up layer, not the closer. Teams getting the best results treat LinkedIn as where a buyer notices you exist, and move the actual qualifying conversation to email or a call once there's a reason to."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "where-its-still-a-waste-of-budget",
+        "title": "Where it's still a waste of budget",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Automated connection-request tools that spray hundreds of invites a week are increasingly getting accounts restricted, and the reply rates on that volume were already thin. Cold InMail with no context performs worse than a well-sequenced cold email, largely because recipients now expect LinkedIn messages to be even less personalized than their inbox — so the bar to stand out is lower, but so is the benefit of the doubt they'll give you."
+          }
+        ]
+      },
+      {
+        "id": "the-multi-channel-case",
+        "title": "The multi-channel case",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "LinkedIn rarely wins on its own. The pattern that shows up in the data across mid-market B2B programs is a coordinated sequence: a relevant comment or connection on LinkedIn, followed by an email that references it directly, followed by a call if there's no response. Each channel covers for the others — someone who ignores your email might still notice a LinkedIn touch from the same name a few days later, and vice versa. Treating LinkedIn as one lane in that sequence, rather than a standalone channel with its own quota, is what separates the programs that produce meetings from the ones that produce vanity connection counts."
+          }
+        ]
+      },
+      {
+        "id": "the-bottom-line",
+        "title": "The bottom line",
+        "blocks": [
+          {
+            "type": "p","text": "LinkedIn social selling isn't dead, but the version of it that worked in 2022 — volume connection requests plus a templated opener — is close to it. What still converts is a smaller number of genuinely researched touches, used to warm an account before email or a call does the actual qualifying. If your LinkedIn motion is measured only in connections sent, you're measuring the wrong thing."
+          }
+        ]
+      }
+    ]
   }
 ];
 
