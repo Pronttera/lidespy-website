@@ -9,6 +9,7 @@ import { FEATURED, POSTS } from "@/i18n/dictionaries/en/blog";
 import { blogHref, route } from "@/lib/routes";
 import NewsletterForm from "@/components/NewsletterForm";
 import PostGrid from "./PostGrid";
+import ContactCTA from "@/components/ContactCTA";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/blog" },
@@ -117,27 +118,7 @@ export default function BlogPage() {
       </section>
 
       <PostGrid />
-
-      {/* CTA */}
-      <section className="border-t border-ink/12 bg-brand-cta">
-        <div className="mx-auto flex max-w-[1000px] flex-col items-center gap-5 page-x py-[clamp(52px,5.5vw,84px)] text-center">
-          <h2 className="m-0 text-[clamp(28px,3.2vw,46px)] leading-[1.05] font-normal tracking-[-0.03em] text-ink text-pretty">
-            Rather see it run on your data?
-          </h2>
-          <p className="m-0 max-w-[600px] text-[clamp(15px,1.2vw,18px)] leading-[1.6] text-ink/82 text-pretty">
-            Get a qualified intent database and map a six-week program to your
-            pipeline target.
-          </p>
-          <Link
-            href={route("Contact.dc.html")}
-            className="mt-1.5 inline-flex items-center gap-3 rounded-ui bg-ink px-8 py-[18px] text-[12px] font-semibold tracking-[0.04em] text-coral uppercase transition-colors hover:bg-brand hover:text-white"
-          >
-            Book a strategy call
-            <ArrowRight />
-          </Link>
-        </div>
-      </section>
-
+      <ContactCTA />
       <SiteFooter />
     </div>
   );

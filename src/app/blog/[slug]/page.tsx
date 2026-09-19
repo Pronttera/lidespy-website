@@ -3,10 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import SiteFooter from "@/components/SiteFooter";
 import SiteNav from "@/components/SiteNav";
-import { DetailCta } from "@/components/detail";
 import { ArrowRight, Check } from "@/components/icons";
 import { Slot } from "@/components/ui";
-import { BLOG_COPY, POSTS } from "@/i18n/dictionaries/en/blog";
+import { POSTS } from "@/i18n/dictionaries/en/blog";
 import {
   ARTICLES,
   articleBySlug,
@@ -14,6 +13,7 @@ import {
 } from "@/i18n/dictionaries/en/blog-articles";
 import { route } from "@/lib/routes";
 import PostCard from "../PostCard";
+import ContactCTA from "@/components/ContactCTA";
 
 export function generateStaticParams() {
   return ARTICLES.map((a) => ({ slug: a.slug }));
@@ -202,12 +202,7 @@ export default async function BlogArticlePage({
         </div>
       </section>
 
-      <DetailCta
-        title={BLOG_COPY.cta.title}
-        body={BLOG_COPY.cta.body}
-        button={BLOG_COPY.cta.button}
-      />
-
+      <ContactCTA />
       <SiteFooter />
     </div>
   );
