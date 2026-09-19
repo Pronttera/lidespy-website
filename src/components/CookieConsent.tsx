@@ -5,12 +5,14 @@ import Script from "next/script";
 import { useEffect, useState, useSyncExternalStore } from "react";
 
 /**
- * Cookie banner and the only place Google Analytics is loaded. Nothing from
- * Google is requested until the visitor allows it; a denial is remembered and
- * GA never loads for them. Mounted once in the root layout; the footer's
- * "Cookie settings" calls `openCookieSettings()` to reopen it.
+ * Cookie banner and the only place analytics is loaded. Nothing from Google or
+ * Microsoft is requested until the visitor allows it; a denial is remembered
+ * and neither GA nor Clarity ever loads for them. Mounted once in the root
+ * layout; the footer's "Cookie settings" calls `openCookieSettings()` to
+ * reopen it.
  */
 const GA_ID = "G-PL0XQ1LZ7M";
+const CLARITY_ID = "yjbzvjlmzo";
 const STORAGE_KEY = "lidespy-cookie-consent";
 const OPEN_EVENT = "lidespy:open-cookie-settings";
 
@@ -22,7 +24,7 @@ export function openCookieSettings() {
 
 const COPY = {
   title: "We use cookies for analytics only",
-  body: "With your permission, we use Google Analytics to understand how visitors use this site so we can improve it. No advertising, no selling your data.",
+  body: "With your permission, we use Google Analytics and Microsoft Clarity to understand how visitors use this site so we can improve it. No advertising, no selling your data.",
   policy: "Cookie Policy",
   allow: "Allow cookies",
   deny: "Deny",
@@ -56,13 +58,15 @@ function saveChoice(choice: Choice) {
 
 let memoryChoice: Choice | null = null;
 
-/** Removes the `_ga*` cookies GA set before the visitor withdrew consent. */
+/** Removes the cookies GA and Clarity set before the visitor withdrew consent. */
 function clearAnalyticsCookies() {
   const host = window.location.hostname;
   const domains = ["", host, `.${host}`, `.${host.replace(/^www\./, "")}`];
   for (const cookie of document.cookie.split(";")) {
     const name = cookie.split("=")[0].trim();
-    if (!name.startsWith("_ga")) continue;
+    const analytics =
+      name.startsWith("_ga") || name === "_clck" || name === "_clsk" || name === "CLID";
+    if (!analytics) continue;
     for (const domain of domains) {
       document.cookie = `${name}=; Max-Age=0; path=/${domain ? `; domain=${domain}` : ""}`;
     }
@@ -84,16 +88,24 @@ export default function CookieConsent() {
   function decide(next: Choice) {
     if (next === "denied" && choice === "granted") {
       // GA is already running on this page; stop it and drop its cookies.
-      const w = window as unknown as { gtag?: (...args: unknown[]) => void };
+      const w = window as unknown as {
+        gtag?: (...args: unknown[]) => void;
+        clarity?: (...args: unknown[]) => void;
+      };
       w.gtag?.("consent", "update", { analytics_storage: "denied" });
       (window as unknown as Record<string, boolean>)[`ga-disable-${GA_ID}`] = true;
+      w.clarity?.("consent", false);
       clearAnalyticsCookies();
     }
     if (next === "granted" && choice === "denied") {
       // Re-enable a GA instance switched off earlier on this same page view.
-      const w = window as unknown as { gtag?: (...args: unknown[]) => void };
+      const w = window as unknown as {
+        gtag?: (...args: unknown[]) => void;
+        clarity?: (...args: unknown[]) => void;
+      };
       (window as unknown as Record<string, boolean>)[`ga-disable-${GA_ID}`] = false;
       w.gtag?.("consent", "update", { analytics_storage: "granted" });
+      w.clarity?.("consent", true);
     }
     setReopened(false);
     saveChoice(next);
@@ -115,6 +127,16 @@ export default function CookieConsent() {
               gtag('consent', 'update', { analytics_storage: 'granted' });
               gtag('js', new Date());
               gtag('config', '${GA_ID}');
+            `}
+          </Script>
+          <Script id="microsoft-clarity" strategy="afterInteractive">
+            {`
+              (function(c,l,a,r,i,t,y){
+                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "${CLARITY_ID}");
+              window.clarity('consent', true);
             `}
           </Script>
         </>
