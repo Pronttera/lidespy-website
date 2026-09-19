@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "@/components/icons";
 import { route } from "@/lib/routes";
-import { FaWhatsapp, FaPhone, FaEnvelope, FaCalendarCheck } from "react-icons/fa";
+import Image from "next/image";
 
 export default function ContactCTA() {
   return (
@@ -27,7 +27,15 @@ export default function ContactCTA() {
             className="group flex h-[72px] items-center justify-between rounded-ui border border-ink/15 bg-white px-6 text-ink shadow-[0_12px_30px_rgba(0,0,0,0.15)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-cta"
           >
             <span className="flex items-center gap-4">
-            <FaWhatsapp size={24} className="text-brand-cta" />
+            <Image
+                src="https://img.icons8.com/color/96/whatsapp.png"
+                alt=""
+                aria-hidden
+                width={24}
+                height={24}
+                className="h-6 w-6"
+                unoptimized
+              />
               <span className="text-[16px] font-semibold">WhatsApp</span>
             </span>
 
@@ -43,7 +51,15 @@ export default function ContactCTA() {
             className="group flex h-[72px] items-center justify-between rounded-ui border border-ink/15 bg-white px-6 text-ink shadow-[0_12px_28px_rgba(0,0,0,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-cta"
           >
             <span className="flex items-center gap-4">
-            <FaPhone size={22} className="text-brand-cta" />
+            <Image
+                src="https://img.icons8.com/fluency/96/phone.png"
+                alt=""
+                aria-hidden
+                width={24}
+                height={24}
+                className="h-6 w-6"
+                unoptimized
+              />
               <span className="text-[16px] font-semibold">Call us</span>
             </span>
 
@@ -59,7 +75,15 @@ export default function ContactCTA() {
             className="group flex h-[72px] items-center justify-between rounded-ui border border-ink/15 bg-white px-6 text-ink shadow-[0_12px_28px_rgba(0,0,0,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-cta"
           >
             <span className="flex items-center gap-4">
-            <FaEnvelope size={22} className="text-brand-cta" />
+            <Image
+                src="https://img.icons8.com/fluency/96/mail.png"
+                alt=""
+                aria-hidden
+                width={24}
+                height={24}
+                className="h-6 w-6"
+                unoptimized
+              />
               <span className="text-[16px] font-semibold">E-mail us</span>
             </span>
 
@@ -77,7 +101,15 @@ export default function ContactCTA() {
             className="group flex h-[72px] items-center justify-between rounded-ui border border-ink/15 bg-white px-6 text-ink shadow-[0_12px_28px_rgba(0,0,0,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-cta"
 >
             <span className="flex items-center gap-4">
-            <FaCalendarCheck size={22} className="text-brand-cta" />
+            <Image
+                src="https://img.icons8.com/fluency/96/calendar.png"
+                alt=""
+                aria-hidden
+                width={24}
+                height={24}
+                className="h-6 w-6"
+                unoptimized
+              />
               <span className="text-[16px] font-semibold">Book a Call</span>
             </span>
 
