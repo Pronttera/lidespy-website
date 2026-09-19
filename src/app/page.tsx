@@ -70,7 +70,7 @@ const HOME_SCHEMA = [
     description: HOME_DESCRIPTION,
     thumbnailUrl: absoluteUrl("/hero-poster.jpg"),
     contentUrl: "/hero.mp4",
-    uploadDate: "2026-09-16",
+    uploadDate: "2026-09-18",
     publisher: { "@id": `${absoluteUrl("/")}#organization` },
   },
 ];
