@@ -1,11 +1,9 @@
-import Link from "next/link";
-import { ArrowRight } from "@/components/icons";
-import { route } from "@/lib/routes";
 import Image from "next/image";
+import { ArrowRight } from "@/components/icons";
 
 export default function ContactCTA() {
   return (
-    <section className="border-t border-ink/12 bg-red-700">
+    <section className="border-t border-ink/12 bg-brand-cta">
       <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-5 page-x py-[clamp(52px,5.5vw,84px)] text-center">
         
         <h2 className="m-0 text-[clamp(28px,3.2vw,46px)] leading-[1.05] font-medium tracking-[-0.03em] text-white text-pretty">

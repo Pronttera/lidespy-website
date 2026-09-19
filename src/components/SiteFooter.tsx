@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { hasServicePage, route, serviceHref } from "@/lib/routes";
+import ContactCTA from "./ContactCTA";
 import { ArrowUpRight } from "./icons";
 import { CookieSettingsButton } from "./CookieConsent";
 import OptOutDialog from "./OptOutDialog";
@@ -74,78 +75,81 @@ function footerHref(href: string): string {
 
 export default function SiteFooter() {
   return (
-    <footer className="border-t border-ink/15 bg-cream text-ink">
-      <div className="mx-auto grid max-w-[1280px] gap-7 page-x pt-14 sm:grid-cols-2 lg:grid-cols-[minmax(220px,1.2fr)_repeat(4,minmax(140px,1fr))] lg:gap-12">
-        <div className="flex flex-col gap-3.5">
-          <Image
-            src="/lidespy-logo.png"
-            alt="Lidespy"
-            width={997}
-            height={304}
-            className="h-[30px] w-auto self-start"
-          />
-          <div className="text-[12px] font-semibold text-brand">
-            Leads That Drive Growth
+    <>
+      <ContactCTA />
+      <footer className="border-t border-ink/15 bg-cream text-ink">
+        <div className="mx-auto grid max-w-[1280px] gap-7 page-x pt-14 sm:grid-cols-2 lg:grid-cols-[minmax(220px,1.2fr)_repeat(4,minmax(140px,1fr))] lg:gap-12">
+          <div className="flex flex-col gap-3.5">
+            <Image
+              src="/lidespy-logo.png"
+              alt="Lidespy"
+              width={997}
+              height={304}
+              className="h-[30px] w-auto self-start"
+            />
+            <div className="text-[12px] font-semibold text-brand">
+              Leads That Drive Growth
+            </div>
+            <p className="m-0 max-w-[280px] text-[12px] leading-[1.6] text-muted-2">
+              B2B demand generation for technology, SaaS and enterprise revenue
+              teams. Headquartered in Pune, India. Serving clients globally.
+            </p>
+            <div className="flex items-center gap-4">
+              <a
+                href="https://www.linkedin.com/company/lidespy/"
+                target="_blank"
+                rel="noopener"
+                className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-muted transition-colors hover:text-brand"
+              >
+                LinkedIn
+                <ArrowUpRight size={10} className="text-brand" />
+              </a>
+              <a
+                href="mailto:info@lidespy.com"
+                className="text-[11px] font-semibold text-muted transition-colors hover:text-brand"
+              >
+                info@lidespy.com
+              </a>
+            </div>
           </div>
-          <p className="m-0 max-w-[280px] text-[12px] leading-[1.6] text-muted-2">
-            B2B demand generation for technology, SaaS and enterprise revenue
-            teams. Headquartered in Pune, India. Serving clients globally.
-          </p>
-          <div className="flex items-center gap-4">
-            <a
-              href="https://www.linkedin.com/company/lidespy/"
-              target="_blank"
-              rel="noopener"
-              className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-muted transition-colors hover:text-brand"
-            >
-              LinkedIn
-              <ArrowUpRight size={10} className="text-brand" />
-            </a>
-            <a
-              href="mailto:info@lidespy.com"
-              className="text-[11px] font-semibold text-muted transition-colors hover:text-brand"
-            >
-              info@lidespy.com
-            </a>
-          </div>
+
+          {COLUMNS.map((col) => (
+            <div key={col.title} className="flex flex-col gap-2.5">
+              <div className="mb-1 text-[11px] font-semibold tracking-[0.12em] text-muted-3 uppercase">
+                {col.title}
+              </div>
+              {col.links.map((l) => (
+                <Link
+                  key={l.label}
+                  href={footerHref(l.href)}
+                  className={`text-[12.5px] transition-colors hover:text-brand ${
+                    l.accent ? "font-semibold text-brand" : "text-muted"
+                  }`}
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </div>
+          ))}
         </div>
 
-        {COLUMNS.map((col) => (
-          <div key={col.title} className="flex flex-col gap-2.5">
-            <div className="mb-1 text-[11px] font-semibold tracking-[0.12em] text-muted-3 uppercase">
-              {col.title}
-            </div>
-            {col.links.map((l) => (
+        <div className="mx-auto mt-10 flex max-w-[1280px] flex-wrap justify-between gap-4 border-t border-ink/11 page-x pt-6 pb-8 text-[11px] text-muted-2">
+          <span>© 2026 Lidespy. All rights reserved.</span>
+          <div className="flex flex-wrap items-center gap-5">
+            {LEGAL.map((l) => (
               <Link
-                key={l.label}
-                href={footerHref(l.href)}
-                className={`text-[12.5px] transition-colors hover:text-brand ${
-                  l.accent ? "font-semibold text-brand" : "text-muted"
-                }`}
+                key={l.href}
+                href={l.href}
+                className="text-muted-2 transition-colors hover:text-brand"
               >
                 {l.label}
               </Link>
             ))}
+            <CookieSettingsButton className="cursor-pointer text-muted-2 transition-colors hover:text-brand" />
+            <OptOutDialog />
           </div>
-        ))}
-      </div>
-
-      <div className="mx-auto mt-10 flex max-w-[1280px] flex-wrap justify-between gap-4 border-t border-ink/11 page-x pt-6 pb-8 text-[11px] text-muted-2">
-        <span>© 2026 Lidespy. All rights reserved.</span>
-        <div className="flex flex-wrap items-center gap-5">
-          {LEGAL.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="text-muted-2 transition-colors hover:text-brand"
-            >
-              {l.label}
-            </Link>
-          ))}
-          <CookieSettingsButton className="cursor-pointer text-muted-2 transition-colors hover:text-brand" />
-          <OptOutDialog />
         </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }

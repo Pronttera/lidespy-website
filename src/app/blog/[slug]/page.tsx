@@ -13,7 +13,6 @@ import {
 } from "@/i18n/dictionaries/en/blog-articles";
 import { route } from "@/lib/routes";
 import PostCard from "../PostCard";
-import ContactCTA from "@/components/ContactCTA";
 
 export function generateStaticParams() {
   return ARTICLES.map((a) => ({ slug: a.slug }));
@@ -202,7 +201,6 @@ export default async function BlogArticlePage({
         </div>
       </section>
 
-      <ContactCTA />
       <SiteFooter />
     </div>
   );

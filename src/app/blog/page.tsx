@@ -9,7 +9,6 @@ import { FEATURED, POSTS } from "@/i18n/dictionaries/en/blog";
 import { blogHref, route } from "@/lib/routes";
 import NewsletterForm from "@/components/NewsletterForm";
 import PostGrid from "./PostGrid";
-import ContactCTA from "@/components/ContactCTA";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/blog" },
@@ -118,7 +117,6 @@ export default function BlogPage() {
       </section>
 
       <PostGrid />
-      <ContactCTA />
       <SiteFooter />
     </div>
   );
