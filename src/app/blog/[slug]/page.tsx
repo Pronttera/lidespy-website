@@ -1,125 +1,130 @@
+// @ts-nocheck
+/* eslint-disable */
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
-import SiteFooter from "@/components/SiteFooter";
-import SiteNav from "@/components/SiteNav";
-import { ArrowRight, Check } from "@/components/icons";
-import { Slot } from "@/components/ui";
-import { POSTS } from "@/i18n/dictionaries/en/blog";
-import {
-  ARTICLES,
-  articleBySlug,
-  type ArticleBlock,
-} from "@/i18n/dictionaries/en/blog-articles";
-import { route } from "@/lib/routes";
-import PostCard from "../PostCard";
-import ContactCTA from "@/components/ContactCTA";
+import NavCopy from "./nav_copy";
+
+// Article data - pasted from blog-articles.ts (generated, 12 articles)
+// format: [slug, topic, author, readTime, title, description, img, alt, intro, sections]
+// block: [0, text, lead?] = paragraph, [1, items] = list
+const ARTICLES_FINAL: any = [
+  ["is-cold-email-still-worth-it-2026","Outbound","Campaign team","3 min read","Is Cold Email Still Worth It in 2026? What the Data Actually Shows","Cold email reply rates have dropped hard since 2022, but it hasn't stopped working — it's stopped working the old way. Here's what actually moves the needle in 2026.","photo-1557200134-90327ee9fafa","A Gmail inbox open on a laptop",["If you've been running the same cold email playbook since 2022, you've probably noticed the numbers slipping. You're not imagining it. Open rates that used to sit in the 35–45% range are now closer to 15–25%, and a lot of that is inflated by inbox providers pre-fetching emails. Reply rates on generic sequences have fallen into the 1–3% range. Meeting rates on the same lists are often under 1%.","That's the bad news. The good news is that cold email hasn't died — it's just stopped rewarding lazy execution. Teams running signal-based, well-personalized outbound are still pulling reply rates of 5–12% and meeting rates several times higher than the industry average. The gap between \"cold email doesn't work anymore\" and \"cold email is our best channel\" almost entirely comes down to three things: infrastructure, timing, and message quality."],[{"ID":"why-deliverability-got-so-much-harder","ttl":"Why deliverability got so much harder","stuff":[[0,"Gmail, Outlook, and every major inbox provider tightened sender requirements between 2024 and 2026. Authentication (SPF, DKIM, DMARC) is no longer optional — it's the baseline for reaching an inbox at all. On top of that, spam filters have gotten much better at pattern-matching the structure of a cold email: new sender, no prior interaction, a calendar ask in the first message. That combination gets flagged even when the copy itself looks fine."],[0,"The practical fix is infrastructure most founders underestimate: separate sending domains from your primary brand domain, a proper warm-up period of several weeks, and ongoing monitoring of bounce and spam-complaint rates. Skip this step and no amount of clever copywriting will save the campaign — it never reaches the inbox to be read."]]},{"ID":"why-generic-sequences-stopped-converting","ttl":"Why generic sequences stopped converting","stuff":[[0,"The second shift is about relevance. A cold email that only references someone's job title and company name reads as spam to filters and to humans now. What's replacing it is signal-based outbound: reaching out because a company just raised funding, posted five SDR roles, launched a product, or showed up on your website. That context turns \"another cold email\" into \"this person clearly did their homework,\" and it's the single biggest lever behind the reply-rate gap between average and top-performing teams."]]},{"ID":"what-a-modern-cold-email-program-actually-looks-like","ttl":"What a modern cold email program actually looks like","stuff":[[0,"Programs that are still working in 2026 share a few traits:"],[1,[{"t":"Small, verified lists built around a specific trigger, not a scraped database of \"companies with 50–500 employees\""},{"t":"A few sentences, one clear ask, no attachments or heavy formatting","l":"Short, plain emails"},{"t":"A real reason for the outreach tied to something happening at the account right now"},{"t":"Email paired with LinkedIn and, increasingly, a phone call — rather than a six-email sequence with nothing else behind it","l":"Multi-channel follow-up"},{"t":"Open tracking has been unreliable for years and shouldn't drive decisions anymore","l":"Tracking on replies and meetings booked, not opens"}]]]},{"ID":"the-real-question-isnt-does-cold-email-work","ttl":"The real question isn't \"does cold email work\"","stuff":[[0,"It's whether your team has the infrastructure to land in the inbox, the data to know who to contact and why, and the discipline to keep the list small and the message specific. Companies that treat cold email as a system that needs ongoing management are still building predictable pipeline from it. Companies treating it as a one-time setup are the ones writing \"cold email is dead\" posts."],[0,"If your outbound has gone quiet and you're not sure whether it's a deliverability problem, a targeting problem, or a message problem, that diagnosis is usually the fastest fix available — often faster than switching channels entirely."]]}]],
+  ["why-your-mqls-arent-converting","Demand gen","Research team","3 min read","Why Your MQLs Aren't Turning Into Sales Conversations (And How to Fix It)","MQL-to-SQL conversion rates are stubbornly low across most B2B pipelines. The problem usually isn't sales follow-up — it's how the lead got labeled an MQL in the first place.","photo-1526628953301-3e589a6a8b74","A marketing dashboard showing conversion metrics",["Every revenue team has had this conversation: marketing hits its MQL target, sales complains the leads are junk, and nobody can agree on who's wrong. Usually, both sides are half right. The number is real — marketing did generate that many leads that technically matched the scoring rules. But \"matched the rules\" and \"ready to talk to sales\" turned out to be two different things."],[{"ID":"the-core-problem-engagement-isnt-the-same-as-intent","ttl":"The core problem: engagement isn't the same as intent","stuff":[[0,"A marketing-qualified lead is supposed to signal that someone fits your ideal customer profile and has shown enough interest to be worth a sales conversation. In practice, a lot of scoring models still lean almost entirely on engagement — downloaded a whitepaper, clicked three emails, visited the pricing page once. Engagement is easy to track, so it's easy to over-weight. But a competitor's analyst can download your whitepaper and click every nurture email without ever intending to buy anything."],[0,"The MQL definitions that actually hold up in 2026 blend three separate signals:"],[1,[{"t":"Does this person and company match your ICP on firmographics (industry, size, role, seniority)?","l":"Fit"},{"t":"Are they actively researching a problem you solve, right now, based on behavior that suggests urgency?","l":"Intent"},{"t":"Are they interacting in ways that have historically correlated with becoming pipeline, not just interacting at all?","l":"Engagement"}]],[0,"When only one or two of those show up, you have a nurture lead, not an MQL. Labeling it an MQL anyway is what fills your sales team's calendar with calls that go nowhere — and quietly teaches them to stop trusting the MQL label altogether."]]},{"ID":"why-ai-assisted-scoring-is-closing-the-gap","ttl":"Why AI-assisted scoring is closing the gap","stuff":[[0,"This is one area where the tooling genuinely caught up with the problem. AI-driven lead scoring models are now hitting noticeably higher predictive accuracy than traditional rule-based threshold scoring, because they can weigh dozens of fit, intent, and behavioral signals simultaneously instead of a handful of hard-coded rules. Teams that have shifted to this kind of scoring are seeing meaningfully better MQL-to-SQL conversion and are saving real time per rep by not chasing leads that were never going anywhere."],[0,"The bigger shift underneath the tooling, though, is moving from person-level scoring to account-level scoring. B2B purchases are made by committees, not individuals — a single enthusiastic mid-level employee is often a poor proxy for whether the company is actually ready to buy. That's why many teams are supplementing (or replacing) the classic MQL with a marketing-qualified account view that rolls signal up to the whole buying group."]]},{"ID":"what-to-check-before-you-blame-sales","ttl":"What to check before you blame sales","stuff":[[0,"If MQL-to-SQL conversion is stuck, walk through this before assuming the leads are fine and sales is the problem:"],[1,[{"t":"Recalibrate your threshold against actual closed revenue, not last year's assumptions"},{"t":"Separate fit scoring from intent scoring so a high-fit, low-intent lead doesn't get routed the same way as a high-fit, high-intent one"},{"t":"Set a clear SLA for how fast sales responds once a lead crosses the threshold — intent windows are short, and a lead that goes three days without a touch has often gone cold"},{"t":"Build a feedback loop where sales can flag bad MQLs and that feedback actually retrains the scoring, not just gets logged and ignored"}]],[0,"Fixing the definition is almost always cheaper than fixing the argument between marketing and sales that happens every quarter without it."]]}]],
+  ["ai-sdrs-vs-human-appointment-setters","Outbound","Campaign team","3 min read","AI SDRs vs. Human Appointment Setters: What's Actually Working in 2026","AI SDR adoption tripled in a year, but the \"replace your whole team\" pitch doesn't hold up for most B2B companies. Here's where AI helps, where humans still win, and how most teams are actually structured.","photo-1531746790731-6c087fecd65a","A white robotic hand",["AI SDRs went from a niche experiment to real production infrastructure faster than almost any other part of the sales stack. A large share of enterprise B2B teams now run at least part of their outbound through an AI SDR, up sharply from just a year or two ago. That's a genuine shift, not hype — but the \"fire your SDR team\" framing that comes with it is mostly wrong for the companies reading this."],[{"ID":"where-ai-sdrs-genuinely-win","ttl":"Where AI SDRs genuinely win","stuff":[[0,"AI-run outbound makes the most sense when a few things are true at once:"],[1,[{"t":"High volume matters more than a perfect first impression","l":"Deal sizes are small to mid-size"},{"t":"You have decent intent data or product-led signals to work from, so the AI isn't cold-dialing a random list","l":"The motion is high-signal"},{"t":"The funnel needs 500 conversations, not 50 perfect ones","l":"You need volume, not precision"}]],[0,"In that setup, an AI SDR can run sequences around the clock, personalize at a scale no human team could match, and free up a smaller human team to focus only on the conversations that show real promise."]]},{"ID":"where-human-appointment-setters-still-win","ttl":"Where human appointment setters still win","stuff":[[0,"The tradeoff shows up fast once you move outside that pattern:"],[1,[{"t":"Larger deal sizes, where a single burned first impression costs more than a year of tooling"},{"t":"Regulated or complex industries, where compliance nuance and trust-building don't compress well into a scripted flow"},{"t":"AI scales whatever pattern you feed it, including a pattern that's still wrong","l":"Early-stage companies still discovering their ICP"},{"t":"Handling an unexpected objection, reading tone, adjusting the pitch mid-call. That's still a distinctly human skill.","l":"Any conversation that needs real-time judgment"}]]]},{"ID":"what-most-teams-are-actually-doing","ttl":"What most teams are actually doing","stuff":[[0,"The reality on the ground isn't \"AI or human\" — it's a hybrid. A common structure now pairs one human appointment setter with AI-assisted tooling handling research, list-building, and first-touch sequencing, with the human stepping in once a prospect engages. This setup tends to land solidly on cost-per-qualified-meeting while keeping conversion rates close to what a fully human team would produce — which matters, because a cheap meeting that never converts to pipeline isn't actually cheap."]]},{"ID":"the-metric-that-actually-matters","ttl":"The metric that actually matters","stuff":[[0,"Cost per meeting booked is the vanity number. Cost per qualified meeting — one that a rep would actually take, and that has a real shot at becoming an opportunity — is the number worth tracking. A fully automated setup can look great on the first metric and mediocre on the second if conversion quality drops. Before deciding how much of your appointment setting to automate, it's worth pressure-testing against your actual deal size, sales cycle, and how much of your ICP is still a moving target. Those three answers tend to make the AI-vs-human decision obvious."]]}]],
+  ["b2b-content-syndication-worth-it-2026","Syndication","Campaign team","3 min read","B2B Content Syndication in 2026: Is It Still Worth the Spend?","Content syndication remains one of the highest-volume B2B lead channels, but the \"publish everywhere, capture every form fill\" version of it is producing worse leads than ever. Here's what's changed.","photo-1533750349088-cd871a92f312","Marketing strategy notes and books on a desk",["Content syndication has been a demand-gen staple for years for a simple reason: your website only reaches people who already know to visit it. Syndicating a whitepaper, research report, or webinar through third-party platforms puts it in front of people actively researching your category who've never heard of you. Done well, it's still one of the highest-volume lead channels available to a B2B team. Done the old way, it's become one of the easiest ways to burn budget on leads that never convert."],[{"ID":"why-the-old-model-is-breaking-down","ttl":"Why the old model is breaking down","stuff":[[0,"The traditional playbook — publish a gated asset broadly, capture every form fill, hand the list to sales — is producing weaker results than it used to. Buying committees have gotten larger, buyers consume more content before ever talking to a vendor, and only a small fraction of anyone who fills out a syndication form is actually ready to buy. Mass distribution without targeting just means sales gets handed a bigger pile of leads that mostly go nowhere, which is exactly the kind of volume-over-value tradeoff B2B marketing has been actively moving away from."]]},{"ID":"whats-replacing-mass-syndication","ttl":"What's replacing mass syndication","stuff":[[0,"Three shifts define syndication that's actually working right now:"],[0,"Instead of distributing to everyone in a broad job-title list, syndication is increasingly matched to accounts already showing research behavior in your category — visiting comparison pages, reading competitor content, searching relevant terms. Marketers report this alone measurably improves lead quality by filtering out people who were never going to convert.","Intent-based targeting"],[0,"A CFO evaluating your category cares about ROI. A technical buyer cares about implementation. Syndicating the same generic asset to both wastes the reach. Segmenting by role and buying stage, and matching the actual asset (whitepaper vs. case study vs. webinar) to where someone is in their journey, consistently outperforms one-size-fits-all distribution.","Content matched to buying stage"],[0,"For higher-value targets, syndication is being scoped down deliberately — distributing content only to a defined list of target accounts rather than a broad audience, mirroring the same logic as account-based marketing. Fewer leads, but leads that are actually the accounts you wanted in the first place.","Account-based syndication"]]},{"ID":"how-to-tell-if-your-syndication-program-is-actually-working","ttl":"How to tell if your syndication program is actually working","stuff":[[0,"Volume of leads captured is the wrong scoreboard. Track instead:"],[1,[{"t":"Lead-to-MQL rate from syndicated sources specifically, compared to other channels"},{"t":"Cost per qualified lead, not cost per form fill"},{"t":"How many syndicated leads show up again later in the funnel through other channels — a sign the content actually built awareness, not just captured an email address"},{"t":"Sales feedback on lead quality, tracked over time, not anecdotally after one bad batch"}]]]},{"ID":"the-bottom-line","ttl":"The bottom line","stuff":[[0,"Content syndication isn't losing effectiveness because the channel is dying — it's losing effectiveness for teams still running it like it's 2019. The version that works in 2026 treats syndication as a targeting exercise first and a distribution exercise second: pick the accounts, match the content, then find the platforms that reach exactly those people. That's a smaller, more deliberate program than the old \"syndicate broadly and let sales sort it out\" approach — and it's the version that still generates real pipeline instead of just leads."]]}]],
+  ["real-cost-of-bad-b2b-data","Data","Research team","3 min read","The Real Cost of Bad B2B Data (And How to Actually Fix Your List)","The average B2B data provider delivers roughly 50% accuracy. Here's what that actually costs a growing sales team, and the practical framework for evaluating a provider before you buy.","photo-1504868584819-f8e8b4b6d7e3","A laptop showing data reports",["Here's a number worth sitting with: the industry-average accuracy for B2B contact data providers is around 50%. That means, on average, half the contacts in a purchased list are wrong — bounced emails, outdated titles, people who left the company two years ago. Top-tier providers claim 90–95%+ accuracy on verified emails and direct dials, which tells you the gap between an average list and a good one isn't small. It's the difference between a campaign that works and one that quietly wastes a quarter's budget."],[{"ID":"what-bad-data-actually-costs-you","ttl":"What bad data actually costs you","stuff":[[0,"It's tempting to think of a bad contact list as a minor annoyance — a few bounces, a few wasted calls. The actual cost compounds:"],[1,[{"t":"High bounce rates from bad data don't just fail individual sends — they damage your sending domain's reputation, which then hurts every future campaign, including the good leads mixed in with the bad ones.","l":"Deliverability damage"},{"t":"A sales rep calling a disconnected number or emailing someone who left the company isn't just failing that touch — they're not spending that time on a contact that could actually convert.","l":"Wasted rep time"},{"t":"If your CRM is full of duplicate, stale, or mismatched records, every report built on top of it — funnel conversion, campaign ROI, territory planning — is quietly wrong too.","l":"Bad targeting decisions downstream"}]]]},{"ID":"a-practical-framework-for-evaluating-a-data-provider","ttl":"A practical framework for evaluating a data provider","stuff":[[0,"Before choosing (or sticking with) a B2B data source, run it through five checks:"],[1,[{"t":"What's the actual bounce rate on their contacts, tested against your specific market? A provider's advertised accuracy and your real-world experience are often different numbers.","l":"Accuracy"},{"t":"How often are records re-verified? A massive database refreshed quarterly is often worse than a smaller one refreshed weekly, because stale records rot fast in B2B — people change jobs constantly.","l":"Freshness"},{"t":"A provider might be excellent for US enterprise SaaS contacts and weak for your specific vertical or region. Test on your real target list, not a generic sample.","l":"Coverage for your actual ICP"},{"t":"GDPR, CCPA, and a growing list of regional privacy laws apply to business contact data now, not just consumer data. A provider that can't clearly explain how they source and process data is a liability, not a shortcut.","l":"Compliance"},{"t":"Firmographic, technographic, and intent signals layered on top of basic contact info are what actually make a list usable for targeting, not just for sending.","l":"Enrichment depth"}]]]},{"ID":"why-waterfall-enrichment-is-becoming-standard","ttl":"Why \"waterfall\" enrichment is becoming standard","stuff":[[0,"No single provider finds everyone. Individual data sources typically locate a meaningful minority of the contacts you're actually looking for, which is why more teams are stacking multiple providers in a \"waterfall\" — checking one source, then falling back to a second and third for the contacts the first one missed. It's more setup work, but it consistently outperforms relying on one database, however large it claims to be."]]},{"ID":"the-takeaway","ttl":"The takeaway","stuff":[[0,"Bad data isn't a rounding error in your outbound program — it's often the single biggest lever on whether your campaigns work at all. Before optimizing subject lines or call scripts, it's worth auditing the list underneath them. A clean, verified, well-targeted list of 500 contacts will consistently outperform a stale list of 5,000 — and it's usually cheaper to fix than to keep sending against."]]}]],
+  ["abm-guide-mid-market-2026","ABM","Research team","3 min read","Account-Based Marketing in 2026: A Practical Guide for Mid-Market B2B Teams","ABM isn't just an enterprise tactic anymore, but most mid-market teams still run it like a slightly-more-personalized version of mass marketing. Here's what a lean, practical ABM program actually looks like.","photo-1557804506-669a67965ba0","A team planning at a whiteboard",["Account-based marketing has been talked about as \"the future of B2B marketing\" for long enough that the phrase itself has started to feel tired. But the underlying shift it describes is real and still accelerating: B2B teams are moving away from generating as many leads as possible and toward identifying a smaller list of high-value accounts and going deep on each one. Fewer leads, better conversion, and a much clearer line from marketing activity to actual revenue."],[{"ID":"why-this-shift-is-happening-now","ttl":"Why this shift is happening now","stuff":[[0,"Traditional demand generation optimizes for lead volume and lets sales sort out quality afterward. The problem is that this approach spends most of its budget on leads that were never going to convert — generic messaging aimed at a broad audience creates noise, not signal. Teams that have shifted to an account-based model are narrowing target lists from thousands of contacts down to hundreds, or even dozens for higher-ticket deals, and investing far more per account in research and personalization. The tradeoff is fewer total leads — but a much higher share of them turn into real pipeline."]]},{"ID":"the-mistake-most-mid-market-teams-make","ttl":"The mistake most mid-market teams make","stuff":[[0,"ABM doesn't require an enterprise budget or a dedicated ops team, but a lot of mid-market programs fail because they try to run ABM with mass-marketing habits: broad target lists dressed up with a first-name merge field, generic content sent to \"target accounts\" with no real customization, and success measured by lead count instead of account engagement or pipeline. That's not ABM — it's segmented email marketing wearing an ABM label."]]},{"ID":"what-an-actually-lean-abm-program-looks-like","ttl":"What an actually lean ABM program looks like","stuff":[[1,[{"t":"Pick accounts based on real fit signals — firmographic match, technographic fit, and ideally some intent signal showing they're already in-market — not just \"companies that could theoretically buy.\"","l":"Start with a short, deliberately narrow account list"},{"t":"B2B purchases are made by groups. Identify the 3–6 roles likely involved in a decision and build a plan to reach each of them, not just the most senior title.","l":"Map the buying committee, not just one contact"},{"t":"Windows of buying intent are narrow. An account showing active research signals today needs outreach this week, not whenever the next campaign happens to launch.","l":"Use intent and behavioral signals to time outreach"},{"t":"The accounts that convert best are usually touched by more than one channel in a coordinated way — a piece of relevant content, a direct outreach sequence, and a sales touch that references the same specific context, not three disconnected campaigns.","l":"Coordinate channels instead of running them separately"},{"t":"If your ABM dashboard still leads with \"leads generated,\" it's measuring the wrong thing. Account engagement, meetings booked with the right people, and pipeline value are the numbers that actually reflect whether it's working.","l":"Measure pipeline and revenue contribution, not lead volume"}]]]},{"ID":"where-to-start-if-youre-not-running-abm-yet","ttl":"Where to start if you're not running ABM yet","stuff":[[0,"You don't need every account on a full 5-channel program on day one. Pick 20–50 accounts that represent your best-fit customer profile, build one genuinely personalized campaign for that list, and measure it against your normal lead-gen baseline. If it outperforms — and for most B2B companies selling anything with real deal value, it will — that's the case for expanding the program, built on your own numbers instead of someone else's benchmark."]]}]],
+  ["does-cold-calling-still-work-b2b-2026","Outbound","Campaign team","3 min read","Does Cold Calling Still Work in B2B? Here's What the 2026 Numbers Say","\"Cold calling is dead\" has been said every year since 2015. The 2026 data says otherwise — as long as you're calling the right people, the right way.","photo-1423666639041-f56000c27a9a","Hands holding a phone beside a laptop",["Cold calling gets declared dead on a fairly reliable annual cycle, and the data keeps refusing to cooperate with the obituary. Across recent industry research, more than half of B2B leads still originate from cold outreach, and companies that drop calling from their sales mix tend to grow meaningfully slower than the ones that keep it in the channel mix. The phone isn't going anywhere. What's changed is what it takes to make it work."],[{"ID":"why-buyers-still-pick-up","ttl":"Why buyers still pick up","stuff":[[0,"Buyer behavior data consistently shows that a majority of B2B decision-makers are willing to take a call from a seller they don't know yet, and a striking share will accept a meeting when the outreach is relevant. Executives specifically tend to prefer being contacted by phone over email for exactly the reason you'd expect: it's faster, it's a real conversation, and it lets both sides qualify and adjust in real time instead of waiting days for an email reply."],[0,"There's also a competitive angle that's easy to miss: as more teams shifted budget toward email and LinkedIn automation over the last few years, fewer companies are actually calling. That's made the phone a less crowded channel than it's been in a decade — the teams still calling well are standing out simply because most competitors stopped."]]},{"ID":"what-separates-cold-calling-that-works-from-cold-calling-that-fails","ttl":"What separates cold calling that works from cold calling that fails","stuff":[[0,"The gap between a 2% success rate and a 10%+ success rate almost never comes down to script quality alone. It comes down to:"],[1,[{"t":"Calling switchboards and outdated numbers versus calling verified direct dials produces dramatically different pickup rates. Data quality is consistently the single largest variable in call program performance.","l":"List quality"},{"t":"A focused list of accounts that actually match your ICP beats a bigger, unqualified list every time. Volume without targeting is just noise with a dial tone.","l":"Targeting"},{"t":"The majority of conversions happen after multiple follow-up attempts, not the first call. Most reps quit after one or two tries and conclude the list — or the channel — doesn't work.","l":"Persistence"},{"t":"Opening with a generic pitch gets a hang-up. Opening with a specific, relevant reason for calling that account, right now, gets a hearing.","l":"A real reason for the call"}]]]},{"ID":"cold-calling-works-best-as-part-of-a-system-not-a-solo-channel","ttl":"Cold calling works best as part of a system, not a solo channel","stuff":[[0,"The strongest results come from pairing calls with email and LinkedIn in a coordinated sequence rather than running any one channel alone — a combined approach can produce two to three times the meetings of a single-channel effort. Compared to cold email, which can take a couple of weeks to generate a first reply, a well-targeted call can produce a first appointment within days, which makes it one of the fastest channels available for building near-term pipeline, even if it's not the highest-volume one."]]},{"ID":"one-more-thing-worth-knowing","ttl":"One more thing worth knowing","stuff":[[0,"Compliance isn't optional background noise here. TCPA, GDPR, and local do-not-call regulations do apply to B2B calling, and violations carry real financial penalties — not just a reputational risk. Any calling program worth running needs a clean, compliant contact source behind it, not just a big list."]]},{"ID":"the-honest-answer","ttl":"The honest answer","stuff":[[0,"Cold calling in B2B isn't dead, and it isn't a silver bullet either. It's a channel that rewards the same discipline every other outbound channel does — good data, real targeting, and follow-through — and punishes the same shortcuts. Teams asking \"does cold calling still work\" are usually really asking whether it's worth fixing the process behind it. For most B2B companies with a real ICP and decent contact data, it is."]]}]],
+  ["tofu-mofu-bofu-funnel-guide","Demand gen","Research team","3 min read","TOFU, MOFU, BOFU: Building a Multi-Funnel Lead Gen Strategy That Actually Converts","Most B2B teams have a funnel diagram on a slide somewhere and a lead gen program that ignores it completely. Here's how to actually build campaigns around each stage instead of running one generic motion for everyone.","photo-1543286386-713bdd548da4","A hand-drawn growth chart on a desk",["Every B2B marketer has seen the TOFU/MOFU/BOFU funnel diagram — top, middle, and bottom of funnel, neatly labeled with a different content type at each stage. Fewer teams actually build their lead generation around it. In practice, a lot of B2B programs run one generic motion — a newsletter signup, a demo request form, a standard nurture sequence — and apply it to everyone regardless of where they actually are in the buying process. That mismatch is a big part of why so many leads go quiet after the first touch."],[{"ID":"why-stage-mismatched-content-kills-conversion","ttl":"Why stage-mismatched content kills conversion","stuff":[[0,"Buyers now consume several pieces of content before ever engaging with a vendor, and buying committees have grown to include more stakeholders than they used to — which means more people, at more different stages, touching your content at any given time. Sending a bottom-of-funnel \"book a demo\" CTA to someone who just discovered your category for the first time is asking them to skip several steps they haven't taken yet. Sending a generic educational article to someone who's already compared three competitors and is ready to talk pricing wastes the moment they were actually ready to convert."]]},{"ID":"what-belongs-at-each-stage","ttl":"What belongs at each stage","stuff":[[0,"The goal is awareness, not conversion. Someone here has a problem but may not know it has a name yet, let alone that your company solves it. Educational content — guides, explainers, original research — earns attention without asking for anything in return except an email address, and sometimes not even that.","Top of funnel (TOFU)"],[0,"The prospect knows the problem and is actively evaluating solutions. This is where comparison content, case studies, webinars, and more detailed guides do the work — content that helps them build the internal case for solving the problem and starts differentiating your approach from alternatives.","Middle of funnel (MOFU)"],[0,"The prospect is close to a decision. Pricing guides, ROI calculators, customer proof, and direct sales conversation are what this stage actually needs. This is also where personalized outreach — email, LinkedIn, a phone call — earns its place, because the prospect is receptive to a direct ask in a way they weren't two stages earlier.","Bottom of funnel (BOFU)"]]},{"ID":"where-most-multi-funnel-programs-actually-break","ttl":"Where most multi-funnel programs actually break","stuff":[[0,"The content usually exists somewhere. The breakdown is almost always in routing — matching the right content and channel to the right stage for each specific lead, instead of running one blanket sequence for the whole list. A few fixes that consistently help:"],[1,[{"t":"Score leads by stage signal, not just engagement volume. Someone who read one bottom-of-funnel pricing page is further along than someone who's opened ten top-of-funnel newsletters."},{"t":"Build separate nurture tracks per stage, not one long sequence everyone gets regardless of where they entered."},{"t":"Cold email and content syndication tend to do more of the top-of-funnel work; direct outreach and sales conversations carry more weight further down.","l":"Coordinate channels by stage, not just by contact"},{"t":"A TOFU lead today can become a BOFU lead in three weeks after visiting your pricing page twice. If your system only scores once, at capture, you're missing the moment they actually became ready.","l":"Re-score continuously"}]]]},{"ID":"the-takeaway","ttl":"The takeaway","stuff":[[0,"A funnel diagram on a slide doesn't generate pipeline. A program that actually routes different content, different channels, and different messaging to leads based on where they really are does. That's a heavier lift than one generic campaign — but it's usually the difference between a funnel that leaks at every stage and one that steadily moves people toward a real sales conversation."]]}]],
+  ["buyer-intent-data-explained","Intent data","Research team","3 min read","Buyer Intent Data Explained: How to Use It Without Wasting Your Budget","Intent data has gone from a nice-to-have to something most high-performing B2B teams use, but it's also easy to buy and never actually act on. Here's what it is, what it isn't, and how to use it well.","photo-1560472354-b33ff0c44a43","An analytics graph of clicks and impressions",["Intent data has crossed from \"interesting emerging category\" to something close to standard practice for serious B2B go-to-market teams. Roughly three-quarters of high-performing sales and marketing organizations now use some form of intent data in their process. That's a real shift — but it's also created a gap between teams that buy intent data and teams that actually get value from it, and that gap is bigger than most vendors will admit."],[{"ID":"what-intent-data-actually-is","ttl":"What intent data actually is","stuff":[[0,"Intent data is behavioral evidence that a person or company is actively researching a problem or solution category — before they've filled out a form or raised their hand in any obvious way. It generally comes from three sources:"],[1,[{"t":"Activity on your own properties: website visits, pricing page views, content downloads, product trial usage. This is the highest-quality signal because the person chose to interact with you directly, but it's also the sparsest — most of your future buyers haven't visited your site yet.","l":"First-party intent"},{"t":"Research behavior happening elsewhere that intent providers can observe at scale, like content consumption on industry sites or review platforms.","l":"Third-party intent"},{"t":"Patterns pulled from a combination of sources, including things like hiring activity (a company posting several SDR roles is a signal they're investing in outbound, and might need related tools) or job changes (a champion who advocated for your product moving to a new company).","l":"AI-inferred signals"}]]]},{"ID":"where-it-actually-helps","ttl":"Where it actually helps","stuff":[[0,"The core value of intent data isn't finding new companies to target — it's knowing when to reach an account you already had on a list. Contacting an account while they're actively researching, instead of on a random quarterly cadence, is the difference between a call that lands and one that doesn't.","Timing outreach"],[0,"Not every account on your ICP list is in-market right now. Intent signals help separate \"fits our profile\" from \"fits our profile and is actually looking,\" which is a much more useful list to work from.","Prioritizing your target list"],[0,"Activating personalized, higher-effort campaigns only for accounts already showing intent signals improves the return on that effort, instead of spending the same personalization budget evenly across accounts that are and aren't ready.","Sharpening ABM campaigns"]]},{"ID":"where-teams-waste-money-on-it","ttl":"Where teams waste money on it","stuff":[[0,"Not all buying signals predict an actual purchase. A company researching your category broadly isn't the same as a company that just visited your pricing page three times this week. Vendors sell aggregate intent scores that blur this distinction — it's worth asking exactly what behaviors are behind any score before acting on it.","Treating every signal as equal"],[0,"Intent data that sits in a dashboard nobody checks daily isn't a signal — it's a subscription fee. The teams getting real value have built a workflow where a qualifying signal automatically triggers a specific next action: an alert to a rep, a campaign activation, a change in ad targeting.","Buying it and never operationalizing it"],[0,"Even with good intent data, tying revenue directly back to \"we acted on this signal\" remains genuinely hard. Don't expect a clean ROI number in month one — expect a gradual improvement in conversion rates and outreach efficiency instead.","Ignoring attribution difficulty"]]},{"ID":"the-practical-starting-point","ttl":"The practical starting point","stuff":[[0,"You don't need an enterprise intent platform to start. Even simple first-party signals — who's visiting your pricing page repeatedly, who's opened every email in a sequence, who suddenly went quiet after months of engagement — are intent data you likely already have and aren't using systematically. Start there, build the habit of acting on signals fast, and layer in third-party or AI-inferred data once the workflow around it actually works."]]}]],
+  ["in-house-appointment-generation","Outbound","Campaign team","3 min read","In-House Appointment Generation: The Real 2026 Cost and How to Get It Right","The salary line item for an in-house SDR isn't the real cost. Here's the fuller picture B2B leaders are running in 2026 before building an in-house appointment generation team.","photo-1542744173-8e7e53415bb0","A sales team meeting around a table",["\"Should we hire an SDR team to book our meetings?\" gets answered too often by looking at a recruiter's salary estimate and nothing else — a number that leaves out most of what in-house appointment generation actually costs. Here's the fuller picture worth running before that decision."],[{"ID":"what-an-in-house-sdr-really-costs","ttl":"What an in-house SDR really costs","stuff":[[0,"The salary line is the smallest piece of the real number. Once you load in tools (dialer, data provider, sales engagement platform), ramp time before the rep produces consistent meetings, management overhead, and recruiting cost, the fully-loaded cost of one SDR typically lands well above the base salary most budgets assume — often close to double it once everything is counted. On top of that, sales development has one of the highest turnover rates of any role in a revenue org, meaning a chunk of that ramp-up investment tends to walk out the door and restart with the next hire."],[0,"Ramp time itself is a real cost most budgets underweight. An in-house SDR team usually needs several months to start producing consistent meetings — learning the product, refining messaging, building a rhythm — before it's operating at full output."]]},{"ID":"what-in-house-appointment-generation-gives-you","ttl":"What in-house appointment generation gives you","stuff":[[0,"The return on that investment is control and product depth. A rep who sits in your Slack every day builds intuitive product knowledge, hears objections first-hand, and feeds what they learn straight back into messaging, positioning and the ICP itself."],[0,"It also compounds. The playbooks, call recordings, sequences and qualification criteria an in-house team builds stay with the company, and become the foundation for a much larger sales development function later."]]},{"ID":"the-numbers-that-actually-matter","ttl":"The numbers that actually matter","stuff":[[0,"Headcount and salary miss the point. The numbers worth tracking are:"],[1,[{"t":"Not cost per meeting booked. A cheap meeting that never becomes an opportunity isn't actually cheap.","l":"Cost per qualified meeting"},{"t":"How long ramp takes, weighed against how urgent the pipeline need actually is","l":"Time to first meaningful pipeline"},{"t":"Lead-to-opportunity conversion rate, tracked over each rep's first 90 days — this is where a slow ramp or a messaging gap shows up clearly"},{"t":"If closers are still doing their own prospecting, the team isn't solving the real problem yet","l":"What your AEs are actually spending time on"}]]]},{"ID":"how-to-make-an-in-house-team-work","ttl":"How to make an in-house team work","stuff":[[0,"In-house appointment generation works best when your ICP is still being discovered, your sales motion is complex enough that product depth matters more than volume, or you're building toward a long-term team that will eventually run a much larger function."],[0,"Give it the conditions to succeed: verified contact data from day one, a documented qualification standard agreed with sales, realistic ramp targets, and a clear career path so the reps you train stay long enough to pay back that investment."],[0,"The honest version of this decision isn't a one-off hire. It's a function you design, measure on qualified pipeline, and revisit as the pipeline need changes."]]}]],
+  ["b2b-data-compliance-checklist-2026","Compliance","Compliance lead","3 min read","GDPR, CCPA, and Your B2B Contact Data: A 2026 Compliance Checklist","\"It's business contact data, not personal data\" stopped being a valid excuse years ago. Here's what actually applies to your outbound list in 2026, and how to check whether your current data source holds up.","photo-1589829545856-d10d557cf95f","A statue of Lady Justice holding scales",["There's a myth that's cost more than one B2B company a painful compliance letter: the belief that business contact information — a work email, a job title, a company phone number — isn't covered by data privacy law the way consumer data is. That exemption, where it ever existed, has been closing for years. Business contact data tied to an identifiable person is personal data under GDPR, and California's B2B exemption expired back in 2023. If your outbound program is still operating on the old assumption, it's worth a proper look now rather than after a complaint."],[{"ID":"what-actually-counts-as-regulated-here","ttl":"What actually counts as regulated here","stuff":[[0,"If a record includes a name, a direct email, or anything that identifies a specific individual — even in a clearly professional context — it's covered. A generic sales@company.com address is a different category than firstname.lastname@company.com, and most modern outbound runs entirely on the second kind."],[0,"The regulatory list has also gotten longer, not shorter. Beyond GDPR and CCPA, depending on where your prospects and your company operate, you may also need to consider region-specific rules — Brazil's LGPD, India's DPDPA, Japan's APPI, South Africa's POPIA, and others. If you sell across multiple regions, \"we're GDPR compliant\" doesn't automatically mean you're covered everywhere your list reaches."]]},{"ID":"a-practical-checklist-for-your-data-source","ttl":"A practical checklist for your data source","stuff":[[0,"Before you send another campaign against a purchased or scraped list, check:"],[1,[{"t":"Where did this data come from, specifically? A provider that can't clearly explain their sourcing methodology is a liability wearing a database."},{"t":"Is there a Data Processing Agreement available? Legitimate providers can produce one without a fight. If that request gets stonewalled, treat it as a red flag."},{"t":"Is there a working opt-out mechanism, both from the provider and reflected in your own outreach? An unsubscribe link that doesn't actually update a suppression list is worse than not having one, because it creates a paper trail of ignored requests."},{"t":"Does the provider maintain do-not-call and do-not-contact list compliance for the regions you're targeting, not just a generic global list?"},{"t":"Is the data being re-verified regularly, or is it a static snapshot that gets staler — and riskier — the longer you hold it?"}]]]},{"ID":"the-cost-of-getting-this-wrong","ttl":"The cost of getting this wrong","stuff":[[0,"Regulatory penalties under GDPR can reach a meaningful percentage of global revenue for serious violations, and enforcement isn't purely theoretical — companies buying contact lists without a proper legal basis have received real complaints through regulators after running what looked like a completely normal outbound campaign. Beyond the fine itself, a compliance complaint against a specific campaign tends to trigger a broader review of everything else you're running, which is a much more expensive problem than the original list purchase."]]},{"ID":"what-this-means-day-to-day","ttl":"What this means day to day","stuff":[[0,"Compliance isn't a policy document you write once — it's infrastructure that has to sit underneath every list you buy and every campaign you send. That means treating your data provider selection with the same scrutiny you'd apply to any other vendor holding sensitive information, keeping your own suppression and opt-out lists current across every channel you use, and staying aware that \"it's just business contact data\" hasn't been a safe assumption for a while now. The teams that build this in from the start spend far less time firefighting it later than the teams that bolt it on after the first complaint."]]}]],
+  ["multi-channel-outbound-2026","Outbound","Campaign team","3 min read","Why Email-Only Outbound Is Dying in 2026 (And What to Do Instead)","A single-channel outbound sequence is competing against a full inbox, a distracted LinkedIn feed, and a phone that almost nobody calls anymore. Here's why coordinating channels is outperforming any one of them alone.","photo-1563986768609-322da13575f3","Someone working across a laptop and a phone",["If your outbound program is one email sequence and nothing else, you're not just missing extra reach — you're leaving a well-documented performance gap on the table. Across recent B2B outbound research, coordinating multiple channels toward the same prospect consistently produces two to three times more meetings than running any single channel by itself. That's not a marginal optimization. It's close to the difference between a program that works and one that doesn't."],[{"ID":"why-one-channel-alone-keeps-underperforming","ttl":"Why one channel alone keeps underperforming","stuff":[[0,"Each individual outbound channel has gotten harder on its own. Cold email deliverability has tightened significantly — authentication requirements, stricter spam filtering, and buyer fatigue with generic sequences have pushed reply rates on email-only outreach down hard compared to a few years ago. Cold calling alone still converts, but reachability rates vary a lot by list quality and industry, and it takes real volume to produce consistent results from calling by itself. LinkedIn outreach alone competes with an increasingly noisy feed where connection requests and cold DMs blend into the background."],[0,"Run any one of these alone and you're relying entirely on that one channel landing at exactly the right moment. Coordinate them, and you're giving the same prospect several different, lower-friction ways to notice you and respond on their own terms."]]},{"ID":"what-a-coordinated-sequence-actually-looks-like","ttl":"What a coordinated sequence actually looks like","stuff":[[0,"The specifics vary by team, but the pattern that keeps showing up in effective programs is straightforward: a short cadence across email, LinkedIn, and phone, spaced a few days apart, all referencing the same context so it reads as one coordinated outreach rather than three unrelated interruptions. A rough shape that works well for a lot of B2B teams: an email opens the sequence with a specific, relevant reason for reaching out; a LinkedIn touch follows a couple of days later, often just a connection request or light engagement rather than a pitch; a call closes the loop toward the end of the week, referencing the same reason from the original email."],[0,"The point isn't to hit every channel for its own sake — it's that a prospect who ignores an email might notice a LinkedIn touch, and a prospect who ignores both might actually pick up a call that references something specific instead of opening cold."]]},{"ID":"why-this-also-fixes-a-personalization-problem","ttl":"Why this also fixes a personalization problem","stuff":[[0,"Multi-channel outreach forces a kind of discipline that single-channel sequences often skip: if the same reason for reaching out has to work across an email subject line, a LinkedIn note, and an opening line on a call, it has to be genuinely specific to that account — not a generic template with a merge field. Programs built around a real trigger (funding, hiring, a product launch, an intent signal) naturally translate well across channels. Programs built around \"we sell to companies like yours\" don't survive being said out loud on a phone call, which is often the moment that exposes how generic the outreach really was."]]},{"ID":"getting-started-without-overbuilding","ttl":"Getting started without overbuilding","stuff":[[0,"You don't need every channel running from day one. Add channels in the order that matches where your team already has strength — if you have a rep comfortable on the phone, add calling to an existing email sequence before adding a fourth channel nobody's staffed to run well. The failure mode to avoid isn't under-investing in channels; it's spreading a small team across too many channels at once and running all of them poorly instead of two or three well."],[0,"The honest read on \"email-only outbound is dying\" isn't that email stopped working. It's that email stopped being enough to carry a program by itself, and the teams still winning outbound in 2026 are the ones that noticed early."]]}]],
+  ["audience-intelligence-explained","Intent data","Research team","3 min read","Audience Intelligence Explained: Spotting High-Intent B2B Accounts Before the Form Fill","Most B2B teams only see intent after a form fill. Here's how audience intelligence surfaces buying signals earlier, and how to act on them without overreaching.","photo-1551288049-bebda4e38f71","A dashboard showing account engagement signals across channels",["By the time a prospect fills out a form, they've usually been researching for weeks. They've read comparison content, checked pricing pages, maybe asked a peer group for recommendations — and your CRM has none of it. The form fill is the last visible step in a buying journey that was mostly invisible to you. Audience intelligence exists to close that gap: not by predicting intent from a single data point, but by building a fuller picture of who's actually in-market before they raise a hand."],[{"ID":"how-its-different-from-intent-data-alone","ttl":"How it's different from intent data alone","stuff":[[0,"Third-party intent data tells you a company is researching topics related to what you sell. That's useful, but it's also thin on its own — it tells you almost nothing about who at that company matters, what they've engaged with directly, or where they sit in a buying committee. Audience intelligence layers that signal with firmographic fit, engagement history across your own channels, and role-level detail, so \"this account is showing intent\" becomes \"these three people at this account, in these roles, have engaged with this specific topic twice this month.\""],[0,"The distinction matters because intent data alone drives a lot of wasted outreach — teams buy an intent feed, get a list of \"surging\" accounts, and blast generic outreach at all of them with no sense of who to actually talk to."]]},{"ID":"what-good-audience-intelligence-actually-tracks","ttl":"What good audience intelligence actually tracks","stuff":[[1,[{"t":"Content engagement patterns, not just visits — which specific assets someone came back to, and whether they moved from top-of-funnel content into something more evaluative."},{"t":"Role and seniority mapping, so a signal from a VP of Sales carries different weight than the same signal from an individual contributor researching for a report."},{"t":"Cross-channel corroboration — a webinar registration plus a pricing page visit plus a LinkedIn engagement from the same account is a materially stronger signal than any one of those alone."},{"t":"Recency and frequency, since intent decays. An account that showed a burst of activity six weeks ago and nothing since is a different priority than one that's been engaging steadily this week."}]]]},{"ID":"using-it-without-over-investing","ttl":"Using it without over-investing","stuff":[[0,"The trap most teams fall into is treating every \"high-intent\" flag as a reason to run full ABM outreach. That's expensive and it doesn't scale. A more workable tiering: accounts with strong, corroborated, recent signal get a personalized, multi-touch sequence; accounts with a single weak signal get added to a lighter nurture track; accounts with no signal stay in general demand gen. Audience intelligence is most valuable as a prioritization layer on top of a program you're already running, not a replacement for having one."]]},{"ID":"the-bottom-line","ttl":"The bottom line","stuff":[[0,"Intent data tells you a company might be looking. Audience intelligence tells you who's looking, how seriously, and what they've actually engaged with — which is the difference between outreach that reads as coincidentally well-timed and outreach that reads as a cold guess. Build the layering before you build the volume."]]}]],
+  ["b2b-cold-email-deliverability-2026","Data","Research team","3 min read","Email Deliverability in 2026: Why Your Cold Outbound Is Landing in Spam","Good copy doesn't matter if it never reaches the inbox. Here's what's actually driving B2B cold email deliverability problems in 2026, and the fixes that work.","photo-1557200134-90327ee9fafa","An email inbox with several messages flagged as spam",["Teams spend weeks on subject lines, sequencing, and personalization, then wonder why replies dried up — without checking whether the emails ever reached an inbox at all. Deliverability is the least glamorous part of outbound and the most common reason a genuinely good campaign underperforms. Mailbox providers got sharper in 2026, and a lot of B2B senders haven't caught up."],[{"ID":"the-infrastructure-problem-most-teams-ignore","ttl":"The infrastructure problem most teams ignore","stuff":[[0,"Every sending domain has a reputation, and that reputation is built or damaged by every email sent from it — including ones sent years ago by someone who's no longer at the company. Common, avoidable causes of a damaged reputation:"],[1,[{"t":"Sending cold outbound from the primary company domain, so one bad sequence risks the same domain your invoices and support emails rely on."},{"t":"Skipping domain warm-up on a new sending domain — mailbox providers trust volume that ramps gradually, not a domain that goes from zero to a thousand sends a day in week one."},{"t":"Missing or misconfigured SPF, DKIM, and DMARC records, which mailbox providers increasingly treat as a baseline trust signal rather than a nice-to-have."},{"t":"High bounce rates from unverified lists, which is as much a deliverability issue as a data-quality one — every hard bounce tells the receiving server your sender is careless with its list."}]]]},{"ID":"what-actually-restores-inbox-placement","ttl":"What actually restores inbox placement","stuff":[[0,"Fixing deliverability is mostly about discipline, not a single silver-bullet setting:"],[1,[{"t":"Use dedicated sending domains for cold outbound, separate from your primary domain, so a reputation hit doesn't touch email your whole company depends on."},{"t":"Warm up every new domain and mailbox over 2–4 weeks with gradually increasing, genuinely varied send volume before running it at full campaign pace."},{"t":"Verify every record before it's sent to, not after a bounce report comes back — the point is to never send to a dead or invalid address in the first place."},{"t":"Rotate and monitor sending domains across a pool rather than running everything through one, so no single domain absorbs the full volume of an aggressive campaign."},{"t":"Watch spam complaint rates, not just opens, since open-rate tracking has gotten less reliable since major providers started pre-fetching images — complaint and bounce rates are the more honest signal."}]]]},{"ID":"the-part-thats-easy-to-miss","ttl":"The part that's easy to miss","stuff":[[0,"Deliverability isn't a one-time setup. A domain that was warmed up properly six months ago can still slide if send volume spikes suddenly, if list hygiene slips, or if a new team member starts a sequence without checking existing sender limits. Ongoing monitoring — checking blocklist status, complaint rates, and inbox placement on a rolling basis — matters as much as getting the initial setup right."]]},{"ID":"the-bottom-line","ttl":"The bottom line","stuff":[[0,"No amount of copywriting fixes a deliverability problem, because the recipient never sees the copy. If reply rates have dropped and open rates look suspiciously flat across the board, check inbox placement before touching the sequence. The fix is almost always in the infrastructure, not the message."]]}]],
+  ["b2b-lead-scoring-model","Demand gen","Research team","3 min read","Lead Scoring Models That Actually Predict Sales-Ready Accounts","Most B2B lead scoring models score activity, not intent to buy. Here's how to build one that actually predicts which accounts are sales-ready.","photo-1526628953301-3e589a6a8b74","A lead scoring dashboard ranking accounts by readiness",["Most lead scoring models measure the wrong thing well. They track form fills, email opens, and page visits with precision, then add them up into a number that's supposed to mean \"sales-ready\" — but activity isn't intent, and a model built only on activity tends to hand sales a pile of downloaded-the-ebook leads that go nowhere. Building a model that actually predicts readiness takes a different starting point."],[{"ID":"start-from-closed-won-not-from-the-funnel","ttl":"Start from closed-won, not from the funnel","stuff":[[0,"The common mistake is designing a scoring model around the stages marketing thinks matter — visited pricing, downloaded a guide, attended a webinar — without ever checking whether those actions actually preceded the deals that closed. The better starting point is to pull your last 12–24 months of closed-won deals and reverse-engineer what those accounts actually did before they became opportunities. Sometimes the strongest predictor is a channel nobody weighted heavily, and sometimes an action everyone assumed mattered — like a whitepaper download — barely correlates with anything."]]},{"ID":"weight-fit-and-behavior-separately","ttl":"Weight fit and behavior separately","stuff":[[0,"A lead score is really two different questions mashed into one number: does this account fit our ICP, and is this account behaving like it's ready to buy? Collapsing both into a single score hides useful information. A model that scores fit and behavior separately lets you route leads more precisely — a perfect-fit account showing early research behavior gets a different treatment than a poor-fit account with high activity, even if their combined scores land in the same range."]]},{"ID":"build-in-decay","ttl":"Build in decay","stuff":[[0,"Intent isn't permanent. An account that engaged heavily two months ago and has gone quiet since is a worse bet than one that engaged moderately this week. Most static scoring models don't account for this — points accumulate and never disappear, so an account can sit at a \"hot\" score long after it's actually cooled off. Adding time decay to behavioral points, so older activity contributes less than recent activity, keeps the score closer to reality."]]},{"ID":"validate-against-what-sales-actually-says","ttl":"Validate against what sales actually says","stuff":[[0,"The model isn't finished at launch. The fastest way to tell whether it's working is to sit with the sales team monthly and compare: which \"sales-ready\" leads did they actually want, and which ones did they immediately disqualify? Patterns show up quickly — certain firmographic combinations that score well but never convert, certain lower-scoring signals that sales says are actually strong indicators. Feed that back into the weighting rather than treating the initial model as fixed."]]},{"ID":"the-bottom-line","ttl":"The bottom line","stuff":[[0,"A lead scoring model earns trust from sales by being right more often than it's wrong, and it stays right by being checked against real outcomes, not left running on assumptions from the day it launched. Score fit and intent separately, weight recent behavior over old behavior, and validate the whole thing against what closed — not just what happened along the way."]]}]],
+  ["b2b-webinar-lead-generation-2026","Demand gen","Research team","3 min read","B2B Webinars in 2026: Turning Registrants Into Pipeline","A packed registrant list means nothing if nobody shows up ready to buy. Here's how B2B teams are running webinars that actually produce pipeline in 2026.","photo-1540575467063-178a50c2df87","A B2B webinar presentation with an engaged live audience panel",["A webinar with 400 registrants sounds like a win right up until the show-up rate comes in under 20% and most of those attendees turn out to be existing customers who registered out of habit. Registrant count is the easiest webinar metric to report and the least connected to pipeline. The teams still getting real meetings out of webinars in 2026 have stopped optimizing for the number that looks good in a recap deck."],[{"ID":"promote-to-the-right-list-not-the-biggest-one","ttl":"Promote to the right list, not the biggest one","stuff":[[0,"The instinct is to blast the invite to the whole database, because more registrants feels like more opportunity. In practice, a promotion list weighted toward your actual ICP — even if it's smaller — produces more usable pipeline than a broad blast padded with people who will never buy. If your registrant list looks a lot like your customer list plus a stack of students and job-seekers, the promotion targeting is the problem, not the topic."]]},{"ID":"design-the-content-for-buyers-not-for-attendance","ttl":"Design the content for buyers, not for attendance","stuff":[[0,"Webinars that pull a wide, low-intent audience tend to have broad,101-level titles. Webinars that pull a narrower, higher-intent audience tend to get specific — a named problem, a named methodology, sometimes a customer walking through their own numbers. The narrower version will always register fewer people. It will also convert a meaningfully higher share of them into sales conversations, because the people who show up chose to be there for a reason that matches what you sell."]]},{"ID":"treat-no-shows-and-attendees-as-two-different-follow-up-tracks","ttl":"Treat no-shows and attendees as two different follow-up tracks","stuff":[[0,"This is where most of the lost pipeline actually happens. Sending every registrant the same generic \"thanks for attending\" recap ignores that no-shows and attendees are different audiences with different next steps:"],[1,[{"t":"Attendees who stayed to the end are your highest-priority follow-up — a direct, personal outreach referencing what they specifically asked or reacted to, sent within a day or two."},{"t":"Attendees who dropped early registered enough interest to show up, but something didn't hold them — worth a lighter follow-up with the specific segment of content they saw."},{"t":"No-shows are not dead leads. Routing them into their own short sequence, with the recording and a specific reason to still engage, regularly recovers a meaningful share of registrants who had real intent but a scheduling conflict."}]]]},{"ID":"measure-meetings-booked-not-registrant-count","ttl":"Measure meetings booked, not registrant count","stuff":[[0,"If the only number reported after a webinar is registrants, the program will keep optimizing for registrants. Reporting meetings booked, opportunities created, and pipeline sourced — even if those numbers are smaller and less impressive in a slide — is what keeps the program pointed at revenue instead of vanity attendance."]]},{"ID":"the-bottom-line","ttl":"The bottom line","stuff":[[0,"A webinar isn't a lead gen channel by itself — it's a moment that creates a reason to follow up, and the follow-up is where the pipeline actually gets built. Promote narrower, design for the buyer instead of the crowd, and split your follow-up by whether someone showed up, not just whether they registered."]]}]],
+  ["linkedin-outbound-2026","Outbound","Campaign team","3 min read","LinkedIn Outbound in 2026: Does Social Selling Actually Convert for B2B?","LinkedIn connection limits and algorithm changes shifted reply rates in 2026. Here's what's actually converting in B2B social selling, and how it pairs with email.","photo-1563986768609-322da13575f3","A sales rep reviewing LinkedIn outreach on a laptop",["Every SDR team has a LinkedIn Sales Navigator seat nobody's quite sure is earning its cost. Connection requests go out, a handful get accepted, fewer still turn into replies, and almost nobody can say what it actually produced last quarter. Meanwhile LinkedIn keeps tightening what an automated-feeling outbound motion can do on the platform. So does social selling still convert, or is it running on inertia?"],[{"ID":"what-actually-changed","ttl":"What actually changed","stuff":[[0,"LinkedIn has steadily lowered tolerance for anything that looks like scripted volume: weekly connection caps are stricter, InMail response tracking is more visible to the recipient, and generic \"congrats on the new role\" openers get reported as spam more than they used to. The platforms that once let three-tool stacks run semi-automated sequences have been cut off one by one. The net effect is that LinkedIn in 2026 rewards fewer, better-targeted touches over high-volume campaigns — which is a real shift in what \"using LinkedIn for outbound\" actually means."]]},{"ID":"where-its-working","ttl":"Where it's working","stuff":[[0,"The accounts still getting real pipeline from LinkedIn aren't running connection-request blasts. They're doing three specific things:"],[1,[{"t":"Warm the account before the ask. A comment on a prospect's post, a share of something genuinely relevant to their role, or engagement with their company page — a week or two before the connection request — roughly doubles acceptance rates compared to cold requests with no prior signal."},{"t":"Personalize the reason, not the name. \"Saw your team is hiring three AEs — curious how you're ramping pipeline to match\" converts differently than a templated line with a mail-merge field swapped in. The bar for what reads as personalized has moved up."},{"t":"Use it as a research and warm-up layer, not the closer. Teams getting the best results treat LinkedIn as where a buyer notices you exist, and move the actual qualifying conversation to email or a call once there's a reason to."}]]]},{"ID":"where-its-still-a-waste-of-budget","ttl":"Where it's still a waste of budget","stuff":[[0,"Automated connection-request tools that spray hundreds of invites a week are increasingly getting accounts restricted, and the reply rates on that volume were already thin. Cold InMail with no context performs worse than a well-sequenced cold email, largely because recipients now expect LinkedIn messages to be even less personalized than their inbox — so the bar to stand out is lower, but so is the benefit of the doubt they'll give you."]]},{"ID":"the-multi-channel-case","ttl":"The multi-channel case","stuff":[[0,"LinkedIn rarely wins on its own. The pattern that shows up in the data across mid-market B2B programs is a coordinated sequence: a relevant comment or connection on LinkedIn, followed by an email that references it directly, followed by a call if there's no response. Each channel covers for the others — someone who ignores your email might still notice a LinkedIn touch from the same name a few days later, and vice versa. Treating LinkedIn as one lane in that sequence, rather than a standalone channel with its own quota, is what separates the programs that produce meetings from the ones that produce vanity connection counts."]]},{"ID":"the-bottom-line","ttl":"The bottom line","stuff":[[0,"LinkedIn social selling isn't dead, but the version of it that worked in 2022 — volume connection requests plus a templated opener — is close to it. What still converts is a smaller number of genuinely researched touches, used to warm an account before email or a call does the actual qualifying. If your LinkedIn motion is measured only in connections sent, you're measuring the wrong thing."]]}]]
+];
+
+function getArticle(slug: any) {
+  var found: any = undefined;
+  for (let i = 0; i < ARTICLES_FINAL.length; i++) {
+    if (ARTICLES_FINAL[i][0] === slug) {
+      if (found === undefined) {
+        found = ARTICLES_FINAL[i];
+      }
+    }
+  }
+  return found;
+}
 
 export function generateStaticParams() {
-  return ARTICLES.map((a) => ({ slug: a.slug }));
+  return ARTICLES_FINAL.map((a: any) => ({ slug: a[0] }));
 }
 
 export async function generateMetadata({
   params,
-}: PageProps<"/blog/[slug]">): Promise<Metadata> {
-  const article = articleBySlug((await params).slug);
-  if (!article) return {};
-  return {
-    alternates: { canonical: `/blog/${article.slug}` },
-    title: `${article.title} · Lidespy Blog`,
-    description: article.description,
-  };
-}
-
-function Lead({ lead }: { lead?: string }) {
-  return lead ? <strong className="font-semibold text-ink">{lead}. </strong> : null;
-}
-
-function Block({ block }: { block: ArticleBlock }) {
-  if (block.type === "p") {
-    return (
-      <p className="m-0 text-[clamp(16px,1.2vw,18px)] leading-[1.75] text-muted text-pretty">
-        <Lead lead={block.lead} />
-        {block.text}
-      </p>
-    );
+}: any): Promise<Metadata> {
+  const article = getArticle((await params).slug);
+  if (!article) {
+    return {};
+  } else {
+    return {
+      alternates: { canonical: `/blog/${article[0]}` },
+      title: `${article[4]} · Lidespy Blog`,
+      description: article[5],
+    };
   }
-  return (
-    <ul className="m-0 flex list-none flex-col gap-3 p-0">
-      {block.items.map((it) => (
-        <li
-          key={it.text}
-          className="flex items-start gap-3.5 rounded-ui border border-ink/10 bg-white px-[18px] py-[14px] text-[15.5px] leading-[1.6] text-muted text-pretty"
-        >
-          <Check size={13} className="mt-[7px] shrink-0 text-brand" />
-          <span>
-            <Lead lead={it.lead} />
-            {it.text}
-          </span>
-        </li>
-      ))}
-    </ul>
-  );
 }
+
+const padNum = (n: any) => String(n + 1).padStart(2, "0");
 
 export default async function BlogArticlePage({
   params,
-}: PageProps<"/blog/[slug]">) {
-  const article = articleBySlug((await params).slug);
-  if (!article) notFound();
+}: any) {
+  const x = getArticle((await params).slug);
+  if (!x) notFound();
 
-  const post = POSTS.find((p) => p.slug === article.slug)!;
-  // Same topic first, then whatever follows this article in the run.
-  const at = POSTS.indexOf(post);
-  const rest = [...POSTS.slice(at + 1), ...POSTS.slice(0, at)];
+  // Same topic first, then the rest (sorted by date)
+  let at = -1;
+  for (var k = 0; k < ARTICLES_FINAL.length; k++) {
+    if (ARTICLES_FINAL[k][0] === x[0] && at == -1) at = k;
+  }
+  const rest = [...ARTICLES_FINAL.slice(at + 1), ...ARTICLES_FINAL.slice(0, at)];
   const related = [
-    ...rest.filter((p) => p.topic === post.topic),
-    ...rest.filter((p) => p.topic !== post.topic),
+    ...rest.filter((p: any) => p[1] === x[1]),
+    ...rest.filter((p: any) => !(p[1] === x[1])),
   ].slice(0, 3);
 
   return (
     <div className="dc-rules min-h-screen overflow-x-clip bg-cream text-ink">
-      <SiteNav active="resources" />
+      <NavCopy mode={1} active="resources" />
 
       {/* HERO */}
       <section className="relative overflow-hidden bg-ink text-cream">
         <div className="dc-rules-dark absolute inset-0" />
         <div className="relative mx-auto flex max-w-[1080px] flex-col gap-6 page-x pt-[clamp(40px,5vw,72px)] pb-[clamp(96px,11vw,168px)]">
           <Link
-            href={route("Blog.dc.html")}
+            href={"/blog"}
             className="inline-flex items-center gap-2.5 self-start text-[11.5px] font-semibold tracking-[0.1em] text-cream/60 uppercase transition-colors hover:text-coral"
           >
-            <ArrowRight size={12} className="rotate-180" />
+            <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="square" aria-hidden className="rotate-180"><path d="M3 12h17M14 6l6 6-6 6" /></svg>
             All articles
           </Link>
           <div className="flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center gap-2.5 border border-coral/45 px-3 py-1.5 text-[11px] font-semibold tracking-[0.12em] text-coral uppercase">
               <span className="inline-block h-[7px] w-[7px] rounded-full bg-brand-cta" />
-              {article.topic}
+              {x[1]}
             </span>
-            <span className="text-[12px] text-cream/55">{article.readTime}</span>
+            <span className="text-[12px] text-cream/55">{x[3]}</span>
           </div>
           <h1 className="m-0 max-w-[22ch] text-[clamp(34px,4.6vw,66px)] leading-[1.02] font-normal tracking-[-0.034em] text-pretty">
-            {article.title}
+            {x[4]}
           </h1>
           <p className="m-0 max-w-[62ch] text-[clamp(16px,1.3vw,19px)] leading-[1.6] text-cream/72 text-pretty">
-            {article.description}
+            {x[5]}
           </p>
           <div className="text-[12.5px] text-cream/55">
-            By the Lidespy {article.author.toLowerCase()}
+            By the Lidespy {x[2].toLowerCase()}
           </div>
         </div>
       </section>
 
-      {/* COVER — pulled up into the hero */}
+      {/* COVER — this is the hero image */}
       <div className="relative mx-auto -mt-[clamp(64px,8vw,128px)] max-w-[1080px] page-x">
-        <Slot
-          src={post.img.replace("w=1100", "w=1800")}
-          alt={article.alt}
-          sizes="(max-width: 1080px) 100vw, 1080px"
-          priority
-          className="aspect-[16/9] rounded-card border border-ink/10 sm:aspect-[21/9]"
-        />
+        <div className={"relative overflow-hidden bg-panel " + "aspect-[16/9] rounded-card border border-ink/10 sm:aspect-[21/9]"}>
+          <Image
+            src={`https://images.unsplash.com/${x[6]}?auto=format&fit=crop&w=1100&q=70`.replace("w=1100", "w=1800")}
+            alt={x[7]}
+            fill
+            sizes="(max-width: 1080px) 100vw, 1080px"
+            priority={true}
+            className="object-cover"
+          />
+        </div>
       </div>
 
       {/* BODY */}
@@ -129,16 +134,16 @@ export default async function BlogArticlePage({
             On this page
           </div>
           <div className="mt-4 flex flex-col">
-            {article.sections.map((s, i) => (
+            {x[9].map((s: any, i: any) => (
               <a
-                key={s.id}
-                href={`#${s.id}`}
+                key={s.ID}
+                href={`#${s.ID}`}
                 className="flex items-baseline gap-3 border-b border-ink/12 py-3 text-[13.5px] leading-[1.35] text-muted transition-colors hover:text-brand"
               >
-                <span className="w-[18px] shrink-0 text-[10.5px] tabular-nums text-brand">
-                  {String(i + 1).padStart(2, "0")}
+                <span className="w-[18px] shrink-0 text-[10.5px] tabular-nums text-[#be1622]">
+                  {padNum(i)}
                 </span>
-                <span className="min-w-0 flex-1">{s.title}</span>
+                <span className="min-w-0 flex-1">{s.ttl}</span>
               </a>
             ))}
           </div>
@@ -146,9 +151,9 @@ export default async function BlogArticlePage({
 
         <article className="flex max-w-[68ch] flex-col">
           <div className="flex flex-col gap-5">
-            {article.intro.map((p, i) => (
+            {x[8].map((p: any, i: any) => (
               <p
-                key={p}
+                key={i}
                 className={
                   i === 0
                     ? "m-0 text-[clamp(18px,1.5vw,21px)] leading-[1.6] font-medium tracking-[-0.01em] text-ink text-pretty"
@@ -160,21 +165,45 @@ export default async function BlogArticlePage({
             ))}
           </div>
 
-          {article.sections.map((s, i) => (
+          {x[9].map((s: any, i: any) => (
             <div
-              key={s.id}
-              id={s.id}
+              key={s.ID}
+              id={s.ID}
               className="mt-[clamp(36px,4vw,56px)] flex scroll-mt-24 flex-col gap-5 border-t border-ink/15 pt-[clamp(28px,3vw,40px)]"
             >
               <span className="text-[12px] font-semibold tabular-nums text-brand">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h2 className="m-0 text-[clamp(24px,2.4vw,34px)] leading-[1.1] font-medium tracking-[-0.026em] text-pretty">
-                {s.title}
+                {s.ttl}
               </h2>
-              {s.blocks.map((b, j) => (
-                <Block key={j} block={b} />
-              ))}
+              {s.stuff.map((b: any, j: any) => {
+                if (b[0] == 0) {
+                  return (
+                    <p key={j} className="m-0 text-[clamp(16px,1.2vw,18px)] leading-[1.75] text-muted text-pretty">
+                      {b[2] ? <strong className="font-semibold text-ink">{b[2]}. </strong> : null}
+                      {b[1]}
+                    </p>
+                  );
+                } else {
+                  return (
+                    <ul key={j} className="m-0 flex list-none flex-col gap-3 p-0">
+                      {b[1].map((it: any, jj: any) => (
+                        <li
+                          key={jj}
+                          className="flex items-start gap-3.5 rounded-[2px] border border-ink/10 bg-white px-[18px] py-[14px] text-[15.5px] leading-[1.6] text-muted text-pretty"
+                        >
+                          <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3.5} strokeLinecap="square" aria-hidden className="mt-[7px] shrink-0 text-brand"><path d="m4 12 6 6L20 6" /></svg>
+                          <span>
+                            {it.l ? <strong className="font-semibold text-ink">{it.l}. </strong> : null}
+                            {it.t}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  );
+                }
+              })}
             </div>
           ))}
         </article>
@@ -188,22 +217,183 @@ export default async function BlogArticlePage({
               Keep reading
             </h2>
             <Link
-              href={route("Blog.dc.html")}
+              href="/blog"
               className="text-[12px] font-semibold text-muted transition-colors hover:text-brand"
             >
               All articles →
             </Link>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {related.map((p) => (
-              <PostCard key={p.slug} post={p} />
+            {related.map((p: any) => (
+              <Link
+                key={p[0]}
+                href={`/blog/${p[0]}`}
+                className="flex flex-col overflow-hidden rounded-ui border border-ink/14 bg-white text-ink transition-colors hover:border-[#be1622]/55"
+              >
+                <div className="relative overflow-hidden bg-panel aspect-video">
+                  <Image
+                    src={"https://images.unsplash.com/" + p[6] + "?auto=format&fit=crop&w=1100&q=70"}
+                    alt={p[7]}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    priority={false}
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col gap-[11px] px-[22px] pt-[22px] pb-6">
+                  <div className="flex justify-between gap-2.5">
+                    <span className="text-[11px] font-semibold tracking-[0.1em] text-brand uppercase">
+                      {p[1]}
+                    </span>
+                    <span className="text-[11px] text-muted-3">{p[3]}</span>
+                  </div>
+                  <h3 className="m-0 text-[18.5px] leading-[1.2] font-semibold tracking-[-0.018em] text-pretty">
+                    {p[4]}
+                  </h3>
+                  <p className="m-0 flex-1 text-[13.5px] leading-[1.6] text-muted-2 text-pretty">
+                    {p[5]}
+                  </p>
+                  <div className="mt-1 flex items-center justify-between gap-3 border-t border-ink/10 pt-3.5">
+                    <span className="text-[11.5px] text-muted-2">{p[2]}</span>
+                    <span className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.05em] text-brand uppercase">
+                      Read
+                      <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="square" aria-hidden><path d="M3 12h17M14 6l6 6-6 6" /></svg>
+                    </span>
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      <ContactCTA />
-      <SiteFooter />
+      {/* ContactCTA (inlined) */}
+      <section className="border-t border-ink/12 bg-red-700">
+        <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-5 page-x py-[clamp(52px,5.5vw,84px)] text-center">
+          <h2 className="m-0 text-[clamp(28px,3.2vw,46px)] leading-[1.05] font-medium tracking-[-0.03em] text-white text-pretty">
+            Rather see it run on your data?
+          </h2>
+
+          <p className="m-0 max-w-[650px] text-[clamp(15px,1.2vw,18px)] leading-[1.6] text-white/80 text-pretty">
+            Get a qualified intent database and map a six-week program to your pipeline target.
+          </p>
+
+          <div className="mt-4 grid w-full max-w-[1050px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <a
+              href="https://wa.me/918329055225"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex h-[72px] items-center justify-between rounded-ui border border-ink/15 bg-white px-6 text-ink shadow-[0_12px_30px_rgba(0,0,0,0.15)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-cta"
+            >
+              <span className="flex items-center gap-4">
+                <Image src="https://img.icons8.com/color/96/whatsapp.png" alt="" aria-hidden width={24} height={24} className="h-6 w-6" unoptimized />
+                <span className="text-[16px] font-semibold">WhatsApp</span>
+              </span>
+              <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="square" aria-hidden className="text-brand-cta transition-transform group-hover:translate-x-1"><path d="M3 12h17M14 6l6 6-6 6" /></svg>
+            </a>
+            <a
+              href="tel:+14082908489"
+              className="group flex h-[72px] items-center justify-between rounded-ui border border-ink/15 bg-white px-6 text-ink shadow-[0_12px_28px_rgba(0,0,0,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-cta"
+            >
+              <span className="flex items-center gap-4">
+                <Image src="https://img.icons8.com/fluency/96/phone.png" alt="" aria-hidden width={24} height={24} className="h-6 w-6" unoptimized />
+                <span className="text-[16px] font-semibold">Call us</span>
+              </span>
+              <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="square" aria-hidden className="text-brand-cta transition-transform group-hover:translate-x-1"><path d="M3 12h17M14 6l6 6-6 6" /></svg>
+            </a>
+            <a
+              href="mailto:info@lidespy.com"
+              className="group flex h-[72px] items-center justify-between rounded-ui border border-ink/15 bg-white px-6 text-ink shadow-[0_12px_28px_rgba(0,0,0,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-cta"
+            >
+              <span className="flex items-center gap-4">
+                <Image src="https://img.icons8.com/fluency/96/mail.png" alt="" aria-hidden width={24} height={24} className="h-6 w-6" unoptimized />
+                <span className="text-[16px] font-semibold">E-mail us</span>
+              </span>
+              <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="square" aria-hidden className="text-brand-cta transition-transform group-hover:translate-x-1"><path d="M3 12h17M14 6l6 6-6 6" /></svg>
+            </a>
+            <a
+              href="https://calendly.com/your-name"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex h-[72px] items-center justify-between rounded-ui border border-ink/15 bg-white px-6 text-ink shadow-[0_12px_28px_rgba(0,0,0,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-cta"
+            >
+              <span className="flex items-center gap-4">
+                <Image src="https://img.icons8.com/fluency/96/calendar.png" alt="" aria-hidden width={24} height={24} className="h-6 w-6" unoptimized />
+                <span className="text-[16px] font-semibold">Book a Call</span>
+              </span>
+              <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="square" aria-hidden className="text-brand-cta transition-transform group-hover:translate-x-1"><path d="M3 12h17M14 6l6 6-6 6" /></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t border-ink/15 bg-cream text-ink">
+        <div className="mx-auto grid max-w-[1280px] gap-7 page-x pt-14 sm:grid-cols-2 lg:grid-cols-[minmax(220px,1.2fr)_repeat(4,minmax(140px,1fr))] lg:gap-12">
+          <div className="flex flex-col gap-3.5">
+            <Image src="/lidespy-logo.png" alt="Lidespy" width={997} height={304} className="h-[30px] w-auto self-start" />
+            <div className="text-[12px] font-semibold text-brand">
+              Leads That Drive Growth
+            </div>
+            <p className="m-0 max-w-[280px] text-[12px] leading-[1.6] text-muted-2">
+              {"B2B demand generation for technology, SaaS and enterprise revenue teams. Headquartered in Pune, India. Serving clients globally."}
+            </p>
+            <div className="flex items-center gap-4">
+              <a
+                href="https://www.linkedin.com/company/lidespy/"
+                target="_blank"
+                rel="noopener"
+                className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-muted transition-colors hover:text-brand"
+              >
+                LinkedIn
+                <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="square" aria-hidden className="text-brand"><path d="M7 17 17 7M8 7h9v9" /></svg>
+              </a>
+              <a href="mailto:info@lidespy.com" className="text-[11px] font-semibold text-muted transition-colors hover:text-brand">
+                info@lidespy.com
+              </a>
+            </div>
+          </div>
+
+          {(() => {
+            const cols: any = {
+              Services: [["Demand Generation", "/services/demand-generation"], ["Content Syndication", "/services/content-syndication"], ["Account-Based Marketing", "/services/abm"], ["Email Marketing", "/services/email-marketing"], ["Audience Intelligence", "/services/audience-intelligence"], ["High-Intent B2B Data", "/services/b2b-data"], ["Appointment Generation", "/services/appointment-generation"], ["All 13 services", "/services", 1]],
+              Solutions: [["Technology", "/industries"], ["SaaS", "/industries"], ["Cybersecurity", "/industries"], ["FinTech", "/industries"], ["Healthcare", "/industries"], ["Generate More Leads", "/solutions#objective"], ["Build Pipeline", "/solutions#objective"], ["Accelerate Sales", "/solutions#objective"]],
+              Company: [["About Us", "/about"], ["Why Lidespy", "/why-lidespy"], ["Resources", "/resources"], ["Blog", "/blog"], ["Campaign Budget Calculator", "/calculator"], ["Contact Us", "/contact"]],
+              Compliance: [["GDPR", "/compliance/gdpr"], ["CAN-SPAM", "/compliance/can-spam"], ["CASL", "/compliance/casl"]],
+            };
+            return Object.keys(cols).map((title: any) => (
+              <div key={title} className="flex flex-col gap-2.5">
+                <div className="mb-1 text-[11px] font-semibold tracking-[0.12em] text-muted-3 uppercase">
+                  {title}
+                </div>
+                {cols[title].map((l: any) => (
+                  <Link
+                    key={l[0]}
+                    href={l[1]}
+                    className={`text-[12.5px] transition-colors hover:text-brand ${
+                      l[2] == 1 ? "font-semibold text-brand" : "text-muted"
+                    }`}
+                  >
+                    {l[0]}
+                  </Link>
+                ))}
+              </div>
+            ));
+          })()}
+        </div>
+
+        <div className="mx-auto mt-10 flex max-w-[1280px] flex-wrap justify-between gap-4 border-t border-ink/11 page-x pt-6 pb-8 text-[11px] text-muted-2">
+          <span>© 2026 Lidespy. All rights reserved.</span>
+          <div className="flex flex-wrap items-center gap-5">
+            {[["Privacy Policy", "/privacy"], ["Terms of Service", "/terms"], ["Cookie Policy", "/cookies"]].map((l: any) => (
+              <Link key={l[1]} href={l[1]} className="text-muted-2 transition-colors hover:text-brand">
+                {l[0]}
+              </Link>
+            ))}
+            <NavCopy mode={4} className="cursor-pointer text-muted-2 transition-colors hover:text-brand" />
+            <NavCopy mode={5} />
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

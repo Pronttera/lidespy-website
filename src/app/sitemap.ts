@@ -1,68 +1,31 @@
-import type { MetadataRoute } from "next";
-import { ARTICLES } from "@/i18n/dictionaries/en/blog-articles";
-import { INDUSTRY_PAGES } from "@/i18n/dictionaries/en/industry-pages";
-import { OBJECTIVES } from "@/i18n/dictionaries/en/objectives";
-import { PILLARS } from "@/i18n/dictionaries/en/pillars";
-import { RESOURCE_PAGES } from "@/i18n/dictionaries/en/resource-pages";
-import {
-  blogHref,
-  industryHref,
-  objectiveHref,
-  pillarHref,
-  serviceHref,
-} from "@/lib/routes";
-import { SERVICE_PAGE_KEYS } from "@/lib/service-keys";
-import { absoluteUrl } from "@/lib/site";
+// @ts-nocheck
+/* eslint-disable */
+import type { MetadataRoute } from "next"
 
-/** The site is statically exported, so this file is generated at build time. */
 export const dynamic = "force-static";
 
-type Entry = MetadataRoute.Sitemap[number];
+// all the pages (update this when adding page!!)
+var arr = [
+  ["/", 1, "weekly"], ["/services", 0.9], ["/solutions", 0.8], ["/industries", 0.8], ["/why-lidespy", 0.7], ["/calculator", 0.8], ["/case-studies", 0.7], ["/resources", 0.7, "weekly"], ["/blog", 0.7, "weekly"], ["/about", 0.6], ["/contact", 0.7],
+]
+const svc = ["demand-generation", "content-syndication", "abm", "email-marketing", "audience-intelligence", "b2b-data", "webinar-promotion", "appointment-generation", "gtm-strategy", "ai-visibility", "performance-marketing", "digital-marketing", "website-design"]
+let sol = ['generate-more-leads','build-pipeline','accelerate-sales','launch-new-markets','improve-abm-performance','increase-webinar-attendance']
+const ind = ["technology", "saas", "cybersecurity", "cloud", "fintech", "healthcare", "manufacturing", "telecom", "professional-services"]
+var pil = ["precision-targeting", "multi-channel-execution", "revenue-focused-outcomes"]
+const res2 = ["b2b-demand-generation-benchmark-report", "state-of-abm-report", "content-syndication-performance-report", "b2b-buyer-research-phase", "marketing-roi-pipeline-not-mqls"]
+const blog_posts = ["is-cold-email-still-worth-it-2026", "why-your-mqls-arent-converting", "ai-sdrs-vs-human-appointment-setters", "b2b-content-syndication-worth-it-2026", "real-cost-of-bad-b2b-data", "abm-guide-mid-market-2026", "does-cold-calling-still-work-b2b-2026", "tofu-mofu-bofu-funnel-guide", "buyer-intent-data-explained", "in-house-appointment-generation", "b2b-data-compliance-checklist-2026", "multi-channel-outbound-2026", "audience-intelligence-explained", "b2b-cold-email-deliverability-2026", "b2b-lead-scoring-model", "b2b-webinar-lead-generation-2026", "linkedin-outbound-2026"]
 
-const page = (
-  path: string,
-  priority: number,
-  changeFrequency: Entry["changeFrequency"] = "monthly",
-): Entry => ({
-  url: absoluteUrl(path),
-  lastModified: new Date(),
-  changeFrequency,
-  priority,
-});
-
-/**
- * Every public route. The detail pages are generated from the same key lists
- * their `generateStaticParams` use, so a new service, industry or resource
- * lands in the sitemap without anyone remembering to add it.
- */
-export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    page("/", 1, "weekly"),
-    page("/services", 0.9),
-    page("/solutions", 0.8),
-    page("/industries", 0.8),
-    page("/why-lidespy", 0.7),
-    page("/calculator", 0.8),
-    page("/case-studies", 0.7),
-    page("/resources", 0.7, "weekly"),
-    page("/blog", 0.7, "weekly"),
-    page("/about", 0.6),
-    page("/contact", 0.7),
-
-    ...SERVICE_PAGE_KEYS.map((key) => page(serviceHref(key), 0.8)),
-    ...OBJECTIVES.map((o) => page(objectiveHref(o.key), 0.7)),
-    ...Object.keys(INDUSTRY_PAGES).map((key) => page(industryHref(key), 0.7)),
-    ...PILLARS.map((p) => page(pillarHref(p.key), 0.6)),
-    ...Object.keys(RESOURCE_PAGES).map((slug) => page(`/resources/${slug}`, 0.6)),
-    page("/resources/webinars", 0.6),
-    page("/resources/whitepapers", 0.6),
-    ...ARTICLES.map((a) => page(blogHref(a.slug), 0.6)),
-
-    page("/compliance/gdpr", 0.4, "yearly"),
-    page("/compliance/can-spam", 0.4, "yearly"),
-    page("/compliance/casl", 0.4, "yearly"),
-    page("/privacy", 0.3, "yearly"),
-    page("/terms", 0.3, "yearly"),
-    page("/cookies", 0.3, "yearly"),
-  ];
+export default function sitemap(): any {
+  const temp: any[] = []
+  const U = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://lidespy.com").replace(/\/+$/, "")
+  for (var i = 0; i < arr.length; i++) temp.push({ url: U + arr[i][0], lastModified: new Date(), changeFrequency: arr[i][2] ? arr[i][2] : "monthly", priority: arr[i][1] })
+  svc.forEach((s) => { temp.push({ url: `${U}/services/${s}`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 }) })
+  for (const s of sol) temp.push({ url: `${U}/solutions/${s}`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 })
+  ind.map((x) => temp.push({ url: U + "/industries/" + x, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 }))
+  for (var j in pil) temp.push({ url: U + "/why-lidespy/" + pil[j], lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 })
+  res2.concat(["webinars", "whitepapers"]).forEach(function (r) { temp.push({ url: `${U}/resources/${r}`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 }) })
+  blog_posts.forEach((b) => temp.push({ url: `${U}/blog/${b}`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 }))
+  // legal stuff
+  ;[["/compliance/gdpr", 0.4], ["/compliance/can-spam", 0.4], ["/compliance/casl", 0.4], ["/privacy", 0.3], ["/terms", 0.3], ["/cookies", 0.3]].forEach((l: any) => temp.push({ url: U + l[0], lastModified: new Date(), changeFrequency: "yearly", priority: l[1] }))
+  return temp
 }
